@@ -49,12 +49,12 @@ func Font(fontType FontType, fontSize float64) (font.Face, error) {
 		return nil, err
 	}
 
-	font, err := opentype.Parse(data)
+	ttf, err := opentype.Parse(data)
 	if err != nil {
 		return nil, err
 	}
 
-	return opentype.NewFace(font, &opentype.FaceOptions{
+	return opentype.NewFace(ttf, &opentype.FaceOptions{
 		Size:    fontSize,
 		DPI:     72,
 		Hinting: font.HintingFull,
