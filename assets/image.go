@@ -5,6 +5,7 @@ import (
 	_ "embed"
 	"github.com/hajimehoshi/ebiten/v2"
 	"image"
+	_ "image/png"
 )
 
 //go:embed image/pieces.png
