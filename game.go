@@ -2,8 +2,11 @@ package main
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/kraxarn/ubongo/assets"
 	"github.com/kraxarn/ubongo/widget"
+	"image"
 	"image/color"
+	"log"
 )
 
 type Game struct {
@@ -11,7 +14,21 @@ type Game struct {
 }
 
 func NewGame() *Game {
+	uiImage, err := assets.ImageUi()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	uiFont, err := assets.Font(assets.FontSubmenu, 14)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	ui := widget.NewUi()
+
+	ui.AddWidgets(widget.NewButton(uiImage, uiFont,
+		image.Rect(16, 16, 160, 60), "Button1"))
+
 	return &Game{
 		ui: ui,
 	}
