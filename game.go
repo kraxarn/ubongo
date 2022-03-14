@@ -3,9 +3,9 @@ package main
 import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/assets"
+	"github.com/kraxarn/ubongo/color"
 	"github.com/kraxarn/ubongo/widget"
 	"image"
-	"image/color"
 	"log"
 )
 
@@ -40,7 +40,7 @@ func (g *Game) Update() error {
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	screen.Fill(color.Black)
+	screen.Fill(color.Background)
 	g.ui.Draw(screen)
 }
 
