@@ -4,9 +4,9 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"github.com/kraxarn/ubongo/assets"
+	"github.com/kraxarn/ubongo/color"
 	"golang.org/x/image/font"
 	"image"
-	"image/color"
 )
 
 type Button struct {
@@ -69,5 +69,5 @@ func (b *Button) Draw(dst *ebiten.Image) {
 	w := (bounds.Max.X - bounds.Min.X).Ceil()
 	x := b.rect.Min.X + (b.rect.Dx()-w)/2
 	y := b.rect.Max.Y - (b.rect.Dy()-b.fontHeight)/2
-	text.Draw(dst, b.Text, b.font, x, y, color.Black)
+	text.Draw(dst, b.Text, b.font, x, y, color.ForegroundAlt)
 }
