@@ -22,8 +22,8 @@ const (
 )
 
 var UiImageRects = map[UiImageType]image.Rectangle{
-	UiButton:        image.Rect(0, 0, 16, 16),
-	UiButtonPressed: image.Rect(16, 0, 32, 16),
+	UiButton:        image.Rect(0, 0, 45, 49),
+	UiButtonPressed: image.Rect(45, 0, 90, 45),
 }
 
 func decode(data []byte) (*ebiten.Image, error) {
