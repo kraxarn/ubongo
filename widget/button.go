@@ -20,15 +20,15 @@ type Button struct {
 	onPressed  func(b *Button)
 }
 
-func NewButton(image *ebiten.Image, font font.Face, rect image.Rectangle, text string) *Button {
+func NewButton(background *ebiten.Image, font font.Face, x, y, w, h int, text string) *Button {
 	bounds, _, _ := font.GlyphBounds('M')
 
 	return &Button{
 		Text:       text,
-		background: image,
+		background: background,
 		font:       font,
 		fontHeight: (bounds.Max.Y - bounds.Min.Y).Ceil(),
-		rect:       rect,
+		rect:       image.Rect(x, y, x+w, y+h),
 		mouseDown:  false,
 		isPressed:  false,
 		onPressed:  nil,
