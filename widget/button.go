@@ -63,7 +63,7 @@ func (b *Button) Draw(dst *ebiten.Image) {
 		t = assets.UiButtonPressed
 	}
 
-	drawNinePatch(b.background, dst, b.rect, assets.UiImageRects[t])
+	drawNinePatch(b.background, dst, assets.UiImageRects[t], b.rect)
 
 	bounds, _ := font.BoundString(b.font, b.Text)
 	w := (bounds.Max.X - bounds.Min.X).Ceil()

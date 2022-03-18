@@ -5,7 +5,7 @@ import (
 	"image"
 )
 
-func drawNinePatch(dst, src *ebiten.Image, dstRect, srcRect image.Rectangle) {
+func drawNinePatch(src, dst *ebiten.Image, srcRect, dstRect image.Rectangle) {
 	srcX := srcRect.Min.X
 	srcY := srcRect.Min.Y
 	srcW := srcRect.Dx()
