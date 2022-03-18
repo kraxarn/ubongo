@@ -9,6 +9,7 @@ import (
 	"image"
 )
 
+// Button is a default button that can be pressed
 type Button struct {
 	background *ebiten.Image
 	font       font.Face
@@ -39,7 +40,7 @@ func (b *Button) SetOnPressed(pressed func(b *Button)) {
 	b.onPressed = pressed
 }
 
-func (b *Button) Update() {
+func (b *Button) Update(_ *Ui) {
 	if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
 		x, y := ebiten.CursorPosition()
 		if b.rect.Min.X <= x && x < b.rect.Max.X && b.rect.Min.Y <= y && y < b.rect.Max.Y {

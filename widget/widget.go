@@ -1,8 +1,10 @@
 package widget
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"github.com/hajimehoshi/ebiten/v2"
+)
 
 type Widget interface {
-	Update()
+	Update(ui *Ui)
 	Draw(dst *ebiten.Image)
 }
