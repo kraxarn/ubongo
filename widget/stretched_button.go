@@ -31,13 +31,7 @@ func (s *StretchedButton) Update(ui *Ui) {
 	}
 
 	if s.y >= 0 {
-		if (s.align & enum.AlignTop) > 0 {
-			s.Button.rect.Min.Y = s.y
-			s.Button.rect.Max.Y = s.Button.rect.Min.Y + ButtonHeight
-		} else if (s.align & enum.AlignBottom) > 0 {
-			s.Button.rect.Max.Y = ui.screenSize.Y - s.y
-			s.Button.rect.Min.Y = s.Button.rect.Max.Y - ButtonHeight
-		}
+		ui.setAbsoluteY(&s.Button.rect, s.y, s.align)
 	}
 
 	s.Button.Update(ui)

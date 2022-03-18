@@ -36,6 +36,20 @@ func (u *Ui) addWidgets(widgets ...Widget) {
 	u.widgets = append(u.widgets, widgets...)
 }
 
+func (u *Ui) setAbsoluteY(rect *image.Rectangle, y int, align enum.Alignment) {
+	if (align & enum.AlignTop) > 0 {
+		rect.Min.Y = y
+		rect.Max.Y = rect.Min.Y + ButtonHeight
+		return
+	}
+
+	if (align & enum.AlignBottom) > 0 {
+		rect.Max.Y = u.screenSize.Y - y
+		rect.Min.Y = rect.Max.Y - ButtonHeight
+		return
+	}
+}
+
 func (u *Ui) Update(screenSize util.Vector2[int]) {
 	u.screenSize = screenSize
 
