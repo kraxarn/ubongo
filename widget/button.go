@@ -69,5 +69,5 @@ func (b *Button) Draw(dst *ebiten.Image) {
 	w := (bounds.Max.X - bounds.Min.X).Ceil()
 	x := b.rect.Min.X + (b.rect.Dx()-w)/2
 	y := b.rect.Max.Y - (b.rect.Dy()-b.fontHeight)/2
-	text.Draw(dst, b.Text, b.font, x, y, color.ForegroundAlt)
+	text.Draw(dst, b.Text, b.font, x, y, color.Foreground)
 }
