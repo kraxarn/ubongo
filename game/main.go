@@ -11,10 +11,11 @@ import (
 )
 
 type Game struct {
-	ui    *widget.Ui
-	size  util.Vector2[int]
-	logo  *widget.Image
-	title *widget.Label
+	ui         *widget.Ui
+	size       util.Vector2[int]
+	background *widget.RepeatImage
+	logo       *widget.Image
+	title      *widget.Label
 }
 
 func NewGame() *Game {
@@ -28,6 +29,14 @@ func NewGame() *Game {
 		log.Fatal(err)
 	}
 
+	imgPattern, err := assets.Image("pattern")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Background pattern
+	bg := ui.AddRepeatImage(imgPattern, 0, 0, 0, 0)
+
 	// Logo
 	logo := ui.AddImage(imgLogo, 0, 0, 64, 64)
 
@@ -39,13 +48,17 @@ func NewGame() *Game {
 	ui.AddStretchedButton(widget.ScreenPadding*3, enum.AlignBottom, "Settings")
 
 	return &Game{
-		ui:    ui,
-		logo:  logo,
-		title: title,
+		ui:         ui,
+		logo:       logo,
+		title:      title,
+		background: bg,
 	}
 }
 
 func (g *Game) Update() error {
+	// Update pattern size
+	g.background.SetSize(g.size)
+
 	// Update logo size and position
 	g.logo.SetWidth(g.size.X / 2)
 	logoX := g.size.X/2 - (g.logo.GetWidth() / 2)
