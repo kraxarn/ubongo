@@ -16,7 +16,7 @@ type Ui struct {
 }
 
 func NewUi() (*Ui, error) {
-	uiImage, err := assets.ImageUi()
+	uiImage, err := assets.Image("ui")
 	if err != nil {
 		return nil, err
 	}

@@ -37,11 +37,6 @@ func decode(name string) (*ebiten.Image, error) {
 	return ebiten.NewImageFromImage(img), nil
 }
 
-// Deprecated: Use Image with "ui" instead
-func ImageUi() (*ebiten.Image, error) {
-	return decode("ui")
-}
-
 func Image(name string) (*ebiten.Image, error) {
 	return decode(name)
 }
