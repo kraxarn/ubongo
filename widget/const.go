@@ -15,5 +15,5 @@ const (
 	ButtonFontSize = 18
 
 	// TitleFontSize is the default font size for titles
-	TitleFontSize = 24
+	TitleFontSize = 54
 )
