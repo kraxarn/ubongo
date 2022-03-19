@@ -21,7 +21,7 @@ func NewUi() (*Ui, error) {
 		return nil, err
 	}
 
-	fontButton, err := assets.Font(assets.FontSubmenu, ButtonFontSize)
+	fontButton, err := assets.Font(assets.FontRegular, ButtonFontSize)
 	if err != nil {
 		return nil, err
 	}

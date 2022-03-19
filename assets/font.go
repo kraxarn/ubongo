@@ -13,21 +13,21 @@ var fonts embed.FS
 type FontType uint8
 
 const (
+	FontRegular FontType = iota
+	FontTitle   FontType = iota
 	FontDebug   FontType = iota
-	FontMenu    FontType = iota
-	FontSubmenu FontType = iota
 )
 
 func fontPath(font FontType) (string, error) {
 	switch font {
+	case FontRegular:
+		return "font/regular.ttf", nil
+
+	case FontTitle:
+		return "font/title.ttf", nil
+
 	case FontDebug:
 		return "font/debug.ttf", nil
-
-	case FontMenu:
-		return "font/menu.ttf", nil
-
-	case FontSubmenu:
-		return "font/submenu.ttf", nil
 
 	default:
 		return "", fmt.Errorf("invalid font: %d", font)
