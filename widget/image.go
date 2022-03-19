@@ -6,15 +6,19 @@ import (
 )
 
 type Image struct {
-	image *ebiten.Image
-	rect  image.Rectangle
+	image  *ebiten.Image
+	rect   image.Rectangle
+	scaleX float64
+	scaleY float64
 }
 
-func NewImage(src *ebiten.Image, x, y int) *Image {
-	width, height := src.Size()
+func NewImage(src *ebiten.Image, x, y, w, h int) *Image {
+	imgWidth, imgHeight := src.Size()
 	return &Image{
-		image: src,
-		rect:  image.Rect(x, y, x+width, y+height),
+		image:  src,
+		rect:   image.Rect(x, y, x+w, y+h),
+		scaleX: float64(w) / float64(imgWidth),
+		scaleY: float64(h) / float64(imgHeight),
 	}
 }
 
@@ -23,5 +27,7 @@ func (i *Image) Update(_ *Ui) {
 }
 
 func (i *Image) Draw(dst *ebiten.Image) {
-	dst.DrawImage(i.image, &ebiten.DrawImageOptions{})
+	opt := &ebiten.DrawImageOptions{}
+	opt.GeoM.Scale(i.scaleX, i.scaleY)
+	dst.DrawImage(i.image, opt)
 }
