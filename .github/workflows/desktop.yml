@@ -23,7 +23,7 @@ jobs:
 
       # https://ebiten.org/documents/install.html
       - name: Install dependencies
-        if: ${{contains(matrix.os, 'ubuntu')}}
+        if: contains(matrix.os, 'ubuntu')
         run: |
           sudo apt update
           sudo apt install build-essential libc6-dev libglu1-mesa-dev libgl1-mesa-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev libxxf86vm-dev libasound2-dev pkg-config
@@ -37,7 +37,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ubongo
+          name: ubongo-${{runner.os}}
           path: |
             ./ubongo
             ./ubongo.exe
