@@ -92,6 +92,10 @@ func (u *Ui) AddImage(src *ebiten.Image, x, y, w, h int) *Image {
 	return addWidget(u, NewImage(src, x, y, w, h))
 }
 
+func (u *Ui) AddRepeatImage(src *ebiten.Image, x, y, w, h int) *RepeatImage {
+	return addWidget(u, NewRepeatImage(src, x, y, w, h))
+}
+
 func (u *Ui) AddTitle(x, y int, text string) *Label {
 	return addWidget(u, NewLabel(u.fontTitle, x, y, text))
 }
