@@ -78,25 +78,18 @@ func (u *Ui) Draw(screen *ebiten.Image) {
 }
 
 func (u *Ui) AddButton(x, y, w, h int, text string) *Button {
-	button := NewButton(u.image, u.fontButton, x, y, w, h, text)
-	u.addWidgets(button)
-	return button
+	return addWidget(u, NewButton(u.image, u.fontButton, x, y, w, h, text))
 }
 
 func (u *Ui) AddStretchedButton(y int, align enum.Alignment, text string) *StretchedButton {
-	button := NewStretchedButton(u.image, u.fontButton,
+	return addWidget(u, NewStretchedButton(u.image, u.fontButton,
 		ScreenPadding*2, y,
 		u.screenSize.X-ScreenPadding, ButtonHeight,
-		align, text)
-
-	u.addWidgets(button)
-	return button
+		align, text))
 }
 
 func (u *Ui) AddImage(src *ebiten.Image, x, y, w, h int) *Image {
-	img := NewImage(src, x, y, w, h)
-	u.addWidgets(img)
-	return img
+	return addWidget(u, NewImage(src, x, y, w, h))
 }
 
 func (u *Ui) AddTitle(x, y int, text string) *Label {
