@@ -26,7 +26,7 @@ jobs:
         if: contains(matrix.os, 'ubuntu')
         run: |
           sudo apt update
-          sudo apt install build-essential libc6-dev libglu1-mesa-dev libgl1-mesa-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev libxxf86vm-dev libasound2-dev pkg-config
+          sudo apt install gcc libc6-dev libglu1-mesa-dev libgl1-mesa-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev libxxf86vm-dev libasound2-dev pkg-config
 
       - name: Build
         run: go build -v -o ./ ./...
