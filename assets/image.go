@@ -1,18 +1,15 @@
 package assets
 
 import (
-	"bytes"
-	_ "embed"
+	"embed"
+	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
 	"image"
 	_ "image/png"
 )
 
-//go:embed image/pieces.png
-var pieces []byte
-
-//go:embed image/ui.png
-var ui []byte
+//go:embed image/*.png
+var images embed.FS
 
 type UiImageType uint8
 
@@ -26,8 +23,12 @@ var UiImageRects = map[UiImageType]image.Rectangle{
 	UiButtonPressed: image.Rect(45, 0, 90, 45),
 }
 
-func decode(data []byte) (*ebiten.Image, error) {
-	reader := bytes.NewReader(data)
+func decode(name string) (*ebiten.Image, error) {
+	reader, err := images.Open(fmt.Sprintf("image/%s.png", name))
+	if err != nil {
+		return nil, err
+	}
+
 	img, _, err := image.Decode(reader)
 	if err != nil {
 		return nil, err
@@ -36,6 +37,11 @@ func decode(data []byte) (*ebiten.Image, error) {
 	return ebiten.NewImageFromImage(img), nil
 }
 
+// Deprecated: Use Image with "ui" instead
 func ImageUi() (*ebiten.Image, error) {
-	return decode(ui)
+	return decode("ui")
+}
+
+func Image(name string) (*ebiten.Image, error) {
+	return decode(name)
 }
