@@ -51,6 +51,11 @@ func (i *Image) SetWidth(w int) {
 	i.scaleY = float64(w) / float64(imgHeight)
 }
 
+func (i *Image) GetHeight() int {
+	_, h := i.image.Size()
+	return int(float64(h) * i.scaleY)
+}
+
 func (i *Image) SetPosition(x, y int) {
 	i.position = util.Vec2(x, y)
 }

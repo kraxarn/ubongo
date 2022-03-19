@@ -11,9 +11,10 @@ import (
 )
 
 type Game struct {
-	ui   *widget.Ui
-	size util.Vector2[int]
-	logo *widget.Image
+	ui    *widget.Ui
+	size  util.Vector2[int]
+	logo  *widget.Image
+	title *widget.Label
 }
 
 func NewGame() *Game {
@@ -30,20 +31,29 @@ func NewGame() *Game {
 	// Logo
 	logo := ui.AddImage(imgLogo, 0, 0, 64, 64)
 
+	// Title
+	title := ui.AddTitle(64, 64, "Ubongo")
+
 	// Buttons
 	ui.AddStretchedButton(widget.ScreenPadding*4+widget.ButtonHeight, enum.AlignBottom, "Start Game")
 	ui.AddStretchedButton(widget.ScreenPadding*3, enum.AlignBottom, "Settings")
 
 	return &Game{
-		ui:   ui,
-		logo: logo,
+		ui:    ui,
+		logo:  logo,
+		title: title,
 	}
 }
 
 func (g *Game) Update() error {
 	// Update logo size and position
 	g.logo.SetWidth(g.size.X / 2)
-	g.logo.SetPosition(g.size.X/2-(g.logo.GetWidth()/2), int(float64(g.size.Y)*0.1))
+	logoX := g.size.X/2 - (g.logo.GetWidth() / 2)
+	logoY := int(float64(g.size.Y) * 0.1)
+	g.logo.SetPosition(logoX, logoY)
+
+	// Update title position
+	g.title.SetPosition(logoX-32, logoY+g.logo.GetHeight()-8)
 
 	g.ui.Update(g.size)
 	return nil

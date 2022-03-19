@@ -44,6 +44,11 @@ func (u *Ui) addWidgets(widgets ...Widget) {
 	u.widgets = append(u.widgets, widgets...)
 }
 
+func addWidget[W Widget](ui *Ui, widget W) W {
+	ui.addWidgets(widget)
+	return widget
+}
+
 func (u *Ui) setAbsoluteY(rect *image.Rectangle, y int, align enum.Alignment) {
 	if (align & enum.AlignTop) > 0 {
 		rect.Min.Y = y
@@ -92,4 +97,8 @@ func (u *Ui) AddImage(src *ebiten.Image, x, y, w, h int) *Image {
 	img := NewImage(src, x, y, w, h)
 	u.addWidgets(img)
 	return img
+}
+
+func (u *Ui) AddTitle(x, y int, text string) *Label {
+	return addWidget(u, NewLabel(u.fontTitle, x, y, text))
 }
