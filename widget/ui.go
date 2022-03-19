@@ -6,11 +6,13 @@ import (
 	"github.com/kraxarn/ubongo/enum"
 	"github.com/kraxarn/ubongo/util"
 	"golang.org/x/image/font"
+	"image"
 )
 
 type Ui struct {
 	image      *ebiten.Image
 	fontButton font.Face
+	fontTitle  font.Face
 	widgets    []Widget
 	screenSize util.Vector2[int]
 }
@@ -26,9 +28,15 @@ func NewUi() (*Ui, error) {
 		return nil, err
 	}
 
+	fontTitle, err := assets.Font(assets.FontTitle, TitleFontSize)
+	if err != nil {
+		return nil, err
+	}
+
 	return &Ui{
 		image:      uiImage,
 		fontButton: fontButton,
+		fontTitle:  fontTitle,
 	}, nil
 }
 
