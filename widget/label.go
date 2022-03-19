@@ -3,22 +3,24 @@ package widget
 import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
-	"github.com/kraxarn/ubongo/color"
 	"github.com/kraxarn/ubongo/util"
 	"golang.org/x/image/font"
+	imageColor "image/color"
 )
 
 type Label struct {
 	fontFace font.Face
 	position util.Vector2[int]
 	text     string
+	color    imageColor.Color
 }
 
-func NewLabel(fontFace font.Face, x, y int, text string) *Label {
+func NewLabel(fontFace font.Face, x, y int, text string, color imageColor.Color) *Label {
 	return &Label{
 		fontFace: fontFace,
 		position: util.Vec2(x, y),
 		text:     text,
+		color:    color,
 	}
 }
 
@@ -27,7 +29,7 @@ func (l *Label) Update(_ *Ui) {
 }
 
 func (l *Label) Draw(dst *ebiten.Image) {
-	text.Draw(dst, l.text, l.fontFace, l.position.X, l.position.Y, color.Foreground)
+	text.Draw(dst, l.text, l.fontFace, l.position.X, l.position.Y, l.color)
 }
 
 func (l *Label) SetPosition(x, y int) {

@@ -3,6 +3,7 @@ package widget
 import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/assets"
+	"github.com/kraxarn/ubongo/color"
 	"github.com/kraxarn/ubongo/enum"
 	"github.com/kraxarn/ubongo/util"
 	"golang.org/x/image/font"
@@ -97,5 +98,5 @@ func (u *Ui) AddRepeatImage(src *ebiten.Image, x, y, w, h int) *RepeatImage {
 }
 
 func (u *Ui) AddTitle(x, y int, text string) *Label {
-	return addWidget(u, NewLabel(u.fontTitle, x, y, text))
+	return addWidget(u, NewLabel(u.fontTitle, x, y, text, color.ForegroundAlt))
 }
