@@ -100,3 +100,11 @@ func (u *Ui) AddRepeatImage(src *ebiten.Image, x, y, w, h int) *RepeatImage {
 func (u *Ui) AddTitle(x, y int, text string) *Label {
 	return addWidget(u, NewLabel(u.fontTitle, x, y, text, colors.ForegroundAlt))
 }
+
+func (u *Ui) AddDebugOverlay() *Overlay {
+	widget, err := NewOverlay()
+	if err != nil {
+		return nil
+	}
+	return addWidget(u, widget)
+}

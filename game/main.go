@@ -47,6 +47,9 @@ func NewGame() *Game {
 	ui.AddStretchedButton(widget.ScreenPadding*4+widget.ButtonHeight, enum.AlignBottom, "Start Game")
 	ui.AddStretchedButton(widget.ScreenPadding*3, enum.AlignBottom, "Settings")
 
+	// Debug overlay
+	ui.AddDebugOverlay()
+
 	return &Game{
 		ui:         ui,
 		logo:       logo,
