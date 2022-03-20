@@ -2,9 +2,9 @@ package game
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/kraxarn/ubongo/assets"
 	"github.com/kraxarn/ubongo/color"
 	"github.com/kraxarn/ubongo/enum"
+	"github.com/kraxarn/ubongo/resources"
 	"github.com/kraxarn/ubongo/util"
 	"github.com/kraxarn/ubongo/widget"
 	"log"
@@ -24,12 +24,12 @@ func NewGame() *Game {
 		log.Fatal(err)
 	}
 
-	imgLogo, err := assets.Image("logo")
+	imgLogo, err := resources.Image("logo")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	imgPattern, err := assets.Image("pattern")
+	imgPattern, err := resources.Image("pattern")
 	if err != nil {
 		log.Fatal(err)
 	}

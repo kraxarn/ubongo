@@ -2,9 +2,9 @@ package widget
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/kraxarn/ubongo/assets"
 	"github.com/kraxarn/ubongo/color"
 	"github.com/kraxarn/ubongo/enum"
+	"github.com/kraxarn/ubongo/resources"
 	"github.com/kraxarn/ubongo/util"
 	"golang.org/x/image/font"
 	"image"
@@ -19,17 +19,17 @@ type Ui struct {
 }
 
 func NewUi() (*Ui, error) {
-	uiImage, err := assets.Image("ui")
+	uiImage, err := resources.Image("ui")
 	if err != nil {
 		return nil, err
 	}
 
-	fontButton, err := assets.Font(assets.FontRegular, ButtonFontSize)
+	fontButton, err := resources.Font(resources.FontRegular, ButtonFontSize)
 	if err != nil {
 		return nil, err
 	}
 
-	fontTitle, err := assets.Font(assets.FontTitle, TitleFontSize)
+	fontTitle, err := resources.Font(resources.FontTitle, TitleFontSize)
 	if err != nil {
 		return nil, err
 	}

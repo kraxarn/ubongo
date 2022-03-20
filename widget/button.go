@@ -3,8 +3,8 @@ package widget
 import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
-	"github.com/kraxarn/ubongo/assets"
 	"github.com/kraxarn/ubongo/color"
+	"github.com/kraxarn/ubongo/resources"
 	"golang.org/x/image/font"
 	"image"
 )
@@ -59,12 +59,12 @@ func (b *Button) Update(_ *Ui) {
 }
 
 func (b *Button) Draw(dst *ebiten.Image) {
-	t := assets.UiButton
+	t := resources.UiButton
 	if b.mouseDown {
-		t = assets.UiButtonPressed
+		t = resources.UiButtonPressed
 	}
 
-	drawNinePatch(b.background, dst, assets.UiImageRects[t], b.rect)
+	drawNinePatch(b.background, dst, resources.UiImageRects[t], b.rect)
 
 	bounds, _ := font.BoundString(b.font, b.Text)
 	w := (bounds.Max.X - bounds.Min.X).Ceil()
