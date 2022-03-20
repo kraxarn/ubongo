@@ -34,6 +34,13 @@ jobs:
           cp ./dist/wasm/index.html ./html/
           cp ./ubongo ./html/ubongo.wasm
 
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          publish_dir: html
+          cname: ubongo.kraxarn.com
+
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
