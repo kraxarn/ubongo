@@ -5,17 +5,17 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"github.com/kraxarn/ubongo/util"
 	"golang.org/x/image/font"
-	imageColor "image/color"
+	"image/color"
 )
 
 type Label struct {
 	fontFace font.Face
 	position util.Vector2[int]
 	text     string
-	color    imageColor.Color
+	color    color.Color
 }
 
-func NewLabel(fontFace font.Face, x, y int, text string, color imageColor.Color) *Label {
+func NewLabel(fontFace font.Face, x, y int, text string, color color.Color) *Label {
 	return &Label{
 		fontFace: fontFace,
 		position: util.Vec2(x, y),
