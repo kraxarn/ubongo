@@ -32,7 +32,7 @@ jobs:
           mkdir html
           cp $(go env GOROOT)/misc/wasm/wasm_exec.js ./html/
           cp ./dist/wasm/index.html ./html/
-          cp ./ubongo.wasm ./html/
+          cp ./ubongo ./html/ubongo.wasm
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
