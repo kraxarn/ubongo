@@ -26,10 +26,10 @@ jobs:
       - name: Build
         run: |
           cp ./dist/android/AndroidManifest.xml .
-          gomobile build -v -target=android/arm64 - ./ ./...
+          gomobile build -v -target=android/arm64 -o ./ubongo.apk ./mobile
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: ubongo-android
-          path: ./assets/
+          path: ./ubongo.apk
