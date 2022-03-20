@@ -1,0 +1,40 @@
+name: WASM
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  GOOS: "js"
+  GOARCH: "wasm"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.18
+
+      - name: Build
+        run: go build -v -o ./ ./...
+
+      - name: Test
+        run: go test -v ./...
+
+      - name: Package
+        run: |
+          mkdir html
+          cp $(go env GOROOT)/misc/wasm/wasm_exec.js ./html/
+          cp ./dist/wasm/index.html ./html/
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ubongo-wasm
+          path: ./html/
