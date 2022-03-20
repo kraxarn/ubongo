@@ -3,7 +3,7 @@ package widget
 import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
-	"github.com/kraxarn/ubongo/color"
+	"github.com/kraxarn/ubongo/colors"
 	"github.com/kraxarn/ubongo/resources"
 	"golang.org/x/image/font"
 	"image"
@@ -70,5 +70,5 @@ func (b *Button) Draw(dst *ebiten.Image) {
 	w := (bounds.Max.X - bounds.Min.X).Ceil()
 	x := b.rect.Min.X + (b.rect.Dx()-w)/2
 	y := b.rect.Max.Y - (b.rect.Dy()-b.fontHeight)/2
-	text.Draw(dst, b.Text, b.font, x, y, color.Foreground)
+	text.Draw(dst, b.Text, b.font, x, y, colors.Foreground)
 }

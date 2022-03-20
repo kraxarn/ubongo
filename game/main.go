@@ -2,7 +2,7 @@ package game
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/kraxarn/ubongo/color"
+	"github.com/kraxarn/ubongo/colors"
 	"github.com/kraxarn/ubongo/enum"
 	"github.com/kraxarn/ubongo/resources"
 	"github.com/kraxarn/ubongo/util"
@@ -73,7 +73,7 @@ func (g *Game) Update() error {
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	screen.Fill(color.Background)
+	screen.Fill(colors.Background)
 	g.ui.Draw(screen)
 }
 
