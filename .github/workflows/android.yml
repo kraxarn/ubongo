@@ -26,7 +26,7 @@ jobs:
       - name: Build
         run: |
           cp ./dist/android/AndroidManifest.xml .
-          gomobile build -v -target=android/arm64 -androidapi=32 .
+          gomobile build -v -target=android/arm64 -androidapi=31 .
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
