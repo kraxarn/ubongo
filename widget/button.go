@@ -5,6 +5,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"github.com/kraxarn/ubongo/colors"
 	"github.com/kraxarn/ubongo/resources"
+	"github.com/kraxarn/ubongo/util/vec2"
 	"golang.org/x/image/font"
 	"image"
 )
@@ -41,12 +42,22 @@ func (b *Button) SetOnPressed(pressed func(b *Button)) {
 }
 
 func (b *Button) Update(_ *Ui) {
+	var positions []vec2.Vector2[int]
 	if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
-		x, y := ebiten.CursorPosition()
-		if b.rect.Min.X <= x && x < b.rect.Max.X && b.rect.Min.Y <= y && y < b.rect.Max.Y {
-			b.mouseDown = true
-		} else {
-			b.mouseDown = false
+		positions = append(positions, vec2.New(ebiten.CursorPosition()))
+	} else {
+		for _, id := range ebiten.AppendTouchIDs([]ebiten.TouchID{}) {
+			positions = append(positions, vec2.New(ebiten.TouchPosition(id)))
+		}
+	}
+
+	if len(positions) > 0 {
+		b.mouseDown = false
+		for _, pos := range positions {
+			if b.rect.Min.X <= pos.X && pos.X < b.rect.Max.X && b.rect.Min.Y <= pos.Y && pos.Y < b.rect.Max.Y {
+				b.mouseDown = true
+				break
+			}
 		}
 	} else {
 		if b.mouseDown {
