@@ -1,0 +1,5 @@
+#!/bin/bash
+
+TAG="0.1.0" # $(git describe --abbrev=0 --tags)
+HASH=$(git rev-parse --short HEAD)
+echo -n "$TAG+$HASH" > version
