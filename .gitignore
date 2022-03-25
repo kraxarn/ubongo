@@ -1,0 +1,7 @@
+# Manifest copied from dist/
+AndroidManifest.xml
+
+# Built binaries
+ubongo
+ubongo.exe
+ubongo.apk
