@@ -5,7 +5,7 @@ import (
 	"github.com/kraxarn/ubongo/colors"
 	"github.com/kraxarn/ubongo/enum"
 	"github.com/kraxarn/ubongo/resources"
-	"github.com/kraxarn/ubongo/util"
+	"github.com/kraxarn/ubongo/util/vec2"
 	"golang.org/x/image/font"
 	"image"
 )
@@ -15,7 +15,7 @@ type Ui struct {
 	fontButton font.Face
 	fontTitle  font.Face
 	widgets    []Widget
-	screenSize util.Vector2[int]
+	screenSize vec2.Vector2[int]
 }
 
 func NewUi() (*Ui, error) {
@@ -64,7 +64,7 @@ func (u *Ui) setAbsoluteY(rect *image.Rectangle, y int, align enum.Alignment) {
 	}
 }
 
-func (u *Ui) Update(screenSize util.Vector2[int]) {
+func (u *Ui) Update(screenSize vec2.Vector2[int]) {
 	u.screenSize = screenSize
 
 	for _, widget := range u.widgets {

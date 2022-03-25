@@ -3,14 +3,14 @@ package widget
 import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
-	"github.com/kraxarn/ubongo/util"
+	"github.com/kraxarn/ubongo/util/vec2"
 	"golang.org/x/image/font"
 	"image/color"
 )
 
 type Label struct {
 	fontFace font.Face
-	position util.Vector2[int]
+	position vec2.Vector2[int]
 	text     string
 	color    color.Color
 }
@@ -18,7 +18,7 @@ type Label struct {
 func NewLabel(fontFace font.Face, x, y int, text string, color color.Color) *Label {
 	return &Label{
 		fontFace: fontFace,
-		position: util.Vec2(x, y),
+		position: vec2.New(x, y),
 		text:     text,
 		color:    color,
 	}
@@ -33,5 +33,5 @@ func (l *Label) Draw(dst *ebiten.Image) {
 }
 
 func (l *Label) SetPosition(x, y int) {
-	l.position = util.Vec2(x, y)
+	l.position = vec2.New(x, y)
 }

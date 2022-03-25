@@ -2,20 +2,20 @@ package widget
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/kraxarn/ubongo/util"
+	"github.com/kraxarn/ubongo/util/vec2"
 )
 
 type RepeatImage struct {
 	image    *ebiten.Image
-	position util.Vector2[int]
-	size     util.Vector2[int]
+	position vec2.Vector2[int]
+	size     vec2.Vector2[int]
 }
 
 func NewRepeatImage(src *ebiten.Image, x, y, w, h int) *RepeatImage {
 	return &RepeatImage{
 		image:    src,
-		position: util.Vec2(x, y),
-		size:     util.Vec2(w, h),
+		position: vec2.New(x, y),
+		size:     vec2.New(w, h),
 	}
 }
 
@@ -36,6 +36,6 @@ func (r *RepeatImage) Draw(dst *ebiten.Image) {
 	}
 }
 
-func (r *RepeatImage) SetSize(size util.Vector2[int]) {
+func (r *RepeatImage) SetSize(size vec2.Vector2[int]) {
 	r.size = size
 }

@@ -2,14 +2,14 @@ package widget
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/kraxarn/ubongo/util"
+	"github.com/kraxarn/ubongo/util/vec2"
 )
 
 type Image struct {
 	image    *ebiten.Image
 	scaleX   float64
 	scaleY   float64
-	position util.Vector2[int]
+	position vec2.Vector2[int]
 }
 
 func NewImage(src *ebiten.Image, x, y, w, h int) *Image {
@@ -57,5 +57,5 @@ func (i *Image) GetHeight() int {
 }
 
 func (i *Image) SetPosition(x, y int) {
-	i.position = util.Vec2(x, y)
+	i.position = vec2.New(x, y)
 }
