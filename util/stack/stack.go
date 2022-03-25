@@ -15,19 +15,24 @@ func New[V any]() *Stack[V] {
 // Currently, methods can't contain generics, so functions are required
 
 func Push[V any](stack *Stack[V], value V) V {
-	return stack.list.PushBack(value).Value
+	return stack.list.PushBack(value).Value.(V)
 }
 
 func Pop[V any](stack *Stack[V]) V {
 	if stack.list.Len() == 0 {
-		return nil
+		// TODO: We can't return V's address as it doesn't have to be a pointer
+		panic("Stack empty")
 	}
 
 	front := stack.list.Back()
 	stack.list.Remove(front)
-	return front.Value
+	return front.Value.(V)
 }
 
 func Peek[V any](stack *Stack[V]) V {
-	return stack.list.Back().Value
+	return stack.list.Front().Value.(V)
+}
+
+func Len[V any](stack *Stack[V]) int {
+	return stack.list.Len()
 }
