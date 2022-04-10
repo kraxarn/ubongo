@@ -35,3 +35,10 @@ func (l *Label) Draw(dst *ebiten.Image) {
 func (l *Label) SetPosition(x, y int) {
 	l.position = vec2.New(x, y)
 }
+
+func (l *Label) Size() vec2.Vector2[int] {
+	bounds, _ := font.BoundString(l.fontFace, l.text)
+	x := (bounds.Max.X - bounds.Min.X).Ceil()
+	y := (bounds.Max.Y - bounds.Min.Y).Ceil()
+	return vec2.New(x, y)
+}

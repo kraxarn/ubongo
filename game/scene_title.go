@@ -7,12 +7,14 @@ import (
 	"github.com/kraxarn/ubongo/resources"
 	"github.com/kraxarn/ubongo/settings"
 	"github.com/kraxarn/ubongo/widget"
+	"time"
 )
 
 type Title struct {
-	ui    *widget.Ui
-	logo  *widget.Image
-	title *widget.Label
+	ui       *widget.Ui
+	logo     *widget.Image
+	title    *widget.Label
+	seedName *widget.Label
 }
 
 func NewTitle() (*Title, error) {
@@ -30,14 +32,18 @@ func NewTitle() (*Title, error) {
 	ui.AddStretchedButton(widget.ScreenPadding*4+widget.ButtonHeight, enum.AlignBottom, "Start Game")
 	ui.AddStretchedButton(widget.ScreenPadding*3, enum.AlignBottom, "Settings")
 
+	// Seed name
+	seedName := ui.AddLabel(32, 32, resources.RandomWord(time.Now().UnixNano()))
+
 	// TODO: For testing
 	opt := settings.Load()
 	opt.Save()
 
 	return &Title{
-		ui:    ui,
-		logo:  ui.AddImage(imgLogo, 0, 0, 64, 64),
-		title: ui.AddTitle(64, 64, app.Name),
+		ui:       ui,
+		logo:     ui.AddImage(imgLogo, 0, 0, 64, 64),
+		title:    ui.AddTitle(64, 64, app.Name),
+		seedName: seedName,
 	}, nil
 }
 
@@ -49,7 +55,14 @@ func (t *Title) Update(game *Game) error {
 	t.logo.SetPosition(logoX, logoY)
 
 	// Update title position
-	t.title.SetPosition(logoX-32, logoY+t.logo.GetHeight()-8)
+	titleY := logoY + t.logo.GetHeight() - 8
+	titleSize := t.title.Size()
+	t.title.SetPosition(logoX-32, titleY)
+
+	// Update seed name position
+	seedNameSize := t.seedName.Size()
+	t.seedName.SetPosition(game.size.X/2-seedNameSize.X/2,
+		titleY+titleSize.Y+seedNameSize.Y+32)
 
 	t.ui.Update(game.size)
 	return nil

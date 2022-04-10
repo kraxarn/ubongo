@@ -3,6 +3,7 @@ package resources
 import (
 	"embed"
 	"fmt"
+	"math/rand"
 	"strings"
 )
 
@@ -31,4 +32,11 @@ func Adjective(index int) string {
 
 func Noun(index int) string {
 	return readLine("nouns", index)
+}
+
+func RandomWord(seed int64) string {
+	rand.Seed(seed)
+	adjective := Adjective(rand.Int())
+	noun := Noun(rand.Int())
+	return fmt.Sprintf("%s %s", adjective, noun)
 }
