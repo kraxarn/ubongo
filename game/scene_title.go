@@ -5,6 +5,7 @@ import (
 	"github.com/kraxarn/ubongo/app"
 	"github.com/kraxarn/ubongo/enum"
 	"github.com/kraxarn/ubongo/resources"
+	"github.com/kraxarn/ubongo/settings"
 	"github.com/kraxarn/ubongo/widget"
 )
 
@@ -28,6 +29,10 @@ func NewTitle() (*Title, error) {
 	// Buttons
 	ui.AddStretchedButton(widget.ScreenPadding*4+widget.ButtonHeight, enum.AlignBottom, "Start Game")
 	ui.AddStretchedButton(widget.ScreenPadding*3, enum.AlignBottom, "Settings")
+
+	// TODO: For testing
+	opt := settings.Load()
+	opt.Save()
 
 	return &Title{
 		ui:    ui,
