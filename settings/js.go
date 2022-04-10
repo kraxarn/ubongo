@@ -5,7 +5,7 @@ package settings
 import "syscall/js"
 
 func localStorage() js.Value {
-	return js.Global().Get("localstorage")
+	return js.Global().Get("localStorage")
 }
 
 func get(key string) string {
