@@ -12,6 +12,7 @@ type MusicManager struct {
 	player  *audio.Player
 	streams []*vorbis.Stream
 	current int
+	volume  float64
 }
 
 const min = 1
@@ -32,6 +33,7 @@ func NewMusicManager() (*MusicManager, error) {
 		context: audio.NewContext(resources.AudioSampleRate),
 		streams: streams,
 		current: 0,
+		volume:  0.25,
 	}, nil
 }
 
@@ -42,6 +44,7 @@ func (m *MusicManager) Play() error {
 	}
 
 	m.player = player
+	player.SetVolume(m.volume)
 	player.Play()
 	return nil
 }
