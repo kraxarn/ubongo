@@ -3,9 +3,8 @@ package game
 import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/app"
-	"github.com/kraxarn/ubongo/enum"
-	"github.com/kraxarn/ubongo/resources"
-	"github.com/kraxarn/ubongo/settings"
+	resources2 "github.com/kraxarn/ubongo/game/resources"
+	"github.com/kraxarn/ubongo/game/settings"
 	"github.com/kraxarn/ubongo/widget"
 	"time"
 )
@@ -24,17 +23,17 @@ func NewTitle() (*Title, error) {
 		return nil, err
 	}
 
-	imgLogo, err := resources.Image("logo")
+	imgLogo, err := resources2.Image("logo")
 	if err != nil {
 		return nil, err
 	}
 
 	// Buttons
-	ui.AddStretchedButton(widget.ScreenPadding*4+widget.ButtonHeight, enum.AlignBottom, "Start Game")
-	ui.AddStretchedButton(widget.ScreenPadding*3, enum.AlignBottom, "Settings")
+	ui.AddStretchedButton(widget.ScreenPadding*4+widget.ButtonHeight, widget.AlignBottom, "Start Game")
+	ui.AddStretchedButton(widget.ScreenPadding*3, widget.AlignBottom, "Settings")
 
 	// Seed name
-	seedName := ui.AddLabel(32, 32, resources.RandomWord(time.Now().UnixNano()))
+	seedName := ui.AddLabel(32, 32, resources2.RandomWord(time.Now().UnixNano()))
 
 	// Music
 	music, err := NewMusicManager()

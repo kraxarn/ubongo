@@ -2,9 +2,8 @@ package widget
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/kraxarn/ubongo/colors"
-	"github.com/kraxarn/ubongo/enum"
-	"github.com/kraxarn/ubongo/resources"
+	"github.com/kraxarn/ubongo/game/colors"
+	resources2 "github.com/kraxarn/ubongo/game/resources"
 	"github.com/kraxarn/ubongo/util/vec2"
 	"golang.org/x/image/font"
 	"image"
@@ -19,17 +18,17 @@ type Ui struct {
 }
 
 func NewUi() (*Ui, error) {
-	uiImage, err := resources.Image("ui")
+	uiImage, err := resources2.Image("ui")
 	if err != nil {
 		return nil, err
 	}
 
-	fontButton, err := resources.Font(resources.FontRegular, ButtonFontSize)
+	fontButton, err := resources2.Font(resources2.FontRegular, ButtonFontSize)
 	if err != nil {
 		return nil, err
 	}
 
-	fontTitle, err := resources.Font(resources.FontTitle, TitleFontSize)
+	fontTitle, err := resources2.Font(resources2.FontTitle, TitleFontSize)
 	if err != nil {
 		return nil, err
 	}
@@ -50,14 +49,14 @@ func addWidget[W Widget](ui *Ui, widget W) W {
 	return widget
 }
 
-func (u *Ui) setAbsoluteY(rect *image.Rectangle, y int, align enum.Alignment) {
-	if (align & enum.AlignTop) > 0 {
+func (u *Ui) setAbsoluteY(rect *image.Rectangle, y int, align Alignment) {
+	if (align & AlignTop) > 0 {
 		rect.Min.Y = y
 		rect.Max.Y = rect.Min.Y + ButtonHeight
 		return
 	}
 
-	if (align & enum.AlignBottom) > 0 {
+	if (align & AlignBottom) > 0 {
 		rect.Max.Y = u.screenSize.Y - y
 		rect.Min.Y = rect.Max.Y - ButtonHeight
 		return
@@ -82,7 +81,7 @@ func (u *Ui) AddButton(x, y, w, h int, text string) *Button {
 	return addWidget(u, NewButton(u.image, u.fontButton, x, y, w, h, text))
 }
 
-func (u *Ui) AddStretchedButton(y int, align enum.Alignment, text string) *StretchedButton {
+func (u *Ui) AddStretchedButton(y int, align Alignment, text string) *StretchedButton {
 	return addWidget(u, NewStretchedButton(u.image, u.fontButton,
 		ScreenPadding*2, y,
 		u.screenSize.X-ScreenPadding, ButtonHeight,

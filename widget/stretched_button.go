@@ -2,7 +2,6 @@ package widget
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/kraxarn/ubongo/enum"
 	"golang.org/x/image/font"
 )
 
@@ -11,11 +10,11 @@ type StretchedButton struct {
 	*Button
 	x     int
 	y     int
-	align enum.Alignment
+	align Alignment
 }
 
 func NewStretchedButton(background *ebiten.Image, fontFace font.Face, x, y, w, h int,
-	align enum.Alignment, text string) *StretchedButton {
+	align Alignment, text string) *StretchedButton {
 	return &StretchedButton{
 		NewButton(background, fontFace, x, y, w, h, text),
 		x,

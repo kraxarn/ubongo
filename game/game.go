@@ -2,8 +2,8 @@ package game
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/kraxarn/ubongo/colors"
-	"github.com/kraxarn/ubongo/resources"
+	"github.com/kraxarn/ubongo/game/colors"
+	"github.com/kraxarn/ubongo/game/resources"
 	"github.com/kraxarn/ubongo/util/vec2"
 	"github.com/kraxarn/ubongo/widget"
 )

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
-	"github.com/kraxarn/ubongo/resources"
+	"github.com/kraxarn/ubongo/game/resources"
 )
 
 type MusicManager struct {
@@ -35,6 +35,10 @@ func NewMusicManager() (*MusicManager, error) {
 		current: 0,
 		volume:  0.25,
 	}, nil
+}
+
+func (m *MusicManager) Update() {
+
 }
 
 func (m *MusicManager) Play() error {

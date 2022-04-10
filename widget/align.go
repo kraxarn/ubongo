@@ -1,4 +1,4 @@
-package enum
+package widget
 
 type Alignment uint8
 

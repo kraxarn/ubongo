@@ -3,8 +3,8 @@ package widget
 import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
-	"github.com/kraxarn/ubongo/colors"
-	"github.com/kraxarn/ubongo/resources"
+	"github.com/kraxarn/ubongo/game/colors"
+	"github.com/kraxarn/ubongo/game/resources"
 	"github.com/kraxarn/ubongo/util/vec2"
 	"golang.org/x/image/font"
 	"image"
