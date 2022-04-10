@@ -70,12 +70,14 @@ func (b *Button) Update(_ *Ui) {
 }
 
 func (b *Button) Draw(dst *ebiten.Image) {
-	t := resources.UiButton
+	var imageType resources.UiImageType
 	if b.mouseDown {
-		t = resources.UiButtonPressed
+		imageType = resources.UiButtonPressed
+	} else {
+		imageType = resources.UiButton
 	}
 
-	drawNinePatch(b.background, dst, resources.UiImageRects[t], b.rect)
+	drawNinePatch(b.background, dst, resources.UiImageRects[imageType], b.rect)
 
 	bounds, _ := font.BoundString(b.font, b.Text)
 	w := (bounds.Max.X - bounds.Min.X).Ceil()
