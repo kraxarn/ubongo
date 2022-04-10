@@ -23,7 +23,7 @@ var UiImageRects = map[UiImageType]image.Rectangle{
 	UiButtonPressed: image.Rect(45, 0, 90, 45),
 }
 
-func decode(name string) (*ebiten.Image, error) {
+func decodeImage(name string) (*ebiten.Image, error) {
 	reader, err := images.Open(fmt.Sprintf("image/%s.png", name))
 	if err != nil {
 		return nil, err
@@ -38,5 +38,5 @@ func decode(name string) (*ebiten.Image, error) {
 }
 
 func Image(name string) (*ebiten.Image, error) {
-	return decode(name)
+	return decodeImage(name)
 }

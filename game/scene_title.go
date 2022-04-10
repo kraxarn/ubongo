@@ -15,6 +15,7 @@ type Title struct {
 	logo     *widget.Image
 	title    *widget.Label
 	seedName *widget.Label
+	music    *MusicManager
 }
 
 func NewTitle() (*Title, error) {
@@ -34,6 +35,17 @@ func NewTitle() (*Title, error) {
 
 	// Seed name
 	seedName := ui.AddLabel(32, 32, resources.RandomWord(time.Now().UnixNano()))
+
+	// Music
+	music, err := NewMusicManager()
+	if err != nil {
+		return nil, err
+	}
+
+	err = music.Play()
+	if err != nil {
+		return nil, err
+	}
 
 	// TODO: For testing
 	opt := settings.Load()
