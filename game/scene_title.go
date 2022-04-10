@@ -2,6 +2,7 @@ package game
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/kraxarn/ubongo/app"
 	"github.com/kraxarn/ubongo/enum"
 	"github.com/kraxarn/ubongo/resources"
 	"github.com/kraxarn/ubongo/widget"
@@ -31,7 +32,7 @@ func NewTitle() (*Title, error) {
 	return &Title{
 		ui:    ui,
 		logo:  ui.AddImage(imgLogo, 0, 0, 64, 64),
-		title: ui.AddTitle(64, 64, "Ubongo"),
+		title: ui.AddTitle(64, 64, app.Name),
 	}, nil
 }
 
