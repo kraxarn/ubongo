@@ -9,7 +9,7 @@ import (
 	"github.com/kraxarn/ubongo/widget"
 )
 
-type Title struct {
+type SceneTitle struct {
 	ui          *widget.Ui
 	logo        *widget.Image
 	title       *widget.Label
@@ -18,7 +18,7 @@ type Title struct {
 	music       *MusicManager
 }
 
-func NewTitle(game *Game) (*Title, error) {
+func NewSceneTitle(game *Game) (*SceneTitle, error) {
 	ui, err := widget.NewUi()
 	if err != nil {
 		return nil, err
@@ -89,7 +89,7 @@ func NewTitle(game *Game) (*Title, error) {
 		}
 	})
 
-	return &Title{
+	return &SceneTitle{
 		ui:          ui,
 		logo:        ui.AddImage(imgLogo, 0, 0, 64, 64),
 		title:       ui.AddTitle(64, 64, app.Name),
@@ -99,7 +99,7 @@ func NewTitle(game *Game) (*Title, error) {
 	}, nil
 }
 
-func (t *Title) Update(game *Game) error {
+func (t *SceneTitle) Update(game *Game) error {
 	// Update logo size and position
 	t.logo.SetWidth(game.size.X / 2)
 	logoX := game.size.X/2 - (t.logo.GetWidth() / 2)
@@ -124,6 +124,6 @@ func (t *Title) Update(game *Game) error {
 	return nil
 }
 
-func (t *Title) Draw(screen *ebiten.Image) {
+func (t *SceneTitle) Draw(screen *ebiten.Image) {
 	t.ui.Draw(screen)
 }

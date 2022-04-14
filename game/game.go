@@ -44,7 +44,7 @@ func NewGame() *Game {
 	}
 
 	// Load title scene
-	titleScene, err := NewTitle(game)
+	titleScene, err := NewSceneTitle(game)
 	if err != nil {
 		panic(err)
 	}
