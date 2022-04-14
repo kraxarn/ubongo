@@ -7,7 +7,6 @@ import (
 	"github.com/kraxarn/ubongo/game/settings"
 	"github.com/kraxarn/ubongo/res"
 	"github.com/kraxarn/ubongo/widget"
-	"time"
 )
 
 type Title struct {
@@ -19,7 +18,7 @@ type Title struct {
 	music       *MusicManager
 }
 
-func NewTitle() (*Title, error) {
+func NewTitle(game *Game) (*Title, error) {
 	ui, err := widget.NewUi()
 	if err != nil {
 		return nil, err
@@ -43,7 +42,7 @@ func NewTitle() (*Title, error) {
 	musicToggle.SetSourceRect(0, 0, 50, 50)
 
 	// Seed name
-	seedName := ui.AddLabel(32, 32, res.RandomWord(time.Now().UnixNano()))
+	seedName := ui.AddLabel(32, 32, res.RandomWord(game.seed))
 
 	// Music
 	music, err := NewMusicManager()

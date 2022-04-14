@@ -6,6 +6,7 @@ import (
 	"github.com/kraxarn/ubongo/res"
 	"github.com/kraxarn/ubongo/util/vec2"
 	"github.com/kraxarn/ubongo/widget"
+	"time"
 )
 
 type Game struct {
@@ -13,6 +14,7 @@ type Game struct {
 	size       vec2.Vector2[int]
 	background *widget.RepeatImage
 	scenes     *SceneManager
+	seed       int64
 }
 
 func NewGame() *Game {
@@ -32,20 +34,23 @@ func NewGame() *Game {
 	// Debug overlay
 	ui.AddDebugOverlay()
 
-	// Load title scene
-	titleScene, err := NewTitle()
-	if err != nil {
-		panic(err)
-	}
-
 	sceneManager := NewSceneManager()
-	sceneManager.Push(titleScene)
 
-	return &Game{
+	game := &Game{
 		ui:         ui,
 		background: bg,
 		scenes:     sceneManager,
+		seed:       time.Now().Truncate(time.Minute).Unix(),
 	}
+
+	// Load title scene
+	titleScene, err := NewTitle(game)
+	if err != nil {
+		panic(err)
+	}
+	sceneManager.Push(titleScene)
+
+	return game
 }
 
 func (g *Game) Update() error {
