@@ -46,11 +46,6 @@ func NewTitle() (*Title, error) {
 		return nil, err
 	}
 
-	err = music.Play()
-	if err != nil {
-		return nil, err
-	}
-
 	// TODO: For testing
 	opt := settings.Load()
 	opt.Save()
@@ -61,6 +56,7 @@ func NewTitle() (*Title, error) {
 		title:       ui.AddTitle(64, 64, app.Name),
 		musicToggle: ui.AddImageButton(imgMusic, 16, 16, 50, 50),
 		seedName:    seedName,
+		music:       music,
 	}, nil
 }
 
