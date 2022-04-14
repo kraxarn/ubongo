@@ -23,7 +23,7 @@ func NewTitle() (*Title, error) {
 		return nil, err
 	}
 
-	imgLogo, err := resources2.Image("logo")
+	imgLogo, err := resources.Image("logo")
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +33,7 @@ func NewTitle() (*Title, error) {
 	ui.AddStretchedButton(widget.ScreenPadding*3, widget.AlignBottom, "Settings")
 
 	// Seed name
-	seedName := ui.AddLabel(32, 32, resources2.RandomWord(time.Now().UnixNano()))
+	seedName := ui.AddLabel(32, 32, resources.RandomWord(time.Now().UnixNano()))
 
 	// Music
 	music, err := NewMusicManager()
