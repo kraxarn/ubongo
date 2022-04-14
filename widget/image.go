@@ -3,18 +3,22 @@ package widget
 import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/util/vec2"
+	"image"
 )
 
+// Image is an image, or a sheet of multiple images
 type Image struct {
-	image    *ebiten.Image
-	scaleX   float64
-	scaleY   float64
-	position vec2.Vector2[int]
+	image      *ebiten.Image
+	scaleX     float64
+	scaleY     float64
+	sourceRect image.Rectangle
+	position   vec2.Vector2[int]
 }
 
 func NewImage(src *ebiten.Image, x, y, w, h int) *Image {
 	img := &Image{
-		image: src,
+		image:      src,
+		sourceRect: image.Rectangle{},
 	}
 
 	img.SetPosition(x, y)
@@ -22,8 +26,7 @@ func NewImage(src *ebiten.Image, x, y, w, h int) *Image {
 	return img
 }
 
-func (i *Image) Update(_ *Ui) {
-	// Static image, no need to update
+func (i *Image) Update(*Ui) {
 }
 
 func (i *Image) Draw(dst *ebiten.Image) {
@@ -31,7 +34,14 @@ func (i *Image) Draw(dst *ebiten.Image) {
 	opt.GeoM.Scale(i.scaleX, i.scaleY)
 	opt.GeoM.Translate(float64(i.position.X), float64(i.position.Y))
 
-	dst.DrawImage(i.image, opt)
+	var img *ebiten.Image
+	if i.sourceRect.Empty() {
+		img = i.image
+	} else {
+		img = i.image.SubImage(i.sourceRect).(*ebiten.Image)
+	}
+
+	dst.DrawImage(img, opt)
 }
 
 func (i *Image) Resize(w, h int) {
@@ -58,4 +68,8 @@ func (i *Image) GetHeight() int {
 
 func (i *Image) SetPosition(x, y int) {
 	i.position = vec2.New(x, y)
+}
+
+func (i *Image) SetSourceRect(x, y, w, h int) {
+	i.sourceRect = rect(x, y, w, h)
 }
