@@ -35,7 +35,13 @@ func NewSceneTitle(game *Game) (*SceneTitle, error) {
 	}
 
 	// Buttons
-	ui.AddStretchedButton(widget.ScreenPadding*4+widget.ButtonHeight, widget.AlignBottom, "Start Game")
+	start := ui.AddStretchedButton(widget.ScreenPadding*4+widget.ButtonHeight, widget.AlignBottom, "Start Game")
+	start.SetOnPressed(func(*widget.Button) {
+		sceneGame, err := NewSceneGame(game)
+		if err == nil {
+			game.GoTo(sceneGame)
+		}
+	})
 
 	// Music toggle
 	musicToggle := ui.AddImageButton(imgMusic, 16, 16, 50, 50)

@@ -71,6 +71,10 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeigh
 	return outsideWidth, outsideHeight
 }
 
+func (g *Game) GoTo(scene Scene) {
+	g.scenes.Push(scene)
+}
+
 func generateSeed() int64 {
 	return time.Now().Truncate(time.Minute).Unix()
 }
