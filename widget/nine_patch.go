@@ -5,16 +5,34 @@ import (
 	"image"
 )
 
-func drawNinePatch(src, dst *ebiten.Image, srcRect, dstRect image.Rectangle) {
-	srcX := srcRect.Min.X
-	srcY := srcRect.Min.Y
-	srcW := srcRect.Dx()
-	srcH := srcRect.Dy()
+// NinePatch is a nine-patch image
+type NinePatch struct {
+	image      *ebiten.Image
+	targetRect image.Rectangle
+	sourceRect image.Rectangle
+}
 
-	dstX := dstRect.Min.X
-	dstY := dstRect.Min.Y
-	dstW := dstRect.Dx()
-	dstH := dstRect.Dy()
+func NewNinePatch(image *ebiten.Image, x, y, w, h int) *NinePatch {
+	return &NinePatch{
+		image:      image,
+		targetRect: rect(x, y, w, h),
+		sourceRect: rect(0, 0, w, h),
+	}
+}
+
+func (n *NinePatch) Update(*Ui) {
+}
+
+func (n *NinePatch) Draw(dst *ebiten.Image) {
+	srcX := n.sourceRect.Min.X
+	srcY := n.sourceRect.Min.Y
+	srcW := n.sourceRect.Dx()
+	srcH := n.sourceRect.Dy()
+
+	dstX := n.targetRect.Min.X
+	dstY := n.targetRect.Min.Y
+	dstW := n.targetRect.Dx()
+	dstH := n.targetRect.Dy()
 
 	op := &ebiten.DrawImageOptions{}
 	for j := 0; j < 3; j++ {
@@ -58,7 +76,11 @@ func drawNinePatch(src, dst *ebiten.Image, srcRect, dstRect image.Rectangle) {
 			op.GeoM.Translate(float64(dx), float64(dy))
 			op.GeoM.Translate(float64(dstX), float64(dstY))
 
-			dst.DrawImage(src.SubImage(image.Rect(sx, sy, sx+sw, sy+sh)).(*ebiten.Image), op)
+			dst.DrawImage(n.image.SubImage(image.Rect(sx, sy, sx+sw, sy+sh)).(*ebiten.Image), op)
 		}
 	}
+}
+
+func (n *NinePatch) SetSourceRect(rect image.Rectangle) {
+	n.sourceRect = rect
 }
