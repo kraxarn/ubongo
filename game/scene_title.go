@@ -2,8 +2,8 @@ package game
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/kraxarn/ubongo/app"
-	resources2 "github.com/kraxarn/ubongo/game/resources"
+	"github.com/kraxarn/ubongo/game/app"
+	"github.com/kraxarn/ubongo/game/resources"
 	"github.com/kraxarn/ubongo/game/settings"
 	"github.com/kraxarn/ubongo/widget"
 	"time"

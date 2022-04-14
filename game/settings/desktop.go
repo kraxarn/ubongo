@@ -3,7 +3,7 @@
 package settings
 
 import (
-	"github.com/kraxarn/ubongo/app"
+	"github.com/kraxarn/ubongo/game/app"
 	"os"
 	"path"
 )

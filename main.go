@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/kraxarn/ubongo/app"
 	"github.com/kraxarn/ubongo/game"
+	"github.com/kraxarn/ubongo/game/app"
 	"log"
 )
 
