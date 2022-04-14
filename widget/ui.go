@@ -3,7 +3,7 @@ package widget
 import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/game/colors"
-	resources2 "github.com/kraxarn/ubongo/game/resources"
+	"github.com/kraxarn/ubongo/res"
 	"github.com/kraxarn/ubongo/util/vec2"
 	"golang.org/x/image/font"
 	"image"
@@ -18,17 +18,17 @@ type Ui struct {
 }
 
 func NewUi() (*Ui, error) {
-	uiImage, err := resources2.Image("ui")
+	uiImage, err := res.Image("ui")
 	if err != nil {
 		return nil, err
 	}
 
-	fontButton, err := resources2.Font(resources2.FontRegular, ButtonFontSize)
+	fontButton, err := res.Font(res.FontRegular, ButtonFontSize)
 	if err != nil {
 		return nil, err
 	}
 
-	fontTitle, err := resources2.Font(resources2.FontTitle, TitleFontSize)
+	fontTitle, err := res.Font(res.FontTitle, TitleFontSize)
 	if err != nil {
 		return nil, err
 	}

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
-	"github.com/kraxarn/ubongo/game/resources"
+	"github.com/kraxarn/ubongo/res"
 )
 
 type MusicManager struct {
@@ -22,7 +22,7 @@ func NewMusicManager() (*MusicManager, error) {
 	var streams []*vorbis.Stream
 
 	for i := min; i <= max; i++ {
-		stream, err := resources.Music(i)
+		stream, err := res.Music(i)
 		if err != nil {
 			return nil, err
 		}
@@ -30,7 +30,7 @@ func NewMusicManager() (*MusicManager, error) {
 	}
 
 	return &MusicManager{
-		context: audio.NewContext(resources.AudioSampleRate),
+		context: audio.NewContext(res.AudioSampleRate),
 		streams: streams,
 		current: 0,
 		volume:  0.25,

@@ -3,7 +3,7 @@ package game
 import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/game/colors"
-	"github.com/kraxarn/ubongo/game/resources"
+	"github.com/kraxarn/ubongo/res"
 	"github.com/kraxarn/ubongo/util/vec2"
 	"github.com/kraxarn/ubongo/widget"
 )
@@ -21,7 +21,7 @@ func NewGame() *Game {
 		panic(err)
 	}
 
-	imgPattern, err := resources.Image("pattern")
+	imgPattern, err := res.Image("pattern")
 	if err != nil {
 		panic(err)
 	}

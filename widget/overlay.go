@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/game/colors"
-	"github.com/kraxarn/ubongo/game/resources"
+	"github.com/kraxarn/ubongo/res"
 	"runtime"
 )
 
@@ -15,7 +15,7 @@ type Overlay struct {
 }
 
 func NewOverlay() (*Overlay, error) {
-	font, err := resources.Font(resources.FontDebug, 18)
+	font, err := res.Font(res.FontDebug, 18)
 	if err != nil {
 		return nil, err
 	}

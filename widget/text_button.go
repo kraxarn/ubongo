@@ -4,7 +4,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"github.com/kraxarn/ubongo/game/colors"
-	"github.com/kraxarn/ubongo/game/resources"
+	"github.com/kraxarn/ubongo/res"
 	"golang.org/x/image/font"
 )
 
@@ -35,14 +35,14 @@ func (t *TextButton) Update(ui *Ui) {
 func (t *TextButton) Draw(dst *ebiten.Image) {
 	t.Button.Draw(dst)
 
-	var imageType resources.UiImageType
+	var imageType res.UiImageType
 	if t.Button.mouseDown {
-		imageType = resources.UiButtonPressed
+		imageType = res.UiButtonPressed
 	} else {
-		imageType = resources.UiButton
+		imageType = res.UiButton
 	}
 
-	t.background.SetSourceRect(resources.UiImageRects[imageType])
+	t.background.SetSourceRect(res.UiImageRects[imageType])
 	t.background.SetTargetRect(t.rect)
 	t.background.Draw(dst)
 
