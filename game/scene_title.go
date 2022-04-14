@@ -1,6 +1,7 @@
 package game
 
 import (
+	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/game/app"
 	"github.com/kraxarn/ubongo/game/settings"
@@ -37,6 +38,10 @@ func NewTitle() (*Title, error) {
 	// Buttons
 	ui.AddStretchedButton(widget.ScreenPadding*6, widget.AlignBottom, "Start Game")
 
+	// Music toggle
+	musicToggle := ui.AddImageButton(imgMusic, 16, 16, 50, 50)
+	musicToggle.SetSourceRect(0, 0, 50, 50)
+
 	// Seed name
 	seedName := ui.AddLabel(32, 32, res.RandomWord(time.Now().UnixNano()))
 
@@ -46,6 +51,25 @@ func NewTitle() (*Title, error) {
 		return nil, err
 	}
 
+	// Music toggle
+	musicToggle.SetOnPressed(func(b *widget.Button) {
+		playing := music.IsPlaying()
+		var x int
+		var err error
+		if playing {
+			x = 0
+			err = music.Stop()
+		} else {
+			x = 50
+			err = music.Play()
+		}
+		if err == nil {
+			musicToggle.SetSourceRect(x, 0, 50, 50)
+		} else {
+			fmt.Println("failed to toggle music:", err)
+		}
+	})
+
 	// TODO: For testing
 	opt := settings.Load()
 	opt.Save()
@@ -54,7 +78,7 @@ func NewTitle() (*Title, error) {
 		ui:          ui,
 		logo:        ui.AddImage(imgLogo, 0, 0, 64, 64),
 		title:       ui.AddTitle(64, 64, app.Name),
-		musicToggle: ui.AddImageButton(imgMusic, 16, 16, 50, 50),
+		musicToggle: musicToggle,
 		seedName:    seedName,
 		music:       music,
 	}, nil

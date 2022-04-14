@@ -53,6 +53,18 @@ func (m *MusicManager) Play() error {
 	return nil
 }
 
+func (m *MusicManager) Stop() error {
+	if m.player == nil {
+		return nil
+	}
+
+	return m.player.Close()
+}
+
+func (m *MusicManager) IsPlaying() bool {
+	return m.player != nil && m.player.IsPlaying()
+}
+
 func (m *MusicManager) Previous() error {
 	if m.player == nil {
 		return fmt.Errorf("no player")
