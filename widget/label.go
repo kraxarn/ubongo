@@ -42,3 +42,7 @@ func (l *Label) Size() vec2.Vector2[int] {
 	y := (bounds.Max.Y - bounds.Min.Y).Ceil()
 	return vec2.New(x, y)
 }
+
+func (l *Label) SetText(text string) {
+	l.text = text
+}

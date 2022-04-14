@@ -40,7 +40,7 @@ func NewGame() *Game {
 		ui:         ui,
 		background: bg,
 		scenes:     sceneManager,
-		seed:       time.Now().Truncate(time.Minute).Unix(),
+		seed:       generateSeed(),
 	}
 
 	// Load title scene
@@ -69,4 +69,8 @@ func (g *Game) Draw(screen *ebiten.Image) {
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
 	g.size = vec2.New(outsideWidth, outsideHeight)
 	return outsideWidth, outsideHeight
+}
+
+func generateSeed() int64 {
+	return time.Now().Truncate(time.Minute).Unix()
 }

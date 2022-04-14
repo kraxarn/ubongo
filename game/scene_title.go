@@ -35,7 +35,7 @@ func NewTitle(game *Game) (*Title, error) {
 	}
 
 	// Buttons
-	ui.AddStretchedButton(widget.ScreenPadding*6, widget.AlignBottom, "Start Game")
+	ui.AddStretchedButton(widget.ScreenPadding*4+widget.ButtonHeight, widget.AlignBottom, "Start Game")
 
 	// Music toggle
 	musicToggle := ui.AddImageButton(imgMusic, 16, 16, 50, 50)
@@ -43,6 +43,12 @@ func NewTitle(game *Game) (*Title, error) {
 
 	// Seed name
 	seedName := ui.AddLabel(32, 32, res.RandomWord(game.seed))
+
+	newSeed := ui.AddStretchedButton(widget.ScreenPadding*3, widget.AlignBottom, "Generate Seed")
+	newSeed.SetOnPressed(func(*widget.Button) {
+		game.seed = generateSeed()
+		seedName.SetText(res.RandomWord(game.seed))
+	})
 
 	// Music
 	music, err := NewMusicManager()
