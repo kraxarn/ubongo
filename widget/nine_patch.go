@@ -84,3 +84,7 @@ func (n *NinePatch) Draw(dst *ebiten.Image) {
 func (n *NinePatch) SetSourceRect(rect image.Rectangle) {
 	n.sourceRect = rect
 }
+
+func (n *NinePatch) SetTargetRect(rect image.Rectangle) {
+	n.targetRect = rect
+}

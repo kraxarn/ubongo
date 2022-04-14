@@ -43,6 +43,7 @@ func (t *TextButton) Draw(dst *ebiten.Image) {
 	}
 
 	t.background.SetSourceRect(resources.UiImageRects[imageType])
+	t.background.SetTargetRect(t.rect)
 	t.background.Draw(dst)
 
 	bounds, _ := font.BoundString(t.font, t.Text)
