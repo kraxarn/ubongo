@@ -35,8 +35,7 @@ func NewTitle() (*Title, error) {
 	}
 
 	// Buttons
-	ui.AddStretchedButton(widget.ScreenPadding*4+widget.ButtonHeight, widget.AlignBottom, "Start Game")
-	ui.AddStretchedButton(widget.ScreenPadding*3, widget.AlignBottom, "Settings")
+	ui.AddStretchedButton(widget.ScreenPadding*6, widget.AlignBottom, "Start Game")
 
 	// Seed name
 	seedName := ui.AddLabel(32, 32, res.RandomWord(time.Now().UnixNano()))
