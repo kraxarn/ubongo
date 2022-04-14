@@ -10,11 +10,12 @@ import (
 )
 
 type Title struct {
-	ui       *widget.Ui
-	logo     *widget.Image
-	title    *widget.Label
-	seedName *widget.Label
-	music    *MusicManager
+	ui          *widget.Ui
+	logo        *widget.Image
+	title       *widget.Label
+	seedName    *widget.Label
+	musicToggle *widget.ImageButton
+	music       *MusicManager
 }
 
 func NewTitle() (*Title, error) {
@@ -24,6 +25,11 @@ func NewTitle() (*Title, error) {
 	}
 
 	imgLogo, err := resources.Image("logo")
+	if err != nil {
+		return nil, err
+	}
+
+	imgMusic, err := resources.Image("music")
 	if err != nil {
 		return nil, err
 	}
@@ -51,10 +57,11 @@ func NewTitle() (*Title, error) {
 	opt.Save()
 
 	return &Title{
-		ui:       ui,
-		logo:     ui.AddImage(imgLogo, 0, 0, 64, 64),
-		title:    ui.AddTitle(64, 64, app.Name),
-		seedName: seedName,
+		ui:          ui,
+		logo:        ui.AddImage(imgLogo, 0, 0, 64, 64),
+		title:       ui.AddTitle(64, 64, app.Name),
+		musicToggle: ui.AddImageButton(imgMusic, 16, 16, 50, 50),
+		seedName:    seedName,
 	}, nil
 }
 
@@ -62,7 +69,7 @@ func (t *Title) Update(game *Game) error {
 	// Update logo size and position
 	t.logo.SetWidth(game.size.X / 2)
 	logoX := game.size.X/2 - (t.logo.GetWidth() / 2)
-	logoY := int(float64(game.size.Y) * 0.1)
+	logoY := int(float64(game.size.Y) * 0.15)
 	t.logo.SetPosition(logoX, logoY)
 
 	// Update title position
@@ -74,6 +81,10 @@ func (t *Title) Update(game *Game) error {
 	seedNameSize := t.seedName.Size()
 	t.seedName.SetPosition(game.size.X/2-seedNameSize.X/2,
 		titleY+titleSize.Y+seedNameSize.Y+32)
+
+	// Music toggle
+	musicWidth := t.musicToggle.Size().X
+	t.musicToggle.SetPosition(game.size.X-widget.ScreenPadding-musicWidth, widget.ScreenPadding)
 
 	t.ui.Update(game.size)
 	return nil

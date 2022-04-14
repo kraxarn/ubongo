@@ -62,3 +62,7 @@ func (b *Button) SetPosition(x, y int) {
 	size := b.rect.Size()
 	b.rect = rect(x, y, size.X, size.Y)
 }
+
+func (b *Button) Size() vec2.Vector2[int] {
+	return vec2.NewFromPoint(b.rect.Size())
+}
