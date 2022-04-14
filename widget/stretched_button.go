@@ -7,7 +7,7 @@ import (
 
 // StretchedButton is a button that stretches horizontally across the screen
 type StretchedButton struct {
-	*Button
+	*TextButton
 	x     int
 	y     int
 	align Alignment
@@ -16,7 +16,7 @@ type StretchedButton struct {
 func NewStretchedButton(background *ebiten.Image, fontFace font.Face, x, y, w, h int,
 	align Alignment, text string) *StretchedButton {
 	return &StretchedButton{
-		NewButton(background, fontFace, x, y, w, h, text),
+		NewTextButton(background, fontFace, x, y, w, h, text),
 		x,
 		y,
 		align,

@@ -77,8 +77,8 @@ func (u *Ui) Draw(screen *ebiten.Image) {
 	}
 }
 
-func (u *Ui) AddButton(x, y, w, h int, text string) *Button {
-	return addWidget(u, NewButton(u.image, u.fontButton, x, y, w, h, text))
+func (u *Ui) AddTextButton(x, y, w, h int, text string) *TextButton {
+	return addWidget(u, NewTextButton(u.image, u.fontButton, x, y, w, h, text))
 }
 
 func (u *Ui) AddStretchedButton(y int, align Alignment, text string) *StretchedButton {
