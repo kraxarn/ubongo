@@ -1,30 +1,27 @@
 package settings
 
 import (
-	"fmt"
 	"strconv"
-	"time"
 )
 
-const key = "timestamp"
-
 type Settings struct {
-	timestamp int64
+	MusicVolume float32
 }
 
 func Load() Settings {
-	data := get(key)
-	timestamp, err := strconv.ParseInt(data, 10, 64)
-	if err != nil {
-		return Settings{
-			timestamp: time.Now().Unix(),
-		}
-	}
 	return Settings{
-		timestamp: timestamp,
+		MusicVolume: getFloat32("musicVolume", 0),
 	}
 }
 
 func (s *Settings) Save() {
-	set(key, fmt.Sprintf("%d", s.timestamp))
+	set("musicVolume", strconv.FormatFloat(float64(s.MusicVolume), 'f', 2, 32))
+}
+
+func getFloat32(key string, fallback float32) float32 {
+	value, err := strconv.ParseFloat(get(key), 32)
+	if err == nil {
+		return float32(value)
+	}
+	return fallback
 }
