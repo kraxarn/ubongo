@@ -3,6 +3,7 @@
 package settings
 
 import (
+	"encoding/json"
 	"github.com/kraxarn/ubongo/game/app"
 	"os"
 	"path"
@@ -20,6 +21,24 @@ func configDir() string {
 	return appPath
 }
 
+func configFile() string {
+	return path.Join(configDir(), "settings.json")
+}
+
+func configs() map[string]string {
+	data, err := os.ReadFile(configFile())
+	if err != nil {
+		return map[string]string{}
+	}
+
+	var cfg map[string]string
+	err = json.Unmarshal(data, &cfg)
+	if err != nil {
+		return map[string]string{}
+	}
+	return cfg
+}
+
 func perm() os.FileMode {
 	dir, err := os.UserConfigDir()
 	if err != nil {
@@ -33,13 +52,15 @@ func perm() os.FileMode {
 }
 
 func get(key string) string {
-	data, err := os.ReadFile(path.Join(configDir(), key))
-	if err != nil {
-		return ""
-	}
-	return string(data)
+	return configs()[key]
 }
 
 func set(key, value string) {
-	_ = os.WriteFile(path.Join(configDir(), key), []byte(value), perm())
+	cfg := configs()
+	cfg[key] = value
+
+	data, err := json.Marshal(cfg)
+	if err == nil {
+		_ = os.WriteFile(configFile(), data, perm())
+	}
 }
