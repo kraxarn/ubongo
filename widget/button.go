@@ -57,3 +57,8 @@ func (b *Button) Update(*Ui) {
 
 func (b *Button) Draw(*ebiten.Image) {
 }
+
+func (b *Button) SetPosition(x, y int) {
+	size := b.rect.Size()
+	b.rect = rect(x, y, size.X, size.Y)
+}

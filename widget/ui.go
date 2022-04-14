@@ -88,6 +88,10 @@ func (u *Ui) AddStretchedButton(y int, align Alignment, text string) *StretchedB
 		align, text))
 }
 
+func (u *Ui) AddImageButton(image *ebiten.Image, x, y, w, h int) *ImageButton {
+	return addWidget(u, NewImageButton(image, x, y, w, h))
+}
+
 func (u *Ui) AddImage(src *ebiten.Image, x, y, w, h int) *Image {
 	return addWidget(u, NewImage(src, x, y, w, h))
 }
