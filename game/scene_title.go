@@ -51,28 +51,38 @@ func NewTitle() (*Title, error) {
 		return nil, err
 	}
 
+	// Settings
+	setting := settings.Load()
+
+	if setting.IsMusicEnabled() {
+		music.volume = setting.MusicVolume
+		if err = music.Play(); err != nil {
+			fmt.Println("failed to play music:", err)
+			setting.ToggleMusic(false)
+		}
+	}
+
 	// Music toggle
 	musicToggle.SetOnPressed(func(b *widget.Button) {
-		playing := music.IsPlaying()
+		musicEnabled := setting.IsMusicEnabled()
+		setting.ToggleMusic(!musicEnabled)
 		var x int
 		var err error
-		if playing {
+		if musicEnabled {
 			x = 0
 			err = music.Stop()
 		} else {
 			x = 50
+			music.volume = setting.MusicVolume
 			err = music.Play()
 		}
-		if err == nil {
-			musicToggle.SetSourceRect(x, 0, 50, 50)
-		} else {
+		if err != nil {
 			fmt.Println("failed to toggle music:", err)
+		} else {
+			musicToggle.SetSourceRect(x, 0, 50, 50)
+			setting.Save()
 		}
 	})
-
-	// TODO: For testing
-	opt := settings.Load()
-	opt.Save()
 
 	return &Title{
 		ui:          ui,
