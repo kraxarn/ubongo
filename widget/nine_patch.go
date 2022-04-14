@@ -15,8 +15,8 @@ type NinePatch struct {
 func NewNinePatch(image *ebiten.Image, x, y, w, h int) *NinePatch {
 	return &NinePatch{
 		image:      image,
-		targetRect: rect(x, y, w, h),
-		sourceRect: rect(0, 0, w, h),
+		targetRect: Rect(x, y, w, h),
+		sourceRect: Rect(0, 0, w, h),
 	}
 }
 

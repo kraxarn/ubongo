@@ -45,7 +45,7 @@ func NewSceneTitle(game *Game) (*SceneTitle, error) {
 
 	// Music toggle
 	musicToggle := ui.AddImageButton(imgMusic, 16, 16, 50, 50)
-	musicToggle.SetSourceRect(0, 0, 50, 50)
+	musicToggle.SetSourceRect(widget.Rect(0, 0, 50, 50))
 
 	// Seed name
 	seedName := ui.AddLabel(32, 32, res.RandomWord(game.seed))
@@ -90,7 +90,7 @@ func NewSceneTitle(game *Game) (*SceneTitle, error) {
 		if err != nil {
 			fmt.Println("failed to toggle music:", err)
 		} else {
-			musicToggle.SetSourceRect(x, 0, 50, 50)
+			musicToggle.SetSourceRect(widget.Rect(x, 0, 50, 50))
 			setting.Save()
 		}
 	})

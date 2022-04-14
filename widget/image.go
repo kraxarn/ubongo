@@ -70,6 +70,6 @@ func (i *Image) SetPosition(x, y int) {
 	i.position = vec2.New(x, y)
 }
 
-func (i *Image) SetSourceRect(x, y, w, h int) {
-	i.sourceRect = rect(x, y, w, h)
+func (i *Image) SetSourceRect(rect image.Rectangle) {
+	i.sourceRect = rect
 }

@@ -16,7 +16,7 @@ type Button struct {
 
 func NewButton(x, y, w, h int) *Button {
 	return &Button{
-		rect:      rect(x, y, w, h),
+		rect:      Rect(x, y, w, h),
 		mouseDown: false,
 		isPressed: false,
 		onPressed: nil,
@@ -60,7 +60,7 @@ func (b *Button) Draw(*ebiten.Image) {
 
 func (b *Button) SetPosition(x, y int) {
 	size := b.rect.Size()
-	b.rect = rect(x, y, size.X, size.Y)
+	b.rect = Rect(x, y, size.X, size.Y)
 }
 
 func (b *Button) Size() vec2.Vector2[int] {
