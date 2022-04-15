@@ -53,8 +53,14 @@ func (i *Image) Size() vec2.Vector2[int] {
 
 func (i *Image) Resize(w, h int) {
 	size := i.Size()
-	i.scaleX = float64(w) / float64(size.X)
-	i.scaleY = float64(h) / float64(size.Y)
+	x := float64(w) / float64(size.X)
+	y := float64(h) / float64(size.Y)
+	i.Rescale(x, y)
+}
+
+func (i *Image) Rescale(x, y float64) {
+	i.scaleX = x
+	i.scaleY = y
 }
 
 func (i *Image) GetWidth() int {
@@ -71,6 +77,10 @@ func (i *Image) SetWidth(w int) {
 func (i *Image) GetHeight() int {
 	size := i.Size()
 	return int(float64(size.Y) * i.scaleY)
+}
+
+func (i *Image) GetPosition() vec2.Vector2[int] {
+	return i.position
 }
 
 func (i *Image) SetPosition(x, y int) {

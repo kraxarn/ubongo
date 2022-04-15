@@ -3,6 +3,7 @@ package game
 import (
 	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/kraxarn/ubongo/game/entities"
 	"github.com/kraxarn/ubongo/res"
 	"github.com/kraxarn/ubongo/widget"
 	"math/rand"
@@ -12,7 +13,7 @@ import (
 type SceneGame struct {
 	startTime   time.Time
 	currentTime *widget.Label
-	tempTile    *widget.Image
+	pieces      []*entities.Piece
 }
 
 func NewSceneGame(game *Game) (*SceneGame, error) {
@@ -21,46 +22,83 @@ func NewSceneGame(game *Game) (*SceneGame, error) {
 		return nil, err
 	}
 
-	imgTiles, err := res.Image("pieces")
+	imgPieces, err := res.Image("pieces")
 	if err != nil {
 		return nil, err
 	}
 
-	tempTile := ui.AddImage(imgTiles, 0, 0, 0, 0)
-
-	rand.Seed(game.seed)
-	tempTile.SetSourceRect(res.PieceImageRects[rand.Int()%len(res.PieceImageRects)])
-
 	currentTime := ui.AddLabel(0, 0, "0.0")
 
-	// We only set position first to avoid jumping text
+	// We only set an initial position to avoid jumping text
 	timeSize := currentTime.Size()
 	currentTime.SetPosition(game.size.X/2-timeSize.X/2, widget.ScreenPadding+timeSize.Y)
 
 	return &SceneGame{
 		startTime:   time.Now(),
 		currentTime: currentTime,
-		tempTile:    tempTile,
+		pieces:      getPieces(game, imgPieces),
 	}, nil
 }
 
-func (s *SceneGame) Update(game *Game) error {
+func (s *SceneGame) Update(*Game) error {
 	s.currentTime.SetText(s.elapsedTime())
 
-	tileWidth := s.tempTile.GetWidth()
-	tileHeight := s.tempTile.GetHeight()
-
-	s.tempTile.SetPosition(game.size.X/2-tileWidth/2, game.size.Y-widget.ScreenPadding-tileHeight)
+	for _, piece := range s.pieces {
+		piece.Update()
+	}
 
 	return nil
 }
 
 func (s *SceneGame) Draw(screen *ebiten.Image) {
 	s.currentTime.Draw(screen)
-	s.tempTile.Draw(screen)
+
+	for _, piece := range s.pieces {
+		piece.Draw(screen)
+	}
 }
 
 func (s *SceneGame) elapsedTime() string {
 	duration := time.Now().Sub(s.startTime)
 	return fmt.Sprintf("%.1f", duration.Seconds())
+}
+
+func nextPieceIndex() int {
+	return rand.Int() % len(res.PieceImageRects)
+}
+
+func getPieces(game *Game, image *ebiten.Image) []*entities.Piece {
+	rand.Seed(game.seed)
+	var pieces []*entities.Piece
+	row := 1
+
+	// The highest piece is 3 tiles
+	// TODO: Get this from highest piece in row instead
+	maxHeight := res.PieceTileSize * 3 * entities.PieceScale
+
+	for i := 0; i <= 5; i++ {
+		// TODO: Avoid duplicates
+		index := nextPieceIndex()
+		piece := entities.NewPiece(image, index, 0, 0)
+
+		x := widget.ScreenPadding
+		if i > 0 {
+			prev := pieces[i-1]
+			prevPos := prev.GetPosition()
+			x += prevPos.X + prev.Size().X
+		}
+
+		// Overflow
+		if x+piece.Size().X > game.size.X {
+			x = widget.ScreenPadding
+			row++
+		}
+
+		y := game.size.Y - ((widget.ScreenPadding + int(maxHeight)) * row)
+
+		piece.SetPosition(x, y)
+		pieces = append(pieces, piece)
+	}
+
+	return pieces
 }
