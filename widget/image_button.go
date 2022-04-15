@@ -2,6 +2,7 @@ package widget
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/kraxarn/ubongo/util/vec2"
 )
 
 // ImageButton is a button with an image
@@ -30,4 +31,8 @@ func (i *ImageButton) Draw(dst *ebiten.Image) {
 func (i *ImageButton) SetPosition(x, y int) {
 	i.Button.SetPosition(x, y)
 	i.Image.SetPosition(x, y)
+}
+
+func (i *ImageButton) Size() vec2.Vector2[int] {
+	return i.Button.Size()
 }

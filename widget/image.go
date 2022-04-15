@@ -44,26 +44,33 @@ func (i *Image) Draw(dst *ebiten.Image) {
 	dst.DrawImage(img, opt)
 }
 
+func (i *Image) Size() vec2.Vector2[int] {
+	if i.sourceRect.Empty() {
+		return vec2.New(i.image.Size())
+	}
+	return vec2.NewFromPoint(i.sourceRect.Size())
+}
+
 func (i *Image) Resize(w, h int) {
-	imgWidth, imgHeight := i.image.Size()
-	i.scaleX = float64(w) / float64(imgWidth)
-	i.scaleY = float64(h) / float64(imgHeight)
+	size := i.Size()
+	i.scaleX = float64(w) / float64(size.X)
+	i.scaleY = float64(h) / float64(size.Y)
 }
 
 func (i *Image) GetWidth() int {
-	w, _ := i.image.Size()
-	return int(float64(w) * i.scaleX)
+	size := i.Size()
+	return int(float64(size.X) * i.scaleX)
 }
 
 func (i *Image) SetWidth(w int) {
-	imgWidth, imgHeight := i.image.Size()
-	i.scaleX = float64(w) / float64(imgWidth)
-	i.scaleY = float64(w) / float64(imgHeight)
+	size := i.Size()
+	i.scaleX = float64(w) / float64(size.X)
+	i.scaleY = float64(w) / float64(size.Y)
 }
 
 func (i *Image) GetHeight() int {
-	_, h := i.image.Size()
-	return int(float64(h) * i.scaleY)
+	size := i.Size()
+	return int(float64(size.Y) * i.scaleY)
 }
 
 func (i *Image) SetPosition(x, y int) {
