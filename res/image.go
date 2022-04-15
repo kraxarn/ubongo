@@ -23,23 +23,26 @@ var UiImageRects = map[UiImageType]image.Rectangle{
 	UiButtonPressed: image.Rect(45, 0, 90, 45),
 }
 
+// PieceTileSize is the width/height of each tile in a piece
+const PieceTileSize = 128
+
 var PieceImageRects = []image.Rectangle{
 	// Row 1
-	image.Rect(0, 0, 384, 384),
-	image.Rect(384, 0, 640, 384),
-	image.Rect(640, 0, 896, 256),
-	image.Rect(896, 0, 1024, 256),
+	image.Rect(PieceTileSize*0, PieceTileSize*0, PieceTileSize*3, PieceTileSize*3),
+	image.Rect(PieceTileSize*3, PieceTileSize*0, PieceTileSize*5, PieceTileSize*3),
+	image.Rect(PieceTileSize*5, PieceTileSize*0, PieceTileSize*7, PieceTileSize*2),
+	image.Rect(PieceTileSize*7, PieceTileSize*0, PieceTileSize*8, PieceTileSize*2),
 	// Row 2
-	image.Rect(0, 384, 512, 512),
-	image.Rect(512, 384, 1024, 640),
+	image.Rect(PieceTileSize*0, PieceTileSize*3, PieceTileSize*4, PieceTileSize*4),
+	image.Rect(PieceTileSize*4, PieceTileSize*3, PieceTileSize*8, PieceTileSize*5),
 	// Row 3
-	image.Rect(0, 640, 384, 896),
-	image.Rect(384, 640, 768, 896),
-	image.Rect(768, 640, 1152, 768),
+	image.Rect(PieceTileSize*0, PieceTileSize*5, PieceTileSize*3, PieceTileSize*7),
+	image.Rect(PieceTileSize*3, PieceTileSize*5, PieceTileSize*6, PieceTileSize*7),
+	image.Rect(PieceTileSize*6, PieceTileSize*5, PieceTileSize*9, PieceTileSize*6),
 	// Row 4
-	image.Rect(0, 896, 512, 1152),
-	image.Rect(512, 896, 896, 1152),
-	image.Rect(896, 896, 1152, 1152),
+	image.Rect(PieceTileSize*0, PieceTileSize*7, PieceTileSize*4, PieceTileSize*9),
+	image.Rect(PieceTileSize*4, PieceTileSize*7, PieceTileSize*7, PieceTileSize*9),
+	image.Rect(PieceTileSize*7, PieceTileSize*7, PieceTileSize*9, PieceTileSize*9),
 }
 
 func decodeImage(name string) (*ebiten.Image, error) {
