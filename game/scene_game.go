@@ -89,7 +89,7 @@ func getPieces(game *Game, image *ebiten.Image) []*entities.Piece {
 		}
 
 		// Overflow
-		if x+piece.Size().X > game.size.X {
+		if x+piece.Size().X+widget.ScreenPadding > game.size.X {
 			x = widget.ScreenPadding
 			row++
 		}
