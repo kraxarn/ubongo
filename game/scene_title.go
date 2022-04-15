@@ -29,11 +29,6 @@ func NewSceneTitle(game *Game) (*SceneTitle, error) {
 		return nil, err
 	}
 
-	imgMusic, err := res.Image("music")
-	if err != nil {
-		return nil, err
-	}
-
 	// Buttons
 	start := ui.AddStretchedButton(widget.ScreenPadding*4+widget.ButtonHeight, widget.AlignBottom, "Start Game")
 	start.SetOnPressed(func(*widget.Button) {
@@ -44,8 +39,7 @@ func NewSceneTitle(game *Game) (*SceneTitle, error) {
 	})
 
 	// Music toggle
-	musicToggle := ui.AddImageButton(imgMusic, 16, 16, 50, 50)
-	musicToggle.SetSourceRect(widget.Rect(0, 0, 50, 50))
+	musicToggle := ui.AddImageButton(res.MusicOff, 16, 16, 50, 50)
 
 	// Seed name
 	seedName := ui.AddLabel(32, 32, res.RandomWord(game.seed))
@@ -77,20 +71,20 @@ func NewSceneTitle(game *Game) (*SceneTitle, error) {
 	musicToggle.SetOnPressed(func(b *widget.Button) {
 		musicEnabled := setting.IsMusicEnabled()
 		setting.ToggleMusic(!musicEnabled)
-		var x int
+		var imageType res.UiImageType
 		var err error
 		if musicEnabled {
-			x = 0
+			imageType = res.MusicOff
 			err = music.Stop()
 		} else {
-			x = 50
+			imageType = res.MusicOn
 			music.volume = setting.MusicVolume
 			err = music.Play()
 		}
 		if err != nil {
 			fmt.Println("failed to toggle music:", err)
 		} else {
-			musicToggle.SetSourceRect(widget.Rect(x, 0, 50, 50))
+			musicToggle.SetImageType(imageType)
 			setting.Save()
 		}
 	})
