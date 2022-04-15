@@ -5,12 +5,9 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/game/colors"
 	"github.com/kraxarn/ubongo/res"
-	"runtime"
 )
 
 type Overlay struct {
-	fps   float64
-	os    string
 	label *Label
 }
 
@@ -21,15 +18,13 @@ func NewOverlay() (*Overlay, error) {
 	}
 
 	return &Overlay{
-		fps:   ebiten.CurrentFPS(),
-		os:    fmt.Sprintf("%s (%s)", runtime.GOOS, runtime.GOARCH),
 		label: NewLabel(font, 16, 24, "", colors.ForegroundAlt),
 	}, nil
 }
 
-func (o *Overlay) Update(_ *Ui) {
-	o.label.text = fmt.Sprintf("%.1f\n%s",
-		ebiten.CurrentFPS(), o.os)
+func (o *Overlay) Update(*Ui) {
+	o.label.text = fmt.Sprintf("FPS: %.0f\nTPS: %.0f",
+		ebiten.CurrentFPS(), ebiten.CurrentTPS())
 }
 
 func (o *Overlay) Draw(dst *ebiten.Image) {
