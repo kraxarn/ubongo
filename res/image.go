@@ -16,11 +16,17 @@ type UiImageType uint8
 const (
 	UiButton        UiImageType = iota
 	UiButtonPressed UiImageType = iota
+	PanelBackground UiImageType = iota
+	MusicOff        UiImageType = iota
+	MusicOn         UiImageType = iota
 )
 
 var UiImageRects = map[UiImageType]image.Rectangle{
 	UiButton:        image.Rect(0, 0, 45, 49),
 	UiButtonPressed: image.Rect(45, 0, 90, 45),
+	PanelBackground: image.Rect(0, 49, 64, 113),
+	MusicOff:        image.Rect(0, 113, 50, 163),
+	MusicOn:         image.Rect(50, 113, 100, 163),
 }
 
 // PieceTileSize is the width/height of each tile in a piece
