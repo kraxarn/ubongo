@@ -12,11 +12,14 @@ import (
 	"time"
 )
 
+// pieceCount is the total amount of pieces
+const pieceCount = 5
+
 type SceneGame struct {
 	startTime   time.Time
 	ui          *widget.Ui
 	currentTime *widget.Label
-	pieces      []*entities.Piece
+	pieces      [pieceCount]*entities.Piece
 	piece       *entities.Piece
 	panel       *widget.NinePatch
 }
@@ -96,13 +99,13 @@ func nextPieceIndex() int {
 	return rand.Intn(len(res.PieceImageRects))
 }
 
-func getPieces(game *Game, image *ebiten.Image) []*entities.Piece {
+func getPieces(game *Game, image *ebiten.Image) [pieceCount]*entities.Piece {
 	rand.Seed(game.seed)
 	container := getPanelPos(game)
-	var pieces []*entities.Piece
+	var pieces [pieceCount]*entities.Piece
 	var indexes [res.PieceCount]bool
 
-	for i := 0; i < 5; i++ {
+	for i := 0; i < pieceCount; i++ {
 		index := nextPieceIndex()
 		for indexes[index] {
 			index = nextPieceIndex()
@@ -112,7 +115,7 @@ func getPieces(game *Game, image *ebiten.Image) []*entities.Piece {
 		piece := entities.NewPiece(image, index, 0, 0)
 		pos := getPiecePos(piece, container)
 		piece.SetPosition(pos.X, pos.Y)
-		pieces = append(pieces, piece)
+		pieces[i] = piece
 	}
 
 	return pieces
