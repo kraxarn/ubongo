@@ -35,7 +35,7 @@ const PieceTileSize = 128
 // PieceCount is the total number of pieces
 const PieceCount = 12
 
-var PieceImageRects = []image.Rectangle{
+var PieceImageRects = [PieceCount]image.Rectangle{
 	// Row 1
 	image.Rect(PieceTileSize*0, PieceTileSize*0, PieceTileSize*3, PieceTileSize*3),
 	image.Rect(PieceTileSize*3, PieceTileSize*0, PieceTileSize*5, PieceTileSize*3),
