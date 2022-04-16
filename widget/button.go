@@ -28,15 +28,7 @@ func (b *Button) SetOnPressed(pressed func(b *Button)) {
 }
 
 func (b *Button) Update(*Ui) {
-	var positions []vec2.Vector2[int]
-	if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
-		positions = append(positions, vec2.New(ebiten.CursorPosition()))
-	} else {
-		for _, id := range ebiten.AppendTouchIDs([]ebiten.TouchID{}) {
-			positions = append(positions, vec2.New(ebiten.TouchPosition(id)))
-		}
-	}
-
+	positions := TouchPositions()
 	if len(positions) > 0 {
 		b.mouseDown = false
 		for _, pos := range positions {
