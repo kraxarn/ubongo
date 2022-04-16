@@ -67,6 +67,8 @@ func (s *SceneGame) Update(game *Game) error {
 			for i := len(s.pieces) - 1; i >= 0; i-- {
 				if vec2.ToPoint(pos[0]).In(s.pieces[i].GetRect()) {
 					s.piece = s.pieces[i]
+					s.pieces[i] = s.pieces[len(s.pieces)-1]
+					s.pieces[len(s.pieces)-1] = s.piece
 					break
 				}
 			}
