@@ -74,7 +74,7 @@ func (s *SceneGame) elapsedTime() string {
 }
 
 func nextPieceIndex() int {
-	return rand.Int() % len(res.PieceImageRects)
+	return rand.Intn(len(res.PieceImageRects))
 }
 
 func getPieces(game *Game, image *ebiten.Image) []*entities.Piece {
