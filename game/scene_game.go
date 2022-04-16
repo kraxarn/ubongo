@@ -41,7 +41,7 @@ func NewSceneGame(game *Game) (*SceneGame, error) {
 		startTime:   time.Now(),
 		ui:          ui,
 		currentTime: currentTime,
-		pieces:      getPieces(game, imgPieces, getPanelPos(game)),
+		pieces:      getPieces(game, imgPieces),
 		panel:       ui.AddNinePatch(res.PanelBackground, 0, 0, 0, 0),
 	}, nil
 }
@@ -77,8 +77,9 @@ func nextPieceIndex() int {
 	return rand.Int() % len(res.PieceImageRects)
 }
 
-func getPieces(game *Game, image *ebiten.Image, container image.Rectangle) []*entities.Piece {
+func getPieces(game *Game, image *ebiten.Image) []*entities.Piece {
 	rand.Seed(game.seed)
+	container := getPanelPos(game)
 	var pieces []*entities.Piece
 
 	for i := 0; i < 5; i++ {
