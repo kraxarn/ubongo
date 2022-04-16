@@ -60,7 +60,7 @@ func (s *SceneGame) Update(game *Game) error {
 			s.piece.SetPosition(pos[0].X, pos[0].Y)
 		} else {
 			for _, piece := range s.pieces {
-				if vec2.ToPoint(piece.GetPosition()).In(piece.GetRect()) {
+				if vec2.ToPoint(pos[0]).In(piece.GetRect()) {
 					s.piece = piece
 					break
 				}
