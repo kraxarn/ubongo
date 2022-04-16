@@ -30,10 +30,6 @@ func NewTextButton(background *ebiten.Image, font font.Face, x, y, w, h int, tex
 
 func (t *TextButton) Update(ui *Ui) {
 	t.Button.Update(ui)
-}
-
-func (t *TextButton) Draw(dst *ebiten.Image) {
-	t.Button.Draw(dst)
 
 	var imageType res.UiImageType
 	if t.Button.mouseDown {
@@ -44,6 +40,10 @@ func (t *TextButton) Draw(dst *ebiten.Image) {
 
 	t.background.SetSourceRect(res.UiImageRects[imageType])
 	t.background.SetTargetRect(t.rect)
+}
+
+func (t *TextButton) Draw(dst *ebiten.Image) {
+	t.Button.Draw(dst)
 	t.background.Draw(dst)
 
 	bounds, _ := font.BoundString(t.font, t.Text)
