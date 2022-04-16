@@ -52,7 +52,9 @@ func (p *Piece) SetPosition(x, y int) {
 func (p *Piece) GetRect() image.Rectangle {
 	pos := p.GetPosition()
 	size := p.image.Size()
-	return widget.Rect(pos.X, pos.Y, size.X, size.Y)
+	w := int(float64(size.X) * PieceScale)
+	h := int(float64(size.Y) * PieceScale)
+	return widget.Rect(pos.X, pos.Y, w, h)
 }
 
 func (p *Piece) Size() vec2.Vector2[int] {
