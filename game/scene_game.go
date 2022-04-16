@@ -6,6 +6,7 @@ import (
 	"github.com/kraxarn/ubongo/game/entities"
 	"github.com/kraxarn/ubongo/res"
 	"github.com/kraxarn/ubongo/widget"
+	"image"
 	"math/rand"
 	"time"
 )
@@ -15,6 +16,7 @@ type SceneGame struct {
 	ui          *widget.Ui
 	currentTime *widget.Label
 	pieces      []*entities.Piece
+	panel       *widget.NinePatch
 }
 
 func NewSceneGame(game *Game) (*SceneGame, error) {
@@ -39,12 +41,20 @@ func NewSceneGame(game *Game) (*SceneGame, error) {
 		ui:          ui,
 		currentTime: currentTime,
 		pieces:      getPieces(game, imgPieces),
+		panel:       ui.AddNinePatch(res.PanelBackground, 0, 0, 0, 0),
 	}, nil
 }
 
 func (s *SceneGame) Update(game *Game) error {
 	s.ui.Update(game.size)
 	s.currentTime.SetText(s.elapsedTime())
+
+	// Panel for pieces
+	panelX0 := widget.ScreenPadding
+	panelY0 := int(float64(game.size.Y) * 0.6)
+	panelX1 := game.size.X - widget.ScreenPadding
+	panelY1 := game.size.Y - widget.ScreenPadding
+	s.panel.SetTargetRect(image.Rect(panelX0, panelY0, panelX1, panelY1))
 
 	for _, piece := range s.pieces {
 		piece.Update()
