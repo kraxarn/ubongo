@@ -100,12 +100,16 @@ func getPieces(game *Game, image *ebiten.Image) []*entities.Piece {
 	rand.Seed(game.seed)
 	container := getPanelPos(game)
 	var pieces []*entities.Piece
+	var indexes [res.PieceCount]bool
 
 	for i := 0; i < 5; i++ {
-		// TODO: Avoid duplicates
 		index := nextPieceIndex()
-		piece := entities.NewPiece(image, index, 0, 0)
+		for indexes[index] {
+			index = nextPieceIndex()
+		}
+		indexes[index] = true
 
+		piece := entities.NewPiece(image, index, 0, 0)
 		pos := getPiecePos(piece, container)
 		piece.SetPosition(pos.X, pos.Y)
 		pieces = append(pieces, piece)

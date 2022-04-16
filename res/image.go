@@ -32,6 +32,9 @@ var UiImageRects = map[UiImageType]image.Rectangle{
 // PieceTileSize is the width/height of each tile in a piece
 const PieceTileSize = 128
 
+// PieceCount is the total number of pieces
+const PieceCount = 12
+
 var PieceImageRects = []image.Rectangle{
 	// Row 1
 	image.Rect(PieceTileSize*0, PieceTileSize*0, PieceTileSize*3, PieceTileSize*3),
