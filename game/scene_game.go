@@ -12,6 +12,7 @@ import (
 
 type SceneGame struct {
 	startTime   time.Time
+	ui          *widget.Ui
 	currentTime *widget.Label
 	pieces      []*entities.Piece
 }
@@ -35,12 +36,14 @@ func NewSceneGame(game *Game) (*SceneGame, error) {
 
 	return &SceneGame{
 		startTime:   time.Now(),
+		ui:          ui,
 		currentTime: currentTime,
 		pieces:      getPieces(game, imgPieces),
 	}, nil
 }
 
-func (s *SceneGame) Update(*Game) error {
+func (s *SceneGame) Update(game *Game) error {
+	s.ui.Update(game.size)
 	s.currentTime.SetText(s.elapsedTime())
 
 	for _, piece := range s.pieces {
@@ -51,7 +54,7 @@ func (s *SceneGame) Update(*Game) error {
 }
 
 func (s *SceneGame) Draw(screen *ebiten.Image) {
-	s.currentTime.Draw(screen)
+	s.ui.Draw(screen)
 
 	for _, piece := range s.pieces {
 		piece.Draw(screen)
