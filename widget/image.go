@@ -2,6 +2,7 @@ package widget
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/kraxarn/ubongo/res"
 	"github.com/kraxarn/ubongo/util/vec2"
 	"image"
 )
@@ -89,4 +90,8 @@ func (i *Image) SetPosition(x, y int) {
 
 func (i *Image) SetSourceRect(rect image.Rectangle) {
 	i.sourceRect = rect
+}
+
+func (i *Image) SetImageType(image res.UiImageType) {
+	i.SetSourceRect(res.UiImageRects[image])
 }
