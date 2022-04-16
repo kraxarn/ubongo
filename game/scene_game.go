@@ -61,9 +61,9 @@ func (s *SceneGame) Update(game *Game) error {
 			size := s.piece.Size()
 			s.piece.SetPosition(pos[0].X-size.X/2, pos[0].Y-size.Y/2)
 		} else {
-			for _, piece := range s.pieces {
-				if vec2.ToPoint(pos[0]).In(piece.GetRect()) {
-					s.piece = piece
+			for i := len(s.pieces) - 1; i >= 0; i-- {
+				if vec2.ToPoint(pos[0]).In(s.pieces[i].GetRect()) {
+					s.piece = s.pieces[i]
 					break
 				}
 			}
