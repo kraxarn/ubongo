@@ -103,12 +103,13 @@ func getPanelPos(game *Game) image.Rectangle {
 }
 
 func getPiecePos(piece *entities.Piece, container image.Rectangle) vec2.Vector2[int] {
-	minX := container.Min.X
-	minY := container.Min.Y
+	const padding = widget.ScreenPadding / 4
+	minX := container.Min.X + padding
+	minY := container.Min.Y + padding
 
 	size := piece.Size()
-	maxX := container.Max.X - size.X
-	maxY := container.Max.Y - size.Y
+	maxX := container.Max.X - size.X - padding
+	maxY := container.Max.Y - size.Y - padding
 
 	x := rand.Intn(maxX-minX) + minX
 	y := rand.Intn(maxY-minY) + minY
