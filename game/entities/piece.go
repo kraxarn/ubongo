@@ -49,6 +49,12 @@ func (p *Piece) SetPosition(x, y int) {
 	p.image.SetPosition(x, y)
 }
 
+func (p *Piece) GetRect() image.Rectangle {
+	pos := p.GetPosition()
+	size := p.image.Size()
+	return widget.Rect(pos.X, pos.Y, size.X, size.Y)
+}
+
 func (p *Piece) Size() vec2.Vector2[int] {
 	return p.size
 }

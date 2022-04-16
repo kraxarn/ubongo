@@ -17,6 +17,7 @@ type SceneGame struct {
 	ui          *widget.Ui
 	currentTime *widget.Label
 	pieces      []*entities.Piece
+	piece       *entities.Piece
 	panel       *widget.NinePatch
 }
 
@@ -52,6 +53,22 @@ func (s *SceneGame) Update(game *Game) error {
 
 	// Panel for pieces
 	s.panel.SetTargetRect(getPanelPos(game))
+
+	pos := widget.TouchPositions()
+	if len(pos) > 0 {
+		if s.piece != nil {
+			s.piece.SetPosition(pos[0].X, pos[0].Y)
+		} else {
+			for _, piece := range s.pieces {
+				if vec2.ToPoint(piece.GetPosition()).In(piece.GetRect()) {
+					s.piece = piece
+					break
+				}
+			}
+		}
+	} else {
+		s.piece = nil
+	}
 
 	for _, piece := range s.pieces {
 		piece.Update()

@@ -17,3 +17,7 @@ func New[V any](x, y V) Vector2[V] {
 func NewFromPoint(point image.Point) Vector2[int] {
 	return New(point.X, point.Y)
 }
+
+func ToPoint(vec Vector2[int]) image.Point {
+	return image.Pt(vec.X, vec.Y)
+}
