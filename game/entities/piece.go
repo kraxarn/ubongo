@@ -14,7 +14,7 @@ type Piece struct {
 	size       vec2.Vector2[int]
 }
 
-// PieceScale is how much to PieceScale the image
+// PieceScale is how much to scale the image
 const PieceScale = 0.4
 
 func NewPiece(pieces *ebiten.Image, index, x, y int) *Piece {
