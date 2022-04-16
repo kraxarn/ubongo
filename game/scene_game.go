@@ -81,7 +81,7 @@ func getPieces(game *Game, image *ebiten.Image, container image.Rectangle) []*en
 	rand.Seed(game.seed)
 	var pieces []*entities.Piece
 
-	for i := 0; i <= 5; i++ {
+	for i := 0; i < 5; i++ {
 		// TODO: Avoid duplicates
 		index := nextPieceIndex()
 		piece := entities.NewPiece(image, index, 0, 0)
