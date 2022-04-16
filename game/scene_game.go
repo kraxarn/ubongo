@@ -50,11 +50,7 @@ func (s *SceneGame) Update(game *Game) error {
 	s.currentTime.SetText(s.elapsedTime())
 
 	// Panel for pieces
-	panelX0 := widget.ScreenPadding
-	panelY0 := int(float64(game.size.Y) * 0.6)
-	panelX1 := game.size.X - widget.ScreenPadding
-	panelY1 := game.size.Y - widget.ScreenPadding
-	s.panel.SetTargetRect(image.Rect(panelX0, panelY0, panelX1, panelY1))
+	s.panel.SetTargetRect(getPanelPos(game))
 
 	for _, piece := range s.pieces {
 		piece.Update()
@@ -114,4 +110,12 @@ func getPieces(game *Game, image *ebiten.Image) []*entities.Piece {
 	}
 
 	return pieces
+}
+
+func getPanelPos(game *Game) image.Rectangle {
+	panelX0 := widget.ScreenPadding
+	panelY0 := int(float64(game.size.Y) * 0.6)
+	panelX1 := game.size.X - widget.ScreenPadding
+	panelY1 := game.size.Y - widget.ScreenPadding
+	return image.Rect(panelX0, panelY0, panelX1, panelY1)
 }
