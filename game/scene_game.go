@@ -57,7 +57,9 @@ func (s *SceneGame) Update(game *Game) error {
 	pos := widget.TouchPositions()
 	if len(pos) > 0 {
 		if s.piece != nil {
-			s.piece.SetPosition(pos[0].X, pos[0].Y)
+			// TODO: We probably want an offset from where we started, not center
+			size := s.piece.Size()
+			s.piece.SetPosition(pos[0].X-size.X/2, pos[0].Y-size.Y/2)
 		} else {
 			for _, piece := range s.pieces {
 				if vec2.ToPoint(pos[0]).In(piece.GetRect()) {
