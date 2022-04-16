@@ -5,6 +5,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/game/entities"
 	"github.com/kraxarn/ubongo/res"
+	"github.com/kraxarn/ubongo/util/vec2"
 	"github.com/kraxarn/ubongo/widget"
 	"image"
 	"math/rand"
@@ -40,7 +41,7 @@ func NewSceneGame(game *Game) (*SceneGame, error) {
 		startTime:   time.Now(),
 		ui:          ui,
 		currentTime: currentTime,
-		pieces:      getPieces(game, imgPieces),
+		pieces:      getPieces(game, imgPieces, getPanelPos(game)),
 		panel:       ui.AddNinePatch(res.PanelBackground, 0, 0, 0, 0),
 	}, nil
 }
@@ -76,36 +77,17 @@ func nextPieceIndex() int {
 	return rand.Int() % len(res.PieceImageRects)
 }
 
-func getPieces(game *Game, image *ebiten.Image) []*entities.Piece {
+func getPieces(game *Game, image *ebiten.Image, container image.Rectangle) []*entities.Piece {
 	rand.Seed(game.seed)
 	var pieces []*entities.Piece
-	row := 1
-
-	// The highest piece is 3 tiles
-	// TODO: Get this from highest piece in row instead
-	maxHeight := res.PieceTileSize * 3 * entities.PieceScale
 
 	for i := 0; i <= 5; i++ {
 		// TODO: Avoid duplicates
 		index := nextPieceIndex()
 		piece := entities.NewPiece(image, index, 0, 0)
 
-		x := widget.ScreenPadding
-		if i > 0 {
-			prev := pieces[i-1]
-			prevPos := prev.GetPosition()
-			x += prevPos.X + prev.Size().X
-		}
-
-		// Overflow
-		if x+piece.Size().X+widget.ScreenPadding > game.size.X {
-			x = widget.ScreenPadding
-			row++
-		}
-
-		y := game.size.Y - ((widget.ScreenPadding + int(maxHeight)) * row)
-
-		piece.SetPosition(x, y)
+		pos := getPiecePos(piece, container)
+		piece.SetPosition(pos.X, pos.Y)
 		pieces = append(pieces, piece)
 	}
 
@@ -118,4 +100,17 @@ func getPanelPos(game *Game) image.Rectangle {
 	panelX1 := game.size.X - widget.ScreenPadding
 	panelY1 := game.size.Y - widget.ScreenPadding
 	return image.Rect(panelX0, panelY0, panelX1, panelY1)
+}
+
+func getPiecePos(piece *entities.Piece, container image.Rectangle) vec2.Vector2[int] {
+	minX := container.Min.X
+	minY := container.Min.Y
+
+	size := piece.Size()
+	maxX := container.Max.X - size.X
+	maxY := container.Max.Y - size.Y
+
+	x := rand.Intn(maxX-minX) + minX
+	y := rand.Intn(maxY-minY) + minY
+	return vec2.New(x, y)
 }
