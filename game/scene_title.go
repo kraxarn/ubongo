@@ -39,8 +39,17 @@ func NewSceneTitle(game *Game) (*SceneTitle, error) {
 		}
 	})
 
+	// Settings
+	setting := settings.Load()
+
 	// Music toggle
-	musicToggle := ui.AddImageButton(res.MusicOff, 16, 16, 50, 50)
+	var musicImage res.UiImageType
+	if setting.IsMusicEnabled() {
+		musicImage = res.MusicOn
+	} else {
+		musicImage = res.MusicOff
+	}
+	musicToggle := ui.AddImageButton(musicImage, 16, 16, 50, 50)
 
 	// Seed name
 	seedName := ui.AddLabel(32, 32, res.RandomWord(game.seed))
@@ -56,9 +65,6 @@ func NewSceneTitle(game *Game) (*SceneTitle, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	// Settings
-	setting := settings.Load()
 
 	if setting.IsMusicEnabled() {
 		music.volume = setting.MusicVolume
