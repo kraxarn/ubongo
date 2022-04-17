@@ -12,6 +12,10 @@ func TestPieceTiles(t *testing.T) {
 		if len(tiles) <= 0 || len(tiles[0]) <= 0 {
 			t.Errorf("tile %d returned empty data", i)
 		}
+		// All should be square for transposing
+		if len(tiles) != len(tiles[0]) {
+			t.Errorf("tile %d is not square (%dx%d)", i, len(tiles), len(tiles[0]))
+		}
 	}
 
 	// Invalid tiles should return empty data

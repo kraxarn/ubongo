@@ -13,9 +13,9 @@ func PieceTiles(index int) [][]bool {
 	// 1 : 2
 	case 1:
 		return [][]bool{
-			{true, true},
-			{true, false},
-			{true, false},
+			{true, true, false},
+			{true, false, false},
+			{true, false, false},
 		}
 
 	// 1 : 3
@@ -28,14 +28,17 @@ func PieceTiles(index int) [][]bool {
 	// 1 : 4
 	case 3:
 		return [][]bool{
-			{true},
-			{true},
+			{true, false},
+			{true, false},
 		}
 
 	// 2 : 1
 	case 4:
 		return [][]bool{
 			{true, true, true, true},
+			{false, false, false, false},
+			{false, false, false, false},
+			{false, false, false, false},
 		}
 
 	// 2 : 2
@@ -43,6 +46,8 @@ func PieceTiles(index int) [][]bool {
 		return [][]bool{
 			{true, true, true, true},
 			{false, false, true, false},
+			{false, false, false, false},
+			{false, false, false, false},
 		}
 
 	// 3 : 1
@@ -50,6 +55,7 @@ func PieceTiles(index int) [][]bool {
 		return [][]bool{
 			{true, true, true},
 			{false, true, true},
+			{false, false, false},
 		}
 
 	// 3 : 2
@@ -57,12 +63,15 @@ func PieceTiles(index int) [][]bool {
 		return [][]bool{
 			{false, true, true},
 			{true, true, false},
+			{false, false, false},
 		}
 
 	// 3 : 3
 	case 8:
 		return [][]bool{
 			{true, true, true},
+			{false, false, false},
+			{false, false, false},
 		}
 
 	// 4 : 1
@@ -70,6 +79,8 @@ func PieceTiles(index int) [][]bool {
 		return [][]bool{
 			{true, true, true, true},
 			{false, false, false, true},
+			{false, false, false, false},
+			{false, false, false, false},
 		}
 
 	// 4 : 2
@@ -77,6 +88,7 @@ func PieceTiles(index int) [][]bool {
 		return [][]bool{
 			{true, true, true},
 			{false, true, false},
+			{false, false, false},
 		}
 
 	// 4 : 3
