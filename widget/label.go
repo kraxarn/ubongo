@@ -13,6 +13,7 @@ type Label struct {
 	position image.Point
 	text     string
 	color    color.Color
+	size     image.Point
 }
 
 func NewLabel(fontFace font.Face, x, y int, text string, color color.Color) *Label {
@@ -21,6 +22,7 @@ func NewLabel(fontFace font.Face, x, y int, text string, color color.Color) *Lab
 		position: image.Pt(x, y),
 		text:     text,
 		color:    color,
+		size:     labelSize(fontFace, text),
 	}
 }
 
@@ -35,13 +37,18 @@ func (l *Label) SetPosition(x, y int) {
 	l.position = image.Pt(x, y)
 }
 
-func (l *Label) Size() image.Point {
-	bounds, _ := font.BoundString(l.fontFace, l.text)
+func labelSize(fontFace font.Face, text string) image.Point {
+	bounds, _ := font.BoundString(fontFace, text)
 	x := (bounds.Max.X - bounds.Min.X).Ceil()
 	y := (bounds.Max.Y - bounds.Min.Y).Ceil()
 	return image.Pt(x, y)
 }
 
+func (l *Label) Size() image.Point {
+	return l.size
+}
+
 func (l *Label) SetText(text string) {
 	l.text = text
+	l.size = labelSize(l.fontFace, l.text)
 }
