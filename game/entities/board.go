@@ -106,8 +106,94 @@ func generateBoard(pieces [PieceCount]*Piece) []image.Point {
 			for _, point := range tileData {
 				tiles = append(tiles, image.Pt(centerX, centerY).Add(point))
 			}
+			continue
 		}
+
+		// Find best position for the rest
+		max := 0
+		var results []image.Point
+
+		for y := 0; y < tileCount; y++ {
+			for x := 0; x < tileCount; x++ {
+				offset := image.Pt(x, y)
+				if !allTilesFree(tiles, tileData, offset) {
+					continue
+				}
+				count := adjacentTileCount(tiles, tileData, offset)
+				// New max
+				if count > max {
+					max = count
+					results = []image.Point{
+						offset,
+					}
+					continue
+				}
+				// Same as current max
+				if count == max {
+					results = append(results, offset)
+				}
+			}
+		}
+
+		// Tile doesn't fit anywhere
+		if len(results) <= 0 {
+			continue
+		}
+
+		// Pick a random result and add
+		tiles = append(tiles, results[rand.Intn(len(results))])
 	}
 
 	return tiles
+}
+
+func allTilesFree(tiles, piece []image.Point, offset image.Point) bool {
+	for _, shapePoint := range piece {
+		current := offset.Add(shapePoint)
+		for _, tilePoint := range tiles {
+			if tilePoint.Eq(current) {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+func adjacentTileCount(tiles, piece []image.Point, offset image.Point) int {
+	count := 0
+
+	for _, point := range piece {
+		// Left
+		left := point.Add(image.Pt(-1, 0))
+		if !containsPoint(piece, left) && containsPoint(tiles, offset.Add(left)) {
+			count++
+		}
+		// Top
+		top := point.Add(image.Pt(0, -1))
+		if !containsPoint(piece, top) && containsPoint(tiles, offset.Add(top)) {
+			count++
+		}
+		// Right
+		right := point.Add(image.Pt(1, 0))
+		if !containsPoint(piece, right) && containsPoint(tiles, offset.Add(right)) {
+			count++
+		}
+		// Bottom
+		bottom := point.Add(image.Pt(0, 1))
+		if !containsPoint(piece, bottom) && containsPoint(tiles, offset.Add(bottom)) {
+			count++
+		}
+	}
+
+	return count
+}
+
+// containsPoint checks if point exists in tiles
+func containsPoint(tiles []image.Point, point image.Point) bool {
+	for _, tile := range tiles {
+		if tile.Eq(point) {
+			return true
+		}
+	}
+	return false
 }
