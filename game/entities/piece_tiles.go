@@ -119,22 +119,18 @@ func PieceTiles(index int) []image.Point {
 	}
 }
 
-func PieceWidth(points []image.Point) int {
-	max := 0
-	for _, point := range points {
-		if point.X > max {
-			max = point.X
-		}
-	}
-	return max + 1
-}
+func PieceSize(points []image.Point) image.Point {
+	size := image.Point{}
 
-func PieceHeight(points []image.Point) int {
-	max := 0
 	for _, point := range points {
-		if point.Y > max {
-			max = point.Y
+		if point.X > size.X {
+			size.X = point.X
+		}
+		if point.Y > size.Y {
+			size.Y = point.Y
 		}
 	}
-	return max + 1
+
+	size.Add(image.Pt(1, 1))
+	return size
 }
