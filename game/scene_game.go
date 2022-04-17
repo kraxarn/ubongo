@@ -20,6 +20,7 @@ type SceneGame struct {
 	currentTime *widget.Label
 	pieces      [pieceCount]*entities.Piece
 	piece       *entities.Piece
+	pieceOffset image.Point
 	board       *entities.Board
 	panel       *widget.NinePatch
 }
@@ -66,13 +67,17 @@ func (s *SceneGame) Update(game *Game) error {
 	pos := widget.TouchPositions()
 	if len(pos) > 0 {
 		if s.piece != nil {
-			// TODO: We probably want an offset from where we started, not center
-			size := s.piece.Size()
-			s.piece.SetPosition(pos[0].X-size.X/2, pos[0].Y-size.Y/2)
+			x := pos[0].X - s.pieceOffset.X
+			y := pos[0].Y - s.pieceOffset.Y
+			s.piece.SetPosition(x, y)
 		} else {
 			for i := len(s.pieces) - 1; i >= 0; i-- {
 				if pos[0].In(s.pieces[i].GetRect()) {
+					// Set current piece
 					s.piece = s.pieces[i]
+					// Get offset from where we clicked it
+					s.pieceOffset = pos[0].Sub(s.piece.GetPosition())
+					// Move to back to draw last
 					s.pieces[i] = s.pieces[len(s.pieces)-1]
 					s.pieces[len(s.pieces)-1] = s.piece
 					break
