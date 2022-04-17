@@ -167,7 +167,7 @@ func allTilesFree(tiles, piece []image.Point, offset image.Point) bool {
 func anyOverflow(piece []image.Point, offset image.Point) bool {
 	for _, point := range piece {
 		current := offset.Add(point)
-		if current.X >= tileCount || current.Y >= tileCount {
+		if current.X < 0 || current.Y < 0 || current.X >= tileCount || current.Y >= tileCount {
 			return true
 		}
 	}
