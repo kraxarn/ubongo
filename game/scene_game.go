@@ -20,9 +20,13 @@ type SceneGame struct {
 	pieceOffset image.Point
 	board       *entities.Board
 	panel       *widget.NinePatch
+	level       int64
+	levelText   *widget.Label
+	game        *Game
+	winDialog   *entities.WinDialog
 }
 
-func NewSceneGame(game *Game) (*SceneGame, error) {
+func NewSceneGame(game *Game, level int64) (*SceneGame, error) {
 	ui, err := widget.NewUi()
 	if err != nil {
 		return nil, err
@@ -46,11 +50,13 @@ func NewSceneGame(game *Game) (*SceneGame, error) {
 	panel.SetTargetRect(panelPos)
 
 	boardSize := game.size.X - widget.ScreenPadding*2
-	pieces := getPieces(game.seed, imgPieces, panelPos, entities.TileSize(boardSize))
+	pieces := getPieces(game.seed+level, imgPieces, panelPos, entities.TileSize(boardSize))
 
 	boardX := widget.ScreenPadding
 	boardY := panelPos.Min.Y - widget.ScreenPadding - boardSize
 	board := entities.NewBoard(pieces, boardX, boardY, boardSize, boardSize)
+
+	ui.AddLabel(boardX, timeY, fmt.Sprintf("Level %d", level))
 
 	return &SceneGame{
 		startTime:   time.Now(),
@@ -59,18 +65,27 @@ func NewSceneGame(game *Game) (*SceneGame, error) {
 		pieces:      pieces,
 		board:       board,
 		panel:       panel,
+		level:       level,
+		game:        game,
 	}, nil
 }
 
 func (s *SceneGame) Update(game *Game) error {
 	s.ui.Update(game.size)
-	s.currentTime.SetText(s.elapsedTime())
+
+	if s.winDialog == nil {
+		s.currentTime.SetText(s.elapsedTime())
+	}
 
 	pos := widget.TouchPositions()
 	s.updatePiece(pos)
 
 	for _, piece := range s.pieces {
 		piece.Update()
+	}
+
+	if s.winDialog != nil {
+		s.winDialog.Update(game.size)
 	}
 
 	return nil
@@ -82,6 +97,10 @@ func (s *SceneGame) Draw(screen *ebiten.Image) {
 
 	for _, piece := range s.pieces {
 		piece.Draw(screen)
+	}
+
+	if s.winDialog != nil {
+		s.winDialog.Draw(screen)
 	}
 }
 
@@ -127,6 +146,31 @@ func (s *SceneGame) updatePiece(pos []image.Point) {
 func (s *SceneGame) elapsedTime() string {
 	duration := time.Now().Sub(s.startTime)
 	return fmt.Sprintf("%.1f", duration.Seconds())
+}
+
+func (s *SceneGame) getWinDialog(total time.Duration) (*entities.WinDialog, error) {
+	w := s.game.size.X - widget.ScreenPadding*4
+	h := s.game.size.Y / 4
+	x := widget.ScreenPadding * 2
+	y := s.game.size.Y/2 - h/2
+
+	dialog, err := entities.NewWinDialog(total, s.game.size, x, y, w, h)
+	if err != nil {
+		return nil, err
+	}
+
+	dialog.SetOnBack(func() {
+		s.game.GoBack()
+	})
+
+	dialog.SetOnNext(func() {
+		if scene, err := NewSceneGame(s.game, s.level+1); err == nil {
+			s.game.GoBack()
+			s.game.GoTo(scene)
+		}
+	})
+
+	return dialog, nil
 }
 
 func nextPieceIndex() int {

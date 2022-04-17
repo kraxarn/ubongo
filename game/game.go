@@ -77,6 +77,10 @@ func (g *Game) GoTo(scene Scene) {
 	g.scenes.Push(scene)
 }
 
+func (g *Game) GoBack() {
+	g.scenes.Pop()
+}
+
 func generateSeed() int64 {
 	return time.Now().Truncate(time.Minute).Unix()
 }

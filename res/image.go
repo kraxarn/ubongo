@@ -14,19 +14,25 @@ var images embed.FS
 type UiImageType uint8
 
 const (
-	UiButton        UiImageType = iota
-	UiButtonPressed UiImageType = iota
-	PanelBackground UiImageType = iota
-	MusicOff        UiImageType = iota
-	MusicOn         UiImageType = iota
+	UiButton         UiImageType = iota
+	UiButtonPressed  UiImageType = iota
+	PanelBackground  UiImageType = iota
+	DialogBackground UiImageType = iota
+	MusicOff         UiImageType = iota
+	MusicOn          UiImageType = iota
+	Forward          UiImageType = iota
+	Return           UiImageType = iota
 )
 
 var UiImageRects = map[UiImageType]image.Rectangle{
-	UiButton:        image.Rect(0, 0, 45, 49),
-	UiButtonPressed: image.Rect(45, 0, 90, 45),
-	PanelBackground: image.Rect(0, 49, 64, 113),
-	MusicOff:        image.Rect(0, 113, 50, 163),
-	MusicOn:         image.Rect(50, 113, 100, 163),
+	UiButton:         image.Rect(0, 0, 45, 49),
+	UiButtonPressed:  image.Rect(45, 0, 90, 45),
+	PanelBackground:  image.Rect(0, 49, 64, 113),
+	DialogBackground: image.Rect(64, 49, 128, 113),
+	MusicOff:         image.Rect(0, 113, 50, 163),
+	MusicOn:          image.Rect(50, 113, 100, 163),
+	Forward:          image.Rect(0, 163, 50, 213),
+	Return:           image.Rect(50, 163, 100, 213),
 }
 
 // PieceTileSize is the width/height of each tile in a piece

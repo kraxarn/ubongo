@@ -50,4 +50,12 @@ var (
 		B: 0xf3,
 		A: 0xff,
 	}
+
+	// DialogBackdrop is the color behind dialogs
+	DialogBackdrop = color.RGBA{
+		R: 0x0,
+		G: 0x0,
+		B: 0x0,
+		A: 0x7f,
+	}
 )

@@ -33,7 +33,7 @@ func NewSceneTitle(game *Game) (*SceneTitle, error) {
 	// Buttons
 	start := ui.AddStretchedButton(widget.ScreenPadding*4+widget.ButtonHeight, widget.AlignBottom, "Start Game")
 	start.SetOnPressed(func(*widget.Button) {
-		sceneGame, err := NewSceneGame(game)
+		sceneGame, err := NewSceneGame(game, 1)
 		if err == nil {
 			game.GoTo(sceneGame)
 		}
