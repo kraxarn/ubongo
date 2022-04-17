@@ -14,18 +14,17 @@ type Piece struct {
 	size       vec2.Vector2[int]
 }
 
-// PieceScale is how much to scale the image
-const PieceScale = 0.4
-
-func NewPiece(pieces *ebiten.Image, index, x, y int) *Piece {
+func NewPiece(pieces *ebiten.Image, tileSize, index, x, y int) *Piece {
 	sourceRect := res.PieceImageRects[index]
 	img := widget.NewImage(pieces, x, y, 0, 0)
 	img.SetSourceRect(sourceRect)
-	img.Rescale(PieceScale, PieceScale)
+
+	scale := float64(tileSize) / res.PieceTileSize
+	img.Rescale(scale, scale)
 
 	size := sourceRect.Size()
-	w := int(float64(size.X) * PieceScale)
-	h := int(float64(size.Y) * PieceScale)
+	w := int(float64(size.X) * scale)
+	h := int(float64(size.Y) * scale)
 
 	return &Piece{
 		image:      img,

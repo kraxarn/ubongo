@@ -73,3 +73,7 @@ func (b *Board) Draw(dst *ebiten.Image) {
 		dst.DrawImage(b.line, opt)
 	}
 }
+
+func (b *Board) TileSize() int {
+	return b.tileSize
+}
