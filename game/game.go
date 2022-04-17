@@ -4,14 +4,14 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/game/colors"
 	"github.com/kraxarn/ubongo/res"
-	"github.com/kraxarn/ubongo/util/vec2"
 	"github.com/kraxarn/ubongo/widget"
+	"image"
 	"time"
 )
 
 type Game struct {
 	ui         *widget.Ui
-	size       vec2.Vector2[int]
+	size       image.Point
 	background *widget.RepeatImage
 	scenes     *SceneManager
 	seed       int64
@@ -67,7 +67,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	g.size = vec2.New(outsideWidth, outsideHeight)
+	g.size = image.Pt(outsideWidth, outsideHeight)
 	return outsideWidth, outsideHeight
 }
 

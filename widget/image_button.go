@@ -2,7 +2,7 @@ package widget
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/kraxarn/ubongo/util/vec2"
+	"image"
 )
 
 // ImageButton is a button with an image
@@ -33,6 +33,6 @@ func (i *ImageButton) SetPosition(x, y int) {
 	i.Image.SetPosition(x, y)
 }
 
-func (i *ImageButton) Size() vec2.Vector2[int] {
+func (i *ImageButton) Size() image.Point {
 	return i.Button.Size()
 }

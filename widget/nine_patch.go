@@ -2,7 +2,6 @@ package widget
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/kraxarn/ubongo/util/vec2"
 	"image"
 )
 
@@ -90,8 +89,8 @@ func (n *NinePatch) SetTargetRect(rect image.Rectangle) {
 	n.targetRect = rect
 }
 
-func (n *NinePatch) Position() vec2.Vector2[int] {
-	return vec2.NewFromPoint(n.targetRect.Min)
+func (n *NinePatch) Position() image.Point {
+	return n.targetRect.Min
 }
 
 func (n *NinePatch) Resize(w, h int) {

@@ -4,7 +4,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/game/colors"
 	"github.com/kraxarn/ubongo/res"
-	"github.com/kraxarn/ubongo/util/vec2"
 	"golang.org/x/image/font"
 	"image"
 )
@@ -14,7 +13,7 @@ type Ui struct {
 	fontButton font.Face
 	fontTitle  font.Face
 	widgets    []Widget
-	screenSize vec2.Vector2[int]
+	screenSize image.Point
 }
 
 func NewUi() (*Ui, error) {
@@ -63,7 +62,7 @@ func (u *Ui) setAbsoluteY(rect *image.Rectangle, y int, align Alignment) {
 	}
 }
 
-func (u *Ui) Update(screenSize vec2.Vector2[int]) {
+func (u *Ui) Update(screenSize image.Point) {
 	u.screenSize = screenSize
 
 	for _, widget := range u.widgets {

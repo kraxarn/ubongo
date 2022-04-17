@@ -2,7 +2,6 @@ package widget
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/kraxarn/ubongo/util/vec2"
 	"image"
 )
 
@@ -11,17 +10,17 @@ func Rect(x, y, w, h int) image.Rectangle {
 }
 
 // TouchPositions gets all currently active positions (mouse or touch)
-func TouchPositions() []vec2.Vector2[int] {
-	var positions []vec2.Vector2[int]
+func TouchPositions() []image.Point {
+	var positions []image.Point
 
 	// Mouse
 	if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
-		positions = append(positions, vec2.New(ebiten.CursorPosition()))
+		positions = append(positions, image.Pt(ebiten.CursorPosition()))
 	}
 
 	// Touch
 	for _, id := range ebiten.AppendTouchIDs([]ebiten.TouchID{}) {
-		positions = append(positions, vec2.New(ebiten.TouchPosition(id)))
+		positions = append(positions, image.Pt(ebiten.TouchPosition(id)))
 	}
 
 	return positions

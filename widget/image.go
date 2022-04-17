@@ -3,7 +3,6 @@ package widget
 import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/res"
-	"github.com/kraxarn/ubongo/util/vec2"
 	"image"
 )
 
@@ -13,7 +12,7 @@ type Image struct {
 	scaleX     float64
 	scaleY     float64
 	sourceRect image.Rectangle
-	position   vec2.Vector2[int]
+	position   image.Point
 }
 
 func NewImage(src *ebiten.Image, x, y, w, h int) *Image {
@@ -45,11 +44,11 @@ func (i *Image) Draw(dst *ebiten.Image) {
 	dst.DrawImage(img, opt)
 }
 
-func (i *Image) Size() vec2.Vector2[int] {
+func (i *Image) Size() image.Point {
 	if i.sourceRect.Empty() {
-		return vec2.New(i.image.Size())
+		return image.Pt(i.image.Size())
 	}
-	return vec2.NewFromPoint(i.sourceRect.Size())
+	return i.sourceRect.Size()
 }
 
 func (i *Image) Resize(w, h int) {
@@ -80,12 +79,12 @@ func (i *Image) GetHeight() int {
 	return int(float64(size.Y) * i.scaleY)
 }
 
-func (i *Image) GetPosition() vec2.Vector2[int] {
+func (i *Image) GetPosition() image.Point {
 	return i.position
 }
 
 func (i *Image) SetPosition(x, y int) {
-	i.position = vec2.New(x, y)
+	i.position = image.Pt(x, y)
 }
 
 func (i *Image) SetSourceRect(rect image.Rectangle) {

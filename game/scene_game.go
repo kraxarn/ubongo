@@ -5,7 +5,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/game/entities"
 	"github.com/kraxarn/ubongo/res"
-	"github.com/kraxarn/ubongo/util/vec2"
 	"github.com/kraxarn/ubongo/widget"
 	"image"
 	"math/rand"
@@ -72,7 +71,7 @@ func (s *SceneGame) Update(game *Game) error {
 			s.piece.SetPosition(pos[0].X-size.X/2, pos[0].Y-size.Y/2)
 		} else {
 			for i := len(s.pieces) - 1; i >= 0; i-- {
-				if vec2.ToPoint(pos[0]).In(s.pieces[i].GetRect()) {
+				if pos[0].In(s.pieces[i].GetRect()) {
 					s.piece = s.pieces[i]
 					s.pieces[i] = s.pieces[len(s.pieces)-1]
 					s.pieces[len(s.pieces)-1] = s.piece
@@ -138,7 +137,7 @@ func getPanelPos(game *Game) image.Rectangle {
 	return image.Rect(panelX0, panelY0, panelX1, panelY1)
 }
 
-func getPiecePos(piece *entities.Piece, container image.Rectangle) vec2.Vector2[int] {
+func getPiecePos(piece *entities.Piece, container image.Rectangle) image.Point {
 	const padding = widget.ScreenPadding / 4
 	minX := container.Min.X + padding
 	minY := container.Min.Y + padding
@@ -149,5 +148,5 @@ func getPiecePos(piece *entities.Piece, container image.Rectangle) vec2.Vector2[
 
 	x := rand.Intn(maxX-minX) + minX
 	y := rand.Intn(maxY-minY) + minY
-	return vec2.New(x, y)
+	return image.Pt(x, y)
 }

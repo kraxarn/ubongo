@@ -2,7 +2,6 @@ package widget
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/kraxarn/ubongo/util/vec2"
 	"image"
 )
 
@@ -55,6 +54,6 @@ func (b *Button) SetPosition(x, y int) {
 	b.rect = Rect(x, y, size.X, size.Y)
 }
 
-func (b *Button) Size() vec2.Vector2[int] {
-	return vec2.NewFromPoint(b.rect.Size())
+func (b *Button) Size() image.Point {
+	return b.rect.Size()
 }

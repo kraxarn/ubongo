@@ -3,7 +3,6 @@ package entities
 import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/res"
-	"github.com/kraxarn/ubongo/util/vec2"
 	"github.com/kraxarn/ubongo/widget"
 	"image"
 )
@@ -11,7 +10,7 @@ import (
 type Piece struct {
 	image      *widget.Image
 	sourceRect image.Rectangle
-	size       vec2.Vector2[int]
+	size       image.Point
 }
 
 func NewPiece(pieces *ebiten.Image, tileSize, index, x, y int) *Piece {
@@ -29,7 +28,7 @@ func NewPiece(pieces *ebiten.Image, tileSize, index, x, y int) *Piece {
 	return &Piece{
 		image:      img,
 		sourceRect: sourceRect,
-		size:       vec2.New(w, h),
+		size:       image.Pt(w, h),
 	}
 }
 
@@ -40,7 +39,7 @@ func (p *Piece) Draw(dst *ebiten.Image) {
 	p.image.Draw(dst)
 }
 
-func (p *Piece) GetPosition() vec2.Vector2[int] {
+func (p *Piece) GetPosition() image.Point {
 	return p.image.GetPosition()
 }
 
@@ -54,6 +53,6 @@ func (p *Piece) GetRect() image.Rectangle {
 	return widget.Rect(pos.X, pos.Y, size.X, size.Y)
 }
 
-func (p *Piece) Size() vec2.Vector2[int] {
+func (p *Piece) Size() image.Point {
 	return p.size
 }
