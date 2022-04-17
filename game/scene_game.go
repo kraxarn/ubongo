@@ -97,7 +97,7 @@ func (s *SceneGame) updatePiece(pos []image.Point) {
 		x := pos[0].X - s.pieceOffset.X
 		y := pos[0].Y - s.pieceOffset.Y
 
-		if s.piece.GetPosition().In(s.board.Rect()) {
+		if s.piece.GetRect().In(s.board.Rect()) {
 			// Snap to grid
 			boardPos := s.board.Position()
 			tileSize := s.board.TileSize()
