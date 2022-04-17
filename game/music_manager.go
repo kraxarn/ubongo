@@ -1,7 +1,6 @@
 package game
 
 import (
-	"fmt"
 	"github.com/hajimehoshi/ebiten/v2/audio"
 	"github.com/hajimehoshi/ebiten/v2/audio/vorbis"
 	"github.com/kraxarn/ubongo/res"
@@ -10,28 +9,20 @@ import (
 type MusicManager struct {
 	context *audio.Context
 	player  *audio.Player
-	streams []*vorbis.Stream
+	stream  *vorbis.Stream
 	current int
 	volume  float64
 }
 
-const min = 1
-const max = 3
-
 func NewMusicManager() (*MusicManager, error) {
-	var streams []*vorbis.Stream
-
-	for i := min; i <= max; i++ {
-		stream, err := res.Music(i)
-		if err != nil {
-			return nil, err
-		}
-		streams = append(streams, stream)
+	stream, err := res.Music()
+	if err != nil {
+		return nil, err
 	}
 
 	return &MusicManager{
 		context: audio.NewContext(res.AudioSampleRate),
-		streams: streams,
+		stream:  stream,
 		current: 0,
 		volume:  0.25,
 	}, nil
@@ -42,7 +33,7 @@ func (m *MusicManager) Update() {
 }
 
 func (m *MusicManager) Play() error {
-	player, err := m.context.NewPlayer(m.streams[m.current])
+	player, err := m.context.NewPlayer(m.stream)
 	if err != nil {
 		return err
 	}
@@ -63,30 +54,4 @@ func (m *MusicManager) Stop() error {
 
 func (m *MusicManager) IsPlaying() bool {
 	return m.player != nil && m.player.IsPlaying()
-}
-
-func (m *MusicManager) Previous() error {
-	if m.player == nil {
-		return fmt.Errorf("no player")
-	}
-
-	if m.current <= min {
-		return nil
-	}
-
-	m.current--
-	return m.Play()
-}
-
-func (m *MusicManager) Next() error {
-	if m.player == nil {
-		return fmt.Errorf("no player")
-	}
-
-	if m.current >= max {
-		return nil
-	}
-
-	m.current++
-	return m.Play()
 }
