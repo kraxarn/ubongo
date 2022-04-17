@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/game"
@@ -13,7 +14,11 @@ func main() {
 	ebiten.SetWindowTitle(fmt.Sprintf("%s v%s", app.Name, app.Version()))
 	ebiten.SetWindowResizable(true)
 
-	err := ebiten.RunGame(game.NewGame())
+	opt := game.Options{}
+	flag.BoolVar(&opt.DebugOverlay, "enable-overlay", false, "enable debug overlay")
+	flag.Parse()
+
+	err := ebiten.RunGame(game.NewGame(&opt))
 	if err != nil {
 		log.Fatal(err)
 	}

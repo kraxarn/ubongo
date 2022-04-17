@@ -17,7 +17,7 @@ type Game struct {
 	seed       int64
 }
 
-func NewGame() *Game {
+func NewGame(opt *Options) *Game {
 	ui, err := widget.NewUi()
 	if err != nil {
 		panic(err)
@@ -32,7 +32,9 @@ func NewGame() *Game {
 	bg := ui.AddRepeatImage(imgPattern, 0, 0, 0, 0)
 
 	// Debug overlay
-	ui.AddDebugOverlay()
+	if opt.DebugOverlay {
+		ui.AddDebugOverlay()
+	}
 
 	sceneManager := NewSceneManager()
 
