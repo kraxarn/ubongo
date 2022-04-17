@@ -20,3 +20,5 @@ version is important. The app follows x.y.z versioning where:
 * [ ] Sound effects
 * [ ] Better Android support
 * [ ] Consistent piece style
+* [ ] Customizable piece count
+* [ ] Customizable board size
