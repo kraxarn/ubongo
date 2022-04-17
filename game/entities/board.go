@@ -100,19 +100,12 @@ func generateBoard(pieces [PieceCount]*Piece) []image.Point {
 
 		// Place first in center
 		if i == 0 {
-			tileY := len(tileData)
-			tileX := 0
-			if tileY > 0 {
-				tileX = len(tileData[0])
-			}
+			tileY := PieceHeight(tileData)
+			tileX := PieceWidth(tileData)
 			centerX := tileCount/2 - tileX/2
 			centerY := tileCount/2 - tileY/2
-			for y := range tileData {
-				for x := range tileData[y] {
-					if tileData[y][x] {
-						tiles = append(tiles, image.Pt(centerX+x, centerY+y))
-					}
-				}
+			for _, point := range tileData {
+				tiles = append(tiles, image.Pt(centerX, centerY).Add(point))
 			}
 		}
 	}
