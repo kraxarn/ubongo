@@ -122,6 +122,10 @@ func (u *Ui) AddLabel(x, y int, text string) *Label {
 	return addWidget(u, NewLabel(u.fontButton, x, y, text, colors.ForegroundAlt))
 }
 
+func (u *Ui) AddDebugLabel(x, y int, text string) *Label {
+	return addWidget(u, NewLabel(u.fontDebug, x, y, text, colors.ForegroundAlt))
+}
+
 func (u *Ui) AddDebugOverlay() *Overlay {
 	return addWidget(u, NewOverlay(u.fontDebug))
 }
