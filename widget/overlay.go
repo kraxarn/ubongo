@@ -4,22 +4,17 @@ import (
 	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/game/colors"
-	"github.com/kraxarn/ubongo/res"
+	"golang.org/x/image/font"
 )
 
 type Overlay struct {
 	label *Label
 }
 
-func NewOverlay() (*Overlay, error) {
-	font, err := res.Font(res.FontDebug, DebugFontSize)
-	if err != nil {
-		return nil, err
-	}
-
+func NewOverlay(font font.Face) *Overlay {
 	return &Overlay{
 		label: NewLabel(font, 16, 24, "", colors.ForegroundAlt),
-	}, nil
+	}
 }
 
 func (o *Overlay) Update(*Ui) {

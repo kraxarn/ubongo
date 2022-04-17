@@ -12,6 +12,7 @@ type Ui struct {
 	image      *ebiten.Image
 	fontButton font.Face
 	fontTitle  font.Face
+	fontDebug  font.Face
 	widgets    []Widget
 	screenSize image.Point
 }
@@ -32,10 +33,16 @@ func NewUi() (*Ui, error) {
 		return nil, err
 	}
 
+	fontDebug, err := res.Font(res.FontDebug, DebugFontSize)
+	if err != nil {
+		return nil, err
+	}
+
 	return &Ui{
 		image:      uiImage,
 		fontButton: fontButton,
 		fontTitle:  fontTitle,
+		fontDebug:  fontDebug,
 	}, nil
 }
 
@@ -116,9 +123,5 @@ func (u *Ui) AddLabel(x, y int, text string) *Label {
 }
 
 func (u *Ui) AddDebugOverlay() *Overlay {
-	widget, err := NewOverlay()
-	if err != nil {
-		return nil
-	}
-	return addWidget(u, widget)
+	return addWidget(u, NewOverlay(u.fontDebug))
 }
