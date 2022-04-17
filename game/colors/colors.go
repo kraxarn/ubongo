@@ -34,4 +34,20 @@ var (
 		B: 0x17,
 		A: 0xff,
 	}
+
+	// BackgroundBoard is the background for the board of pieces
+	BackgroundBoard = color.RGBA{
+		R: 0x5c,
+		G: 0xa2,
+		B: 0xe0,
+		A: 0xff,
+	}
+
+	// BorderBoard is the color for borders in board of pieces
+	BorderBoard = color.RGBA{
+		R: 0x63,
+		G: 0xaf,
+		B: 0xf3,
+		A: 0xff,
+	}
 )

@@ -21,6 +21,7 @@ type SceneGame struct {
 	currentTime *widget.Label
 	pieces      [pieceCount]*entities.Piece
 	piece       *entities.Piece
+	board       *entities.Board
 	panel       *widget.NinePatch
 }
 
@@ -41,11 +42,17 @@ func NewSceneGame(game *Game) (*SceneGame, error) {
 	timeSize := currentTime.Size()
 	currentTime.SetPosition(game.size.X/2-timeSize.X/2, widget.ScreenPadding+timeSize.Y)
 
+	pieceContainer := getPanelPos(game)
+	boardSize := game.size.X - widget.ScreenPadding*2
+	board := entities.NewBoard(widget.ScreenPadding, pieceContainer.Min.Y-widget.ScreenPadding-boardSize,
+		boardSize, boardSize)
+
 	return &SceneGame{
 		startTime:   time.Now(),
 		ui:          ui,
 		currentTime: currentTime,
-		pieces:      getPieces(game, imgPieces),
+		pieces:      getPieces(game, imgPieces, pieceContainer),
+		board:       board,
 		panel:       ui.AddNinePatch(res.PanelBackground, 0, 0, 0, 0),
 	}, nil
 }
@@ -86,6 +93,7 @@ func (s *SceneGame) Update(game *Game) error {
 
 func (s *SceneGame) Draw(screen *ebiten.Image) {
 	s.ui.Draw(screen)
+	s.board.Draw(screen)
 
 	for _, piece := range s.pieces {
 		piece.Draw(screen)
@@ -101,9 +109,8 @@ func nextPieceIndex() int {
 	return rand.Intn(len(res.PieceImageRects))
 }
 
-func getPieces(game *Game, image *ebiten.Image) [pieceCount]*entities.Piece {
+func getPieces(game *Game, image *ebiten.Image, container image.Rectangle) [pieceCount]*entities.Piece {
 	rand.Seed(game.seed)
-	container := getPanelPos(game)
 	var pieces [pieceCount]*entities.Piece
 	var indexes [res.PieceCount]bool
 
