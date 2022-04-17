@@ -11,14 +11,11 @@ import (
 	"time"
 )
 
-// pieceCount is the total amount of pieces
-const pieceCount = 5
-
 type SceneGame struct {
 	startTime   time.Time
 	ui          *widget.Ui
 	currentTime *widget.Label
-	pieces      [pieceCount]*entities.Piece
+	pieces      [entities.PieceCount]*entities.Piece
 	piece       *entities.Piece
 	pieceOffset image.Point
 	board       *entities.Board
@@ -49,15 +46,17 @@ func NewSceneGame(game *Game) (*SceneGame, error) {
 	panel.SetTargetRect(panelPos)
 
 	boardSize := game.size.X - widget.ScreenPadding*2
+	pieces := getPieces(game.seed, imgPieces, panelPos, entities.TileSize(boardSize))
+
 	boardX := widget.ScreenPadding
 	boardY := panelPos.Min.Y - widget.ScreenPadding - boardSize
-	board := entities.NewBoard(boardX, boardY, boardSize, boardSize)
+	board := entities.NewBoard(pieces, boardX, boardY, boardSize, boardSize)
 
 	return &SceneGame{
 		startTime:   time.Now(),
 		ui:          ui,
 		currentTime: currentTime,
-		pieces:      getPieces(game, imgPieces, panelPos, board.TileSize()),
+		pieces:      pieces,
 		board:       board,
 		panel:       panel,
 	}, nil
@@ -134,12 +133,12 @@ func nextPieceIndex() int {
 	return rand.Intn(len(res.PieceImageRects))
 }
 
-func getPieces(game *Game, image *ebiten.Image, container image.Rectangle, tileSize int) [pieceCount]*entities.Piece {
-	rand.Seed(game.seed)
-	var pieces [pieceCount]*entities.Piece
+func getPieces(seed int64, image *ebiten.Image, container image.Rectangle, tileSize int) [entities.PieceCount]*entities.Piece {
+	rand.Seed(seed)
+	var pieces [entities.PieceCount]*entities.Piece
 	var indexes [res.PieceCount]bool
 
-	for i := 0; i < pieceCount; i++ {
+	for i := 0; i < entities.PieceCount; i++ {
 		index := nextPieceIndex()
 		for indexes[index] {
 			index = nextPieceIndex()

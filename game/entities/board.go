@@ -5,20 +5,11 @@ import (
 	"github.com/kraxarn/ubongo/game/colors"
 	"github.com/kraxarn/ubongo/widget"
 	"image"
+	"math/rand"
 )
 
-type TileType uint8
-
-const (
-	// None is a tile outside the board
-	None TileType = iota
-
-	// Empty is an empty tile inside the board
-	Empty TileType = iota
-
-	// Filled is a filled tile inside the board
-	Filled TileType = iota
-)
+// PieceCount is the total amount of pieces
+const PieceCount = 5
 
 // tileCount is the number of tiles horizontally and vertically
 const tileCount = 8
@@ -29,35 +20,40 @@ const (
 )
 
 type Board struct {
-	tiles      [tileCount][tileCount]TileType
+	tiles      []image.Point
 	rect       image.Rectangle
 	tileSize   int
 	background *ebiten.Image
 	line       *ebiten.Image
 }
 
-func NewBoard(x, y, w, h int) *Board {
-	background := ebiten.NewImage(w, h)
+func NewBoard(pieces [PieceCount]*Piece, x, y, w, h int) *Board {
+	tileSize := TileSize(w)
+	background := ebiten.NewImage(tileSize, tileSize)
 	background.Fill(colors.BackgroundBoard)
 
 	line := ebiten.NewImage(lineWidth, h-linePadding*2)
 	line.Fill(colors.BorderBoard)
 
 	return &Board{
-		tiles:      [8][8]TileType{},
+		tiles:      generateBoard(pieces),
 		rect:       widget.Rect(x, y, w, h),
-		tileSize:   w / tileCount,
+		tileSize:   tileSize,
 		background: background,
 		line:       line,
 	}
 }
 
 func (b *Board) Draw(dst *ebiten.Image) {
-	// Background
 	opt := &ebiten.DrawImageOptions{}
-	pos := b.rect.Min
-	opt.GeoM.Translate(float64(pos.X), float64(pos.Y))
-	dst.DrawImage(b.background, opt)
+	pos := b.Position()
+
+	// Tiles
+	for _, tile := range b.tiles {
+		opt.GeoM.Reset()
+		opt.GeoM.Translate(float64(pos.X+(tile.X*b.tileSize)), float64(pos.Y+(tile.Y*b.tileSize)))
+		dst.DrawImage(b.background, opt)
+	}
 
 	// Lines
 	for i := 1; i < tileCount; i++ {
@@ -74,6 +70,10 @@ func (b *Board) Draw(dst *ebiten.Image) {
 	}
 }
 
+func TileSize(boardSize int) int {
+	return boardSize / tileCount
+}
+
 func (b *Board) TileSize() int {
 	return b.tileSize
 }
@@ -84,4 +84,38 @@ func (b *Board) Rect() image.Rectangle {
 
 func (b *Board) Position() image.Point {
 	return b.rect.Min
+}
+
+func generateBoard(pieces [PieceCount]*Piece) []image.Point {
+	var tiles []image.Point
+
+	var shuffled [PieceCount]*Piece
+	copy(shuffled[0:], pieces[0:])
+	rand.Shuffle(len(shuffled), func(i, j int) {
+		shuffled[i], shuffled[j] = shuffled[j], shuffled[i]
+	})
+
+	for i, piece := range shuffled {
+		tileData := PieceTiles(piece.Index())
+
+		// Place first in center
+		if i == 0 {
+			tileY := len(tileData)
+			tileX := 0
+			if tileY > 0 {
+				tileX = len(tileData[0])
+			}
+			centerX := tileCount/2 - tileX/2
+			centerY := tileCount/2 - tileY/2
+			for y := range tileData {
+				for x := range tileData[y] {
+					if tileData[y][x] {
+						tiles = append(tiles, image.Pt(centerX+x, centerY+y))
+					}
+				}
+			}
+		}
+	}
+
+	return tiles
 }
