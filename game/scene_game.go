@@ -42,27 +42,28 @@ func NewSceneGame(game *Game) (*SceneGame, error) {
 	timeSize := currentTime.Size()
 	currentTime.SetPosition(game.size.X/2-timeSize.X/2, widget.ScreenPadding+timeSize.Y)
 
-	pieceContainer := getPanelPos(game)
+	panelPos := getPanelPos(game)
+	panel := ui.AddNinePatch(res.PanelBackground, 0, 0, 0, 0)
+	panel.SetTargetRect(panelPos)
+
 	boardSize := game.size.X - widget.ScreenPadding*2
-	board := entities.NewBoard(widget.ScreenPadding, pieceContainer.Min.Y-widget.ScreenPadding-boardSize,
-		boardSize, boardSize)
+	boardX := widget.ScreenPadding
+	boardY := panelPos.Min.Y - widget.ScreenPadding - boardSize
+	board := entities.NewBoard(boardX, boardY, boardSize, boardSize)
 
 	return &SceneGame{
 		startTime:   time.Now(),
 		ui:          ui,
 		currentTime: currentTime,
-		pieces:      getPieces(game, imgPieces, pieceContainer, board.TileSize()),
+		pieces:      getPieces(game, imgPieces, panelPos, board.TileSize()),
 		board:       board,
-		panel:       ui.AddNinePatch(res.PanelBackground, 0, 0, 0, 0),
+		panel:       panel,
 	}, nil
 }
 
 func (s *SceneGame) Update(game *Game) error {
 	s.ui.Update(game.size)
 	s.currentTime.SetText(s.elapsedTime())
-
-	// Panel for pieces
-	s.panel.SetTargetRect(getPanelPos(game))
 
 	pos := widget.TouchPositions()
 	s.updatePiece(pos)
