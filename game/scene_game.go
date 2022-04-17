@@ -36,11 +36,13 @@ func NewSceneGame(game *Game) (*SceneGame, error) {
 		return nil, err
 	}
 
-	currentTime := ui.AddLabel(0, 0, "0.0")
+	currentTime := ui.AddLabel(0, 0, "000.0")
 
 	// We only set an initial position to avoid jumping text
 	timeSize := currentTime.Size()
-	currentTime.SetPosition(game.size.X/2-timeSize.X/2, widget.ScreenPadding+timeSize.Y)
+	timeX := game.size.X - int(float64(timeSize.X)*1.25) - widget.ScreenPadding
+	timeY := widget.ScreenPadding + timeSize.Y
+	currentTime.SetPosition(timeX, timeY)
 
 	panelPos := getPanelPos(game)
 	panel := ui.AddNinePatch(res.PanelBackground, 0, 0, 0, 0)
