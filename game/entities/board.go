@@ -143,7 +143,10 @@ func generateBoard(pieces [PieceCount]*Piece) []image.Point {
 		}
 
 		// Pick a random result and add
-		tiles = append(tiles, results[rand.Intn(len(results))])
+		result := results[rand.Intn(len(results))]
+		for _, point := range tileData {
+			tiles = append(tiles, result.Add(point))
+		}
 	}
 
 	return tiles
