@@ -65,35 +65,7 @@ func (s *SceneGame) Update(game *Game) error {
 	s.panel.SetTargetRect(getPanelPos(game))
 
 	pos := widget.TouchPositions()
-	if len(pos) > 0 {
-		if s.piece != nil {
-			x := pos[0].X - s.pieceOffset.X
-			y := pos[0].Y - s.pieceOffset.Y
-			if s.piece.GetPosition().In(s.board.Rect()) {
-				// Snap to grid
-				boardPos := s.board.Position()
-				tileSize := s.board.TileSize()
-				x = ((x - boardPos.X) / tileSize * tileSize) + boardPos.X
-				y = ((y - boardPos.Y) / tileSize * tileSize) + boardPos.Y
-			}
-			s.piece.SetPosition(x, y)
-		} else {
-			for i := len(s.pieces) - 1; i >= 0; i-- {
-				if pos[0].In(s.pieces[i].GetRect()) {
-					// Set current piece
-					s.piece = s.pieces[i]
-					// Get offset from where we clicked it
-					s.pieceOffset = pos[0].Sub(s.piece.GetPosition())
-					// Move to back to draw last
-					s.pieces[i] = s.pieces[len(s.pieces)-1]
-					s.pieces[len(s.pieces)-1] = s.piece
-					break
-				}
-			}
-		}
-	} else {
-		s.piece = nil
-	}
+	s.updatePiece(pos)
 
 	for _, piece := range s.pieces {
 		piece.Update()
@@ -108,6 +80,45 @@ func (s *SceneGame) Draw(screen *ebiten.Image) {
 
 	for _, piece := range s.pieces {
 		piece.Draw(screen)
+	}
+}
+
+func (s *SceneGame) updatePiece(pos []image.Point) {
+	// Not moving, deselect
+	if len(pos) <= 0 {
+		s.piece = nil
+		return
+	}
+
+	// Update position of current tile
+	if s.piece != nil {
+		x := pos[0].X - s.pieceOffset.X
+		y := pos[0].Y - s.pieceOffset.Y
+
+		if s.piece.GetPosition().In(s.board.Rect()) {
+			// Snap to grid
+			boardPos := s.board.Position()
+			tileSize := s.board.TileSize()
+			x = ((x - boardPos.X) / tileSize * tileSize) + boardPos.X
+			y = ((y - boardPos.Y) / tileSize * tileSize) + boardPos.Y
+		}
+
+		s.piece.SetPosition(x, y)
+		return
+	}
+
+	// Check if we're pressing any piece
+	for i := len(s.pieces) - 1; i >= 0; i-- {
+		if pos[0].In(s.pieces[i].GetRect()) {
+			// Set current piece
+			s.piece = s.pieces[i]
+			// Get offset from where we clicked it
+			s.pieceOffset = pos[0].Sub(s.piece.GetPosition())
+			// Move to back to draw last
+			s.pieces[i] = s.pieces[len(s.pieces)-1]
+			s.pieces[len(s.pieces)-1] = s.piece
+			break
+		}
 	}
 }
 
