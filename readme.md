@@ -10,3 +10,13 @@ version is important. The app follows x.y.z versioning where:
 * x: Major, overhauling the entire app, likely to always be 0/1.
 * y: Minor, changes in the random generator, could result in a different board.
 * z: Patch, minor changes without any changes to the random generator.
+
+## 1.0.0 goals
+
+* [x] Random board generation
+* [ ] Rotating pieces
+* [ ] Flipping/mirroring pieces
+* [ ] Multiple levels
+* [ ] Sound effects
+* [ ] Better Android support
+* [ ] Consistent piece style
