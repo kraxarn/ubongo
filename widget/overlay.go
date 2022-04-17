@@ -12,7 +12,7 @@ type Overlay struct {
 }
 
 func NewOverlay() (*Overlay, error) {
-	font, err := res.Font(res.FontDebug, 18)
+	font, err := res.Font(res.FontDebug, DebugFontSize)
 	if err != nil {
 		return nil, err
 	}

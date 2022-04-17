@@ -16,4 +16,7 @@ const (
 
 	// TitleFontSize is the default font size for titles
 	TitleFontSize = 54
+
+	// DebugFontSize is the default font size for smaller (debug) text
+	DebugFontSize = 18
 )
