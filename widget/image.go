@@ -51,6 +51,20 @@ func (i *Image) Size() image.Point {
 	return i.sourceRect.Size()
 }
 
+func (i *Image) ScaledSize() image.Point {
+	var w, h int
+
+	if i.sourceRect.Empty() {
+		w, h = i.image.Size()
+	} else {
+		size := i.sourceRect.Size()
+		w = size.X
+		h = size.Y
+	}
+
+	return image.Pt(int(float64(w)*i.scaleX), int(float64(h)*i.scaleY))
+}
+
 func (i *Image) Resize(w, h int) {
 	size := i.Size()
 	x := float64(w) / float64(size.X)
