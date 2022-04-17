@@ -5,7 +5,7 @@ import "fmt"
 const (
 	Name  = "Ubongo"
 	major = 0
-	minor = 1
+	minor = 2
 	patch = 0
 )
 
