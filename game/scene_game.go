@@ -91,7 +91,7 @@ func (s *SceneGame) updatePiece(pos []image.Point) {
 		return
 	}
 
-	// Update position of current tile
+	// Update position of current piece
 	if s.piece != nil {
 		x := pos[0].X - s.pieceOffset.X
 		y := pos[0].Y - s.pieceOffset.Y
