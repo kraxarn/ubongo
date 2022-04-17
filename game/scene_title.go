@@ -13,6 +13,7 @@ type SceneTitle struct {
 	ui          *widget.Ui
 	logo        *widget.Image
 	title       *widget.Label
+	version     *widget.Label
 	seedName    *widget.Label
 	musicToggle *widget.ImageButton
 	music       *MusicManager
@@ -93,6 +94,7 @@ func NewSceneTitle(game *Game) (*SceneTitle, error) {
 		ui:          ui,
 		logo:        ui.AddImage(imgLogo, 0, 0, 64, 64),
 		title:       ui.AddTitle(64, 64, app.Name),
+		version:     ui.AddDebugLabel(64, 64, app.Version()),
 		musicToggle: musicToggle,
 		seedName:    seedName,
 		music:       music,
@@ -107,14 +109,20 @@ func (t *SceneTitle) Update(game *Game) error {
 	t.logo.SetPosition(logoX, logoY)
 
 	// Update title position
+	titleX := logoX - widget.ScreenPadding
 	titleY := logoY + t.logo.GetHeight() - 8
 	titleSize := t.title.Size()
-	t.title.SetPosition(logoX-32, titleY)
+	t.title.SetPosition(titleX, titleY)
+
+	// Update version position
+	verX := titleX + titleSize.X - t.version.Size().X
+	verY := titleY + titleSize.Y - 12
+	t.version.SetPosition(verX, verY)
 
 	// Update seed name position
 	seedNameSize := t.seedName.Size()
 	t.seedName.SetPosition(game.size.X/2-seedNameSize.X/2,
-		titleY+titleSize.Y+seedNameSize.Y+32)
+		titleY+titleSize.Y+seedNameSize.Y+40)
 
 	// Music toggle
 	musicWidth := t.musicToggle.Size().X
