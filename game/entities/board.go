@@ -117,7 +117,7 @@ func generateBoard(pieces [PieceCount]*Piece) []image.Point {
 		for y := 0; y < tileCount; y++ {
 			for x := 0; x < tileCount; x++ {
 				offset := image.Pt(x, y)
-				if !allTilesFree(tiles, tileData, offset) {
+				if anyOverflow(tileData, offset) || !allTilesFree(tiles, tileData, offset) {
 					continue
 				}
 				count := adjacentTileCount(tiles, tileData, offset)
@@ -162,6 +162,16 @@ func allTilesFree(tiles, piece []image.Point, offset image.Point) bool {
 		}
 	}
 	return true
+}
+
+func anyOverflow(piece []image.Point, offset image.Point) bool {
+	for _, point := range piece {
+		current := offset.Add(point)
+		if current.X >= tileCount || current.Y >= tileCount {
+			return true
+		}
+	}
+	return false
 }
 
 func adjacentTileCount(tiles, piece []image.Point, offset image.Point) int {
