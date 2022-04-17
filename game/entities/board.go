@@ -1,6 +1,7 @@
 package entities
 
 import (
+	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/game/colors"
 	"github.com/kraxarn/ubongo/widget"
@@ -137,6 +138,7 @@ func generateBoard(pieces [PieceCount]*Piece) []image.Point {
 
 		// Tile doesn't fit anywhere
 		if len(results) <= 0 {
+			fmt.Println("No results found for tile", i)
 			continue
 		}
 
