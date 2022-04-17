@@ -69,6 +69,13 @@ func (s *SceneGame) Update(game *Game) error {
 		if s.piece != nil {
 			x := pos[0].X - s.pieceOffset.X
 			y := pos[0].Y - s.pieceOffset.Y
+			if s.piece.GetPosition().In(s.board.Rect()) {
+				// Snap to grid
+				boardPos := s.board.Position()
+				tileSize := s.board.TileSize()
+				x = ((x - boardPos.X) / tileSize * tileSize) + boardPos.X
+				y = ((y - boardPos.Y) / tileSize * tileSize) + boardPos.Y
+			}
 			s.piece.SetPosition(x, y)
 		} else {
 			for i := len(s.pieces) - 1; i >= 0; i-- {

@@ -77,3 +77,11 @@ func (b *Board) Draw(dst *ebiten.Image) {
 func (b *Board) TileSize() int {
 	return b.tileSize
 }
+
+func (b *Board) Rect() image.Rectangle {
+	return b.rect
+}
+
+func (b *Board) Position() image.Point {
+	return b.rect.Min
+}
