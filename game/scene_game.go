@@ -80,15 +80,15 @@ func (s *SceneGame) Update(game *Game) error {
 		s.currentTime.SetText(s.elapsedTime())
 	}
 
+	if s.winDialog != nil {
+		s.winDialog.Update(game.size)
+	}
+
 	pos := widget.TouchPositions()
 	s.updatePiece(pos)
 
 	for _, piece := range s.pieces {
 		piece.Update()
-	}
-
-	if s.winDialog != nil {
-		s.winDialog.Update(game.size)
 	}
 
 	return nil
@@ -176,9 +176,9 @@ func (s *SceneGame) getWinDialog(total time.Duration) (*entities.WinDialog, erro
 	})
 
 	dialog.SetOnNext(func() {
-		s.game.GoBack()
 		var scene *SceneGame
 		if scene, err = NewSceneGame(s.game, s.level+1); err == nil {
+			s.game.GoBack()
 			s.game.GoTo(scene)
 		}
 	})
