@@ -90,7 +90,7 @@ func (b *Board) Position() image.Point {
 func (b *Board) AllTilesFilled(pieces [PieceCount]*Piece) bool {
 	var pieceTiles []image.Point
 	for _, piece := range pieces {
-		offset := piece.GetPosition()
+		offset := piece.GetPosition().Sub(b.Position()).Div(b.TileSize())
 		for _, pieceTile := range PieceTiles(piece.Index()) {
 			pieceTiles = append(pieceTiles, offset.Add(pieceTile))
 		}
