@@ -14,9 +14,9 @@ version is important. The app follows x.y.z versioning where:
 ## Goals
 
 * [x] Random board generation
+* [x] Multiple levels
 * [ ] Rotating pieces
 * [ ] Flipping/mirroring pieces
-* [ ] Multiple levels
 * [ ] Sound effects
 * [ ] Looping music
 * [ ] Better Android support
