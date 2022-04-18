@@ -116,7 +116,7 @@ func (s *SceneGame) updatePiece(pos []image.Point) {
 		x := pos[0].X - s.pieceOffset.X
 		y := pos[0].Y - s.pieceOffset.Y
 
-		if s.piece.GetRect().In(s.board.Rect()) {
+		if s.piece.Rect().In(s.board.Rect()) {
 			// Snap to grid
 			boardPos := s.board.Position()
 			tileSize := s.board.TileSize()
@@ -130,7 +130,7 @@ func (s *SceneGame) updatePiece(pos []image.Point) {
 
 	// Check if we're pressing any piece
 	for i := len(s.pieces) - 1; i >= 0; i-- {
-		if pos[0].In(s.pieces[i].GetRect()) {
+		if pos[0].In(s.pieces[i].Rect()) {
 			// Set current piece
 			s.piece = s.pieces[i]
 			// Get offset from where we clicked it
