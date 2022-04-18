@@ -33,6 +33,10 @@ func (l *Label) Draw(dst *ebiten.Image) {
 	text.Draw(dst, l.text, l.fontFace, l.position.X, l.position.Y, l.color)
 }
 
+func (l *Label) GetPosition() image.Point {
+	return l.position
+}
+
 func (l *Label) SetPosition(x, y int) {
 	l.position = image.Pt(x, y)
 }
