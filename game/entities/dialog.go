@@ -99,7 +99,7 @@ func (d *Dialog) addButton(i int, icon res.UiImageType, text string) *widget.Ima
 	label.SetPosition(labelX, labelY)
 
 	buttonX := centerX - 25
-	buttonY := labelY - 50
+	buttonY := labelY - labelSize.Y - 50
 	return d.ui.AddImageButton(icon, buttonX, buttonY, 50, 50)
 }
 
