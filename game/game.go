@@ -6,6 +6,7 @@ import (
 	"github.com/kraxarn/ubongo/res"
 	"github.com/kraxarn/ubongo/widget"
 	"image"
+	"math"
 	"time"
 )
 
@@ -69,8 +70,10 @@ func (g *Game) Draw(screen *ebiten.Image) {
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	g.size = image.Pt(outsideWidth, outsideHeight)
-	return outsideWidth, outsideHeight
+	h := outsideHeight
+	w := int(math.Min(float64(outsideWidth), float64(h)*(9.0/16.0)))
+	g.size = image.Pt(w, h)
+	return w, h
 }
 
 func (g *Game) GoTo(scene Scene) {
