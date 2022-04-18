@@ -12,8 +12,8 @@ type WinDialog struct {
 	*Dialog
 }
 
-func NewWinDialog(total time.Duration, screenSize image.Point, x, y, w, h int) (*WinDialog, error) {
-	dialog, err := newDialog(screenSize, x, y, w, h)
+func NewWinDialog(total time.Duration, screenSize image.Point) (*WinDialog, error) {
+	dialog, err := newDialog(screenSize)
 	if err != nil {
 		return nil, err
 	}

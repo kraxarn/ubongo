@@ -19,11 +19,16 @@ type Dialog struct {
 	onRightPressed func()
 }
 
-func newDialog(screenSize image.Point, x, y, w, h int) (*Dialog, error) {
+func newDialog(screenSize image.Point) (*Dialog, error) {
 	ui, err := widget.NewUi()
 	if err != nil {
 		return nil, err
 	}
+
+	w := screenSize.X - widget.ScreenPadding*4
+	h := screenSize.Y / 4
+	x := widget.ScreenPadding * 2
+	y := screenSize.Y/2 - h/2
 
 	backdrop := ebiten.NewImage(screenSize.X, screenSize.Y)
 	backdrop.Fill(colors.DialogBackdrop)

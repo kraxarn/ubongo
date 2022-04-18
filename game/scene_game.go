@@ -161,12 +161,7 @@ func (s *SceneGame) elapsedTime() string {
 }
 
 func (s *SceneGame) getWinDialog(total time.Duration) (*entities.WinDialog, error) {
-	w := s.game.size.X - widget.ScreenPadding*4
-	h := s.game.size.Y / 4
-	x := widget.ScreenPadding * 2
-	y := s.game.size.Y/2 - h/2
-
-	dialog, err := entities.NewWinDialog(total, s.game.size, x, y, w, h)
+	dialog, err := entities.NewWinDialog(total, s.game.size)
 	if err != nil {
 		return nil, err
 	}
