@@ -77,7 +77,7 @@ func (d *Dialog) setInfo(text string) {
 
 	var titleSize image.Point
 	var titlePos image.Point
-	if d.title == nil {
+	if d.title != nil {
 		titleSize = d.title.Size()
 		titlePos = d.title.GetPosition()
 	}
