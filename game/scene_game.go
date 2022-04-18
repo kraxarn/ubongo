@@ -24,6 +24,7 @@ type SceneGame struct {
 	levelText   *widget.Label
 	game        *Game
 	winDialog   *entities.WinDialog
+	pauseDialog *entities.PauseDialog
 }
 
 func NewSceneGame(game *Game, level int64) (*SceneGame, error) {
@@ -40,14 +41,6 @@ func NewSceneGame(game *Game, level int64) (*SceneGame, error) {
 	// Seed for current level
 	rand.Seed(game.seed + level)
 
-	currentTime := ui.AddLabel(0, 0, "000.0")
-
-	// We only set an initial position to avoid jumping text
-	timeSize := currentTime.Size()
-	timeX := game.size.X - int(float64(timeSize.X)*1.25) - widget.ScreenPadding
-	timeY := widget.ScreenPadding + timeSize.Y
-	currentTime.SetPosition(timeX, timeY)
-
 	panelPos := getPanelPos(game)
 	panel := ui.AddNinePatch(res.BackgroundPanel, 0, 0, 0, 0)
 	panel.SetTargetRect(panelPos)
@@ -59,9 +52,20 @@ func NewSceneGame(game *Game, level int64) (*SceneGame, error) {
 	boardY := panelPos.Min.Y - widget.ScreenPadding - boardSize
 	board := entities.NewBoard(pieces, boardX, boardY, boardSize, boardSize)
 
-	ui.AddLabel(boardX, timeY, fmt.Sprintf("Level %d", level))
+	const pauseSize = 50
+	pauseX := game.size.X - pauseSize - widget.ScreenPadding*2
+	pauseY := boardY - pauseSize
+	pause := ui.AddImageButton(res.Pause, pauseX, pauseY, pauseSize, pauseSize)
 
-	return &SceneGame{
+	levelLabel := ui.AddLabel(0, 0, fmt.Sprintf("Level %d", level))
+	levelSize := levelLabel.Size()
+	levelX := pauseX - levelSize.X - widget.ScreenPadding
+	levelY := pauseY + levelSize.Y + ((pauseSize - levelSize.Y) / 2)
+	levelLabel.SetPosition(levelX, levelY)
+
+	currentTime := ui.AddLabel(widget.ScreenPadding*2, levelY, "0.0")
+
+	scene := &SceneGame{
 		startTime:   time.Now(),
 		ui:          ui,
 		currentTime: currentTime,
@@ -70,11 +74,24 @@ func NewSceneGame(game *Game, level int64) (*SceneGame, error) {
 		panel:       panel,
 		level:       level,
 		game:        game,
-	}, nil
+	}
+
+	pause.SetOnPressed(func(*widget.Button) {
+		if dialog, err := scene.getPauseDialog(); err == nil {
+			scene.pauseDialog = dialog
+		}
+	})
+
+	return scene, nil
 }
 
 func (s *SceneGame) Update(game *Game) error {
 	s.ui.Update(game.size)
+
+	if s.pauseDialog != nil {
+		s.pauseDialog.Update(game.size)
+		return nil
+	}
 
 	if s.winDialog == nil {
 		s.currentTime.SetText(s.elapsedTime())
@@ -100,6 +117,10 @@ func (s *SceneGame) Draw(screen *ebiten.Image) {
 
 	for _, piece := range s.pieces {
 		piece.Draw(screen)
+	}
+
+	if s.pauseDialog != nil {
+		s.pauseDialog.Draw(screen)
 	}
 
 	if s.winDialog != nil {
@@ -176,6 +197,23 @@ func (s *SceneGame) getWinDialog(total time.Duration) (*entities.WinDialog, erro
 			s.game.GoBack()
 			s.game.GoTo(scene)
 		}
+	})
+
+	return dialog, nil
+}
+
+func (s *SceneGame) getPauseDialog() (*entities.PauseDialog, error) {
+	dialog, err := entities.NewPauseDialog(s.game.size)
+	if err != nil {
+		return nil, err
+	}
+
+	dialog.SetOnBack(func() {
+		s.game.GoBack()
+	})
+
+	dialog.SetOnResume(func() {
+		s.pauseDialog = nil
 	})
 
 	return dialog, nil
