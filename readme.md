@@ -18,7 +18,9 @@ version is important. The app follows x.y.z versioning where:
 * [ ] Flipping/mirroring pieces
 * [ ] Multiple levels
 * [ ] Sound effects
+* [ ] Looping music
 * [ ] Better Android support
 * [ ] Consistent piece style
 * [ ] Customizable piece count
 * [ ] Customizable board size
+* [ ] Animations
