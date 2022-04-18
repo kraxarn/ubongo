@@ -89,7 +89,7 @@ func (d *Dialog) setInfo(text string) {
 }
 
 func (d *Dialog) addButton(i int, icon res.UiImageType, text string) *widget.ImageButton {
-	part := d.rect.Dx() / 3
+	part := d.rect.Dx() / 5
 	centerX := d.rect.Min.X + (part * i) + (part / 2)
 
 	label := d.ui.AddDebugLabel(0, 0, text)
@@ -104,7 +104,7 @@ func (d *Dialog) addButton(i int, icon res.UiImageType, text string) *widget.Ima
 }
 
 func (d *Dialog) addLeftButton(icon res.UiImageType, text string) {
-	d.addButton(0, icon, text).SetOnPressed(func(*widget.Button) {
+	d.addButton(1, icon, text).SetOnPressed(func(*widget.Button) {
 		if d.onLeftPressed != nil {
 			d.onLeftPressed()
 		}
@@ -112,7 +112,7 @@ func (d *Dialog) addLeftButton(icon res.UiImageType, text string) {
 }
 
 func (d *Dialog) addRightButton(icon res.UiImageType, text string) {
-	d.addButton(2, icon, text).SetOnPressed(func(*widget.Button) {
+	d.addButton(3, icon, text).SetOnPressed(func(*widget.Button) {
 		if d.onRightPressed != nil {
 			d.onRightPressed()
 		}
