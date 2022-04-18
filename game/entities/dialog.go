@@ -90,7 +90,7 @@ func (d *Dialog) setInfo(text string) {
 
 func (d *Dialog) addButton(i int, icon res.UiImageType, text string) *widget.ImageButton {
 	part := d.rect.Dx() / 3
-	centerX := (part * i) + (part / 2)
+	centerX := d.rect.Min.X + (part * i) + (part / 2)
 
 	label := d.ui.AddDebugLabel(0, 0, text)
 	labelSize := label.Size()
