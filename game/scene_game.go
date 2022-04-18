@@ -37,6 +37,9 @@ func NewSceneGame(game *Game, level int64) (*SceneGame, error) {
 		return nil, err
 	}
 
+	// Seed for current level
+	rand.Seed(game.seed + level)
+
 	currentTime := ui.AddLabel(0, 0, "000.0")
 
 	// We only set an initial position to avoid jumping text
@@ -50,7 +53,7 @@ func NewSceneGame(game *Game, level int64) (*SceneGame, error) {
 	panel.SetTargetRect(panelPos)
 
 	boardSize := game.size.X - widget.ScreenPadding*2
-	pieces := getPieces(game.seed+level, imgPieces, panelPos, entities.TileSize(boardSize))
+	pieces := getPieces(imgPieces, panelPos, entities.TileSize(boardSize))
 
 	boardX := widget.ScreenPadding
 	boardY := panelPos.Min.Y - widget.ScreenPadding - boardSize
@@ -186,8 +189,7 @@ func nextPieceIndex() int {
 	return rand.Intn(len(res.PieceImageRects))
 }
 
-func getPieces(seed int64, image *ebiten.Image, container image.Rectangle, tileSize int) [entities.PieceCount]*entities.Piece {
-	rand.Seed(seed)
+func getPieces(image *ebiten.Image, container image.Rectangle, tileSize int) [entities.PieceCount]*entities.Piece {
 	var pieces [entities.PieceCount]*entities.Piece
 	var indexes [res.PieceCount]bool
 
