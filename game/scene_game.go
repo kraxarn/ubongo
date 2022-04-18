@@ -49,7 +49,7 @@ func NewSceneGame(game *Game, level int64) (*SceneGame, error) {
 	currentTime.SetPosition(timeX, timeY)
 
 	panelPos := getPanelPos(game)
-	panel := ui.AddNinePatch(res.PanelBackground, 0, 0, 0, 0)
+	panel := ui.AddNinePatch(res.BackgroundPanel, 0, 0, 0, 0)
 	panel.SetTargetRect(panelPos)
 
 	boardSize := game.size.X - widget.ScreenPadding*2

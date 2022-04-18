@@ -27,7 +27,7 @@ func NewWinDialog(total time.Duration, screenSize image.Point, x, y, w, h int) (
 		return nil, err
 	}
 
-	background := ui.AddNinePatch(res.DialogBackground, x, y, w, h)
+	background := ui.AddNinePatch(res.BackgroundDialog, x, y, w, h)
 
 	title := ui.AddLabel(0, 0, randomMessage())
 	titleSize := title.Size()

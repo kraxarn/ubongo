@@ -24,13 +24,8 @@ func NewGame(opt *Options) *Game {
 		panic(err)
 	}
 
-	imgPattern, err := res.Image("pattern")
-	if err != nil {
-		panic(err)
-	}
-
 	// Background pattern
-	bg := ui.AddRepeatImage(imgPattern, 0, 0, 0, 0)
+	bg := ui.AddRepeatImage(res.Stripes, 0, 0, 0, 0)
 
 	// Debug overlay
 	if opt.DebugOverlay {

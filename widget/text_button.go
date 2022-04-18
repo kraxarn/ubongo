@@ -19,9 +19,13 @@ type TextButton struct {
 
 func NewTextButton(background *ebiten.Image, font font.Face, x, y, w, h int, text string) *TextButton {
 	bounds, _, _ := font.GlyphBounds('M')
+
+	ninePatch := NewNinePatch(background, x, y, w, h)
+	ninePatch.SetSourceRect(res.UiImageRects[res.BackgroundButton])
+
 	return &TextButton{
 		Button:     NewButton(x, y, w, h),
-		background: NewNinePatch(background, x, y, w, h),
+		background: ninePatch,
 		font:       font,
 		fontHeight: (bounds.Max.Y - bounds.Min.Y).Ceil(),
 		Text:       text,
@@ -30,15 +34,6 @@ func NewTextButton(background *ebiten.Image, font font.Face, x, y, w, h int, tex
 
 func (t *TextButton) Update(ui *Ui) {
 	t.Button.Update(ui)
-
-	var imageType res.UiImageType
-	if t.Button.mouseDown {
-		imageType = res.UiButtonPressed
-	} else {
-		imageType = res.UiButton
-	}
-
-	t.background.SetSourceRect(res.UiImageRects[imageType])
 	t.background.SetTargetRect(t.rect)
 }
 

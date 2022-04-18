@@ -6,13 +6,17 @@ import (
 )
 
 type RepeatImage struct {
-	image *ebiten.Image
-	rect  image.Rectangle
+	*Image
+	rect image.Rectangle
 }
 
 func NewRepeatImage(src *ebiten.Image, x, y, w, h int) *RepeatImage {
+	// TODO: Maybe we don't want 2x scale on all images?
+	img := NewImage(src, x, y, 0, 0)
+	img.Rescale(2.0, 2.0)
+
 	return &RepeatImage{
-		image: src,
+		Image: img,
 		rect:  Rect(x, y, w, h),
 	}
 }
@@ -21,14 +25,11 @@ func (r *RepeatImage) Update(*Ui) {
 }
 
 func (r *RepeatImage) Draw(dst *ebiten.Image) {
-	opt := &ebiten.DrawImageOptions{}
-	imgWidth, imgHeight := r.image.Size()
-
-	for x := 0; x < r.rect.Dx(); x += imgWidth {
-		for y := 0; y < r.rect.Dy(); y += imgHeight {
-			opt.GeoM.Reset()
-			opt.GeoM.Translate(float64(x), float64(y))
-			dst.DrawImage(r.image, opt)
+	size := r.Image.ScaledSize()
+	for x := 0; x < r.rect.Dx(); x += size.X {
+		for y := 0; y < r.rect.Dy(); y += size.Y {
+			r.Image.SetPosition(x, y)
+			r.Image.Draw(dst)
 		}
 	}
 }

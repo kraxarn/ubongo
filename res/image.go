@@ -14,25 +14,29 @@ var images embed.FS
 type UiImageType uint8
 
 const (
-	UiButton         UiImageType = iota
-	UiButtonPressed  UiImageType = iota
-	PanelBackground  UiImageType = iota
-	DialogBackground UiImageType = iota
+	BackgroundButton UiImageType = iota
+	BackgroundDialog UiImageType = iota
+	BackgroundPanel  UiImageType = iota
+	Forward          UiImageType = iota
 	MusicOff         UiImageType = iota
 	MusicOn          UiImageType = iota
-	Forward          UiImageType = iota
+	Pause            UiImageType = iota
 	Return           UiImageType = iota
+	Stripes          UiImageType = iota
 )
 
+// UiImageRects are coordinates for ui.png from ui.atlas
+// TODO: Auto parse from atlas file
 var UiImageRects = map[UiImageType]image.Rectangle{
-	UiButton:         image.Rect(0, 0, 45, 49),
-	UiButtonPressed:  image.Rect(45, 0, 90, 45),
-	PanelBackground:  image.Rect(0, 49, 64, 113),
-	DialogBackground: image.Rect(64, 49, 128, 113),
-	MusicOff:         image.Rect(0, 113, 50, 163),
-	MusicOn:          image.Rect(50, 113, 100, 163),
-	Forward:          image.Rect(0, 163, 50, 213),
-	Return:           image.Rect(50, 163, 100, 213),
+	BackgroundButton: r(378, 44, 40, 20),
+	BackgroundDialog: r(64, 0, 64, 64),
+	BackgroundPanel:  r(0, 0, 64, 64),
+	Forward:          r(278, 14, 50, 50),
+	MusicOff:         r(178, 14, 50, 50),
+	MusicOn:          r(328, 14, 50, 50),
+	Pause:            r(228, 14, 50, 50),
+	Return:           r(128, 14, 50, 50),
+	Stripes:          r(378, 16, 28, 28),
 }
 
 // PieceTileSize is the width/height of each tile in a piece
@@ -58,6 +62,10 @@ var PieceImageRects = [PieceCount]image.Rectangle{
 	image.Rect(PieceTileSize*0, PieceTileSize*7, PieceTileSize*4, PieceTileSize*9),
 	image.Rect(PieceTileSize*4, PieceTileSize*7, PieceTileSize*7, PieceTileSize*9),
 	image.Rect(PieceTileSize*7, PieceTileSize*7, PieceTileSize*9, PieceTileSize*9),
+}
+
+func r(x, y, w, h int) image.Rectangle {
+	return image.Rect(x, y, x+w, y+h)
 }
 
 func decodeImage(name string) (*ebiten.Image, error) {

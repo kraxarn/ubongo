@@ -110,8 +110,10 @@ func (u *Ui) AddNinePatch(image res.UiImageType, x, y, w, h int) *NinePatch {
 	return addWidget(u, ninePatch)
 }
 
-func (u *Ui) AddRepeatImage(src *ebiten.Image, x, y, w, h int) *RepeatImage {
-	return addWidget(u, NewRepeatImage(src, x, y, w, h))
+func (u *Ui) AddRepeatImage(image res.UiImageType, x, y, w, h int) *RepeatImage {
+	img := NewRepeatImage(u.image, x, y, w, h)
+	img.SetImageType(image)
+	return addWidget(u, img)
 }
 
 func (u *Ui) AddTitle(x, y int, text string) *Label {
