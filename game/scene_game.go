@@ -107,7 +107,16 @@ func (s *SceneGame) Draw(screen *ebiten.Image) {
 func (s *SceneGame) updatePiece(pos []image.Point) {
 	// Not moving, deselect
 	if len(pos) <= 0 {
-		s.piece = nil
+		if s.piece != nil {
+			if s.board.AllTilesFilled(s.pieces) {
+				var err error
+				s.winDialog, err = s.getWinDialog(time.Now().Sub(s.startTime))
+				if err != nil {
+					fmt.Println("Failed to instance win dialog:", err)
+				}
+			}
+			s.piece = nil
+		}
 		return
 	}
 

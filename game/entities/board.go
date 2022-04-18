@@ -87,6 +87,23 @@ func (b *Board) Position() image.Point {
 	return b.rect.Min
 }
 
+func (b *Board) AllTilesFilled(pieces [PieceCount]*Piece) bool {
+	var pieceTiles []image.Point
+	for _, piece := range pieces {
+		offset := piece.GetPosition()
+		for _, pieceTile := range PieceTiles(piece.Index()) {
+			pieceTiles = append(pieceTiles, offset.Add(pieceTile))
+		}
+	}
+
+	for _, tile := range b.tiles {
+		if !containsPoint(pieceTiles, tile) {
+			return false
+		}
+	}
+	return true
+}
+
 func generateBoard(pieces [PieceCount]*Piece) []image.Point {
 	var tiles []image.Point
 
