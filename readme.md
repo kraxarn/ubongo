@@ -11,7 +11,7 @@ version is important. The app follows x.y.z versioning where:
 * y: Minor, changes in the random generator, could result in a different board.
 * z: Patch, minor changes without any changes to the random generator.
 
-## 1.0.0 goals
+## Goals
 
 * [x] Random board generation
 * [ ] Rotating pieces
@@ -24,3 +24,4 @@ version is important. The app follows x.y.z versioning where:
 * [ ] Customizable piece count
 * [ ] Customizable board size
 * [ ] Animations
+* [ ] Improved detection for dragging pieces
