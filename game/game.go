@@ -70,7 +70,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	h := int(math.Min(float64(outsideWidth)*2, float64(outsideHeight)))
+	h := outsideHeight
 	w := int(math.Min(float64(outsideWidth), float64(outsideHeight)*(9.0/16.0)))
 	g.size = image.Pt(w, h)
 	return w, h
