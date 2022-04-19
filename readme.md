@@ -25,3 +25,5 @@ version is important. The app follows x.y.z versioning where:
 * [ ] Customizable board size
 * [ ] Animations
 * [ ] Improved detection for dragging pieces
+* [ ] "Time rush" game mode (+time for each completed)
+* [ ] Setting for snap to grid on drag or drop
