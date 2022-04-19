@@ -12,19 +12,20 @@ import (
 )
 
 type SceneGame struct {
-	startTime   time.Time
-	ui          *widget.Ui
-	currentTime *widget.Label
-	pieces      [entities.PieceCount]*entities.Piece
-	piece       *entities.Piece
-	pieceOffset image.Point
-	board       *entities.Board
-	panel       *widget.NinePatch
-	level       int64
-	levelText   *widget.Label
-	game        *Game
-	winDialog   *entities.WinDialog
-	pauseDialog *entities.PauseDialog
+	totalDuration time.Duration
+	prevTime      time.Time
+	ui            *widget.Ui
+	currentTime   *widget.Label
+	pieces        [entities.PieceCount]*entities.Piece
+	piece         *entities.Piece
+	pieceOffset   image.Point
+	board         *entities.Board
+	panel         *widget.NinePatch
+	level         int64
+	levelText     *widget.Label
+	game          *Game
+	winDialog     *entities.WinDialog
+	pauseDialog   *entities.PauseDialog
 }
 
 func NewSceneGame(game *Game, level int64) (*SceneGame, error) {
@@ -66,7 +67,7 @@ func NewSceneGame(game *Game, level int64) (*SceneGame, error) {
 	currentTime := ui.AddLabel(widget.ScreenPadding*2, levelY, "0.0")
 
 	scene := &SceneGame{
-		startTime:   time.Now(),
+		prevTime:    time.Now(),
 		ui:          ui,
 		currentTime: currentTime,
 		pieces:      pieces,
@@ -108,6 +109,10 @@ func (s *SceneGame) Update(game *Game) error {
 		piece.Update()
 	}
 
+	now := time.Now()
+	s.totalDuration += now.Sub(s.prevTime)
+	s.prevTime = now
+
 	return nil
 }
 
@@ -134,7 +139,7 @@ func (s *SceneGame) updatePiece(pos []image.Point) {
 		if s.piece != nil {
 			if s.board.AllTilesFilled(s.pieces) {
 				var err error
-				s.winDialog, err = s.getWinDialog(time.Now().Sub(s.startTime))
+				s.winDialog, err = s.getWinDialog(s.totalDuration)
 				if err != nil {
 					fmt.Println("Failed to instance win dialog:", err)
 				}
@@ -177,8 +182,7 @@ func (s *SceneGame) updatePiece(pos []image.Point) {
 }
 
 func (s *SceneGame) elapsedTime() string {
-	duration := time.Now().Sub(s.startTime)
-	return fmt.Sprintf("%.1f", duration.Seconds())
+	return fmt.Sprintf("%.1f", s.totalDuration.Seconds())
 }
 
 func (s *SceneGame) getWinDialog(total time.Duration) (*entities.WinDialog, error) {
@@ -214,6 +218,7 @@ func (s *SceneGame) getPauseDialog() (*entities.PauseDialog, error) {
 
 	dialog.SetOnResume(func() {
 		s.pauseDialog = nil
+		s.prevTime = time.Now()
 	})
 
 	return dialog, nil
