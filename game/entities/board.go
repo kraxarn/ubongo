@@ -6,6 +6,7 @@ import (
 	"github.com/kraxarn/ubongo/game/colors"
 	"github.com/kraxarn/ubongo/widget"
 	"image"
+	"math"
 	"math/rand"
 )
 
@@ -65,7 +66,7 @@ func (b *Board) Draw(dst *ebiten.Image) {
 
 		// Horizontal
 		opt.GeoM.Reset()
-		opt.GeoM.Rotate(-1.57)
+		opt.GeoM.Rotate(-90.0 * 2 * math.Pi / 360)
 		opt.GeoM.Translate(float64(pos.X+linePadding), float64(pos.Y+(i*b.tileSize)))
 		dst.DrawImage(b.line, opt)
 	}
