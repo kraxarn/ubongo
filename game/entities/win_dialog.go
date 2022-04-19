@@ -18,7 +18,7 @@ func NewWinDialog(total time.Duration, screenSize image.Point) (*WinDialog, erro
 		return nil, err
 	}
 
-	dialog.setTitle(randomMessage())
+	dialog.setTitle(randomMessage(total))
 	dialog.setInfo(fmt.Sprintf("You completed in %.3f seconds", total.Seconds()))
 
 	dialog.addLeftButton(res.Return, "Back to menu")
@@ -37,17 +37,29 @@ func (d *WinDialog) SetOnNext(pressed func()) {
 	d.onRightPressed = pressed
 }
 
-func randomMessage() string {
-	messages := []string{
-		"You won!",
-		"You did it!",
-		"Amazing!",
-		"neat",
-		"Cool!",
-		"Congratulations!",
-		"gz",
-		"Puzzle Defeated",
-		"Just in time!",
+func randomMessage(total time.Duration) string {
+	var messages []string
+
+	if total < time.Second*10 {
+		messages = []string{
+			"Amazing!",
+			"Incredible!",
+			"That was quick!",
+		}
+	} else if total > time.Minute {
+		messages = []string{
+			"neat",
+			"Puzzle Defeated",
+			"Just in time!",
+			"Phew!",
+		}
+	} else {
+		messages = []string{
+			"You won!",
+			"You did it!",
+			"Cool!",
+			"Congratulations!",
+		}
 	}
 
 	// Seed should be reset when loading the next level,
