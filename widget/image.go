@@ -4,6 +4,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/kraxarn/ubongo/res"
 	"image"
+	"math"
 )
 
 // Image is an image, or a sheet of multiple images
@@ -11,6 +12,8 @@ type Image struct {
 	image      *ebiten.Image
 	scaleX     float64
 	scaleY     float64
+	theta      float64
+	deg        float64
 	sourceRect image.Rectangle
 	position   image.Point
 }
@@ -31,6 +34,17 @@ func (i *Image) Update(*Ui) {
 
 func (i *Image) Draw(dst *ebiten.Image) {
 	opt := &ebiten.DrawImageOptions{}
+
+	if i.theta != 0 {
+		size := i.Size()
+		offsetX := float64(size.X / -2)
+		offsetY := float64(size.Y / -2)
+
+		opt.GeoM.Translate(offsetX, offsetY)
+		opt.GeoM.Rotate(i.theta)
+		opt.GeoM.Translate(-offsetX, -offsetY)
+	}
+
 	opt.GeoM.Scale(i.scaleX, i.scaleY)
 	opt.GeoM.Translate(float64(i.position.X), float64(i.position.Y))
 
@@ -107,4 +121,13 @@ func (i *Image) SetSourceRect(rect image.Rectangle) {
 
 func (i *Image) SetImageType(image res.UiImageType) {
 	i.SetSourceRect(res.UiImageRects[image])
+}
+
+func (i *Image) Rotate(deg float64) {
+	i.deg += deg
+	i.theta = i.deg * 2 * math.Pi / 360
+}
+
+func (i *Image) Rotation() float64 {
+	return i.deg
 }
