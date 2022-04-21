@@ -18,7 +18,7 @@ func NewOverlay(font font.Face) *Overlay {
 }
 
 func (o *Overlay) Update(*Ui) {
-	o.label.text = fmt.Sprintf("FPS: %.0f\nTPS: %.0f",
+	o.label.text = fmt.Sprintf("%.0f\n%.0f",
 		ebiten.CurrentFPS(), ebiten.CurrentTPS())
 }
 
