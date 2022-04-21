@@ -28,7 +28,7 @@ func NewGame(opt *Options) *Game {
 	bg := ui.AddRepeatImage(res.Stripes, 0, 0, 0, 0)
 
 	// Debug overlay
-	if opt.DebugOverlay {
+	if opt.DebugMode {
 		ui.AddDebugOverlay()
 	}
 

@@ -15,7 +15,7 @@ func main() {
 	ebiten.SetWindowResizable(true)
 
 	opt := game.Options{}
-	flag.BoolVar(&opt.DebugOverlay, "enable-overlay", false, "enable debug overlay")
+	flag.BoolVar(&opt.DebugMode, "debug", false, "enable debug drawing")
 	flag.Parse()
 
 	err := ebiten.RunGame(game.NewGame(&opt))

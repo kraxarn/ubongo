@@ -2,6 +2,6 @@ package game
 
 // Options for a Game instance
 type Options struct {
-	// Show debug overlay with FPS/TPS
-	DebugOverlay bool
+	// Show debug overlay and debug boxes
+	DebugMode bool
 }
