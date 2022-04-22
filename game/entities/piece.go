@@ -51,6 +51,10 @@ func (p *Piece) Update() {
 	} else {
 		p.image.Rotate(-step)
 	}
+
+	if p.image.Rotation() == p.rotation {
+		RotatePiece(p.points)
+	}
 }
 
 func (p *Piece) Draw(dst *ebiten.Image) {

@@ -134,3 +134,10 @@ func PieceSize(points []image.Point) image.Point {
 	size.Add(image.Pt(1, 1))
 	return size
 }
+
+func RotatePiece(points []image.Point) {
+	for i, point := range points {
+		points[i].X = -point.Y
+		points[i].Y = point.X
+	}
+}

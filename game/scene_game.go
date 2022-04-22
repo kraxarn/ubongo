@@ -20,6 +20,7 @@ type SceneGame struct {
 	pieces        [entities.PieceCount]*entities.Piece
 	piece         *entities.Piece
 	pieceOffset   image.Point
+	pieceStart    image.Point
 	board         *entities.Board
 	panel         *widget.NinePatch
 	level         int64
@@ -172,6 +173,8 @@ func (s *SceneGame) updatePiece(pos []image.Point) {
 				if err != nil {
 					fmt.Println("Failed to instance win dialog:", err)
 				}
+			} else if s.shouldRotatePiece() {
+				s.piece.Rotate(90)
 			}
 			s.piece = nil
 		}
@@ -202,6 +205,8 @@ func (s *SceneGame) updatePiece(pos []image.Point) {
 			s.piece = s.pieces[i]
 			// Get offset from where we clicked it
 			s.pieceOffset = pos[0].Sub(s.piece.GetPosition())
+			// Where we started dragging from
+			s.pieceStart = s.piece.GetPosition()
 			// Move to back to draw last
 			s.pieces[i] = s.pieces[len(s.pieces)-1]
 			s.pieces[len(s.pieces)-1] = s.piece
@@ -251,6 +256,12 @@ func (s *SceneGame) getPauseDialog() (*entities.PauseDialog, error) {
 	})
 
 	return dialog, nil
+}
+
+func (s *SceneGame) shouldRotatePiece() bool {
+	threshold := s.board.TileSize() / 8
+	dist := s.piece.GetPosition().Sub(s.pieceStart)
+	return dist.X < threshold && dist.X > -threshold && dist.Y < threshold && dist.Y > -threshold
 }
 
 func nextPieceIndex() int {
