@@ -5,6 +5,7 @@ import (
 	"github.com/kraxarn/ubongo/res"
 	"github.com/kraxarn/ubongo/widget"
 	"image"
+	"math"
 )
 
 type Piece struct {
@@ -12,6 +13,7 @@ type Piece struct {
 	image      *widget.Image
 	sourceRect image.Rectangle
 	size       image.Point
+	rotation   float64
 }
 
 func NewPiece(pieces *ebiten.Image, tileSize, index, x, y int) *Piece {
@@ -35,6 +37,20 @@ func NewPiece(pieces *ebiten.Image, tileSize, index, x, y int) *Piece {
 }
 
 func (p *Piece) Update() {
+	current := p.image.Rotation()
+	if p.rotation == current {
+		return
+	}
+
+	pos := math.Abs(p.rotation - current)
+	speed := (90 - math.Abs(45-pos)) / 7.5
+	step := math.Min(pos, speed)
+
+	if p.rotation > current {
+		p.image.Rotate(step)
+	} else {
+		p.image.Rotate(-step)
+	}
 }
 
 func (p *Piece) Draw(dst *ebiten.Image) {
@@ -61,4 +77,12 @@ func (p *Piece) Size() image.Point {
 
 func (p *Piece) Index() int {
 	return p.index
+}
+
+func (p *Piece) Rotate(deg float64) {
+	if p.rotation != p.image.Rotation() {
+		return
+	}
+
+	p.rotation += deg
 }
