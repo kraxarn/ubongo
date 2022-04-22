@@ -16,6 +16,7 @@ type Game struct {
 	background *widget.RepeatImage
 	scenes     *SceneManager
 	seed       int64
+	opt        *Options
 }
 
 func NewGame(opt *Options) *Game {
@@ -39,6 +40,7 @@ func NewGame(opt *Options) *Game {
 		background: bg,
 		scenes:     sceneManager,
 		seed:       generateSeed(),
+		opt:        opt,
 	}
 
 	// Load title scene
