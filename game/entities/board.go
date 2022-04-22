@@ -92,7 +92,7 @@ func (b *Board) AllTilesFilled(pieces [PieceCount]*Piece) bool {
 	var pieceTiles []image.Point
 	for _, piece := range pieces {
 		offset := piece.GetPosition().Sub(b.Position()).Div(b.TileSize())
-		for _, pieceTile := range PieceTiles(piece.Index()) {
+		for _, pieceTile := range piece.Points() {
 			pieceTiles = append(pieceTiles, offset.Add(pieceTile))
 		}
 	}
@@ -115,7 +115,7 @@ func generateBoard(pieces [PieceCount]*Piece) []image.Point {
 	})
 
 	for i, piece := range shuffled {
-		tileData := PieceTiles(piece.Index())
+		tileData := piece.Points()
 
 		// Place first in center
 		if i == 0 {

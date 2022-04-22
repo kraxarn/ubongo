@@ -152,7 +152,7 @@ func (s *SceneGame) Draw(screen *ebiten.Image) {
 
 		for _, piece := range s.pieces {
 			offset := piece.GetPosition()
-			for _, pieceTile := range entities.PieceTiles(piece.Index()) {
+			for _, pieceTile := range piece.Points() {
 				pos := offset.Add(pieceTile.Mul(tileSize)).Add(margin)
 				opt.GeoM.Reset()
 				opt.GeoM.Translate(float64(pos.X), float64(pos.Y))

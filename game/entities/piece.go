@@ -9,10 +9,10 @@ import (
 )
 
 type Piece struct {
-	index      int
 	image      *widget.Image
 	sourceRect image.Rectangle
 	size       image.Point
+	points     []image.Point
 	rotation   float64
 }
 
@@ -29,10 +29,10 @@ func NewPiece(pieces *ebiten.Image, tileSize, index, x, y int) *Piece {
 	h := int(float64(size.Y) * scale)
 
 	return &Piece{
-		index:      index,
 		image:      img,
 		sourceRect: sourceRect,
 		size:       image.Pt(w, h),
+		points:     PieceTiles(index),
 	}
 }
 
@@ -75,8 +75,8 @@ func (p *Piece) Size() image.Point {
 	return p.size
 }
 
-func (p *Piece) Index() int {
-	return p.index
+func (p *Piece) Points() []image.Point {
+	return p.points
 }
 
 func (p *Piece) Rotate(deg float64) {
