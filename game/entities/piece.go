@@ -12,6 +12,7 @@ type Piece struct {
 	image      *widget.Image
 	sourceRect image.Rectangle
 	size       image.Point
+	origin     image.Point
 	points     []image.Point
 	rotation   float64
 }
@@ -24,6 +25,10 @@ func NewPiece(pieces *ebiten.Image, tileSize, index, x, y int) *Piece {
 	scale := float64(tileSize) / res.PieceTileSize
 	img.Rescale(scale, scale)
 
+	points := PieceTiles(index)
+	origin := PieceOrigin(points)
+	img.SetOrigin(origin.Mul(tileSize))
+
 	size := sourceRect.Size()
 	w := int(float64(size.X) * scale)
 	h := int(float64(size.Y) * scale)
@@ -32,7 +37,8 @@ func NewPiece(pieces *ebiten.Image, tileSize, index, x, y int) *Piece {
 		image:      img,
 		sourceRect: sourceRect,
 		size:       image.Pt(w, h),
-		points:     PieceTiles(index),
+		origin:     origin,
+		points:     points,
 	}
 }
 
@@ -53,7 +59,7 @@ func (p *Piece) Update() {
 	}
 
 	if p.image.Rotation() == p.rotation {
-		RotatePiece(p.points)
+		p.rotate()
 	}
 }
 
@@ -89,4 +95,11 @@ func (p *Piece) Rotate(deg float64) {
 	}
 
 	p.rotation += deg
+}
+
+func (p *Piece) rotate() {
+	for i, point := range p.points {
+		p.points[i].X = -point.Y + p.origin.X
+		p.points[i].Y = point.X + p.origin.Y
+	}
 }

@@ -120,24 +120,28 @@ func PieceTiles(index int) []image.Point {
 }
 
 func PieceSize(points []image.Point) image.Point {
-	size := image.Point{}
+	min := image.Point{}
+	max := image.Point{}
 
 	for _, point := range points {
-		if point.X > size.X {
-			size.X = point.X
+		if point.X < min.X {
+			min.X = point.X
 		}
-		if point.Y > size.Y {
-			size.Y = point.Y
+		if point.X > max.X {
+			max.X = point.X
+		}
+		if point.Y < min.Y {
+			min.Y = point.Y
+		}
+		if point.Y > max.Y {
+			max.Y = point.Y
 		}
 	}
 
-	size.Add(image.Pt(1, 1))
-	return size
+	max.Sub(min).Add(image.Pt(1, 1))
+	return max
 }
 
-func RotatePiece(points []image.Point) {
-	for i, point := range points {
-		points[i].X = -point.Y
-		points[i].Y = point.X
-	}
+func PieceOrigin(points []image.Point) image.Point {
+	return PieceSize(points).Div(2)
 }
