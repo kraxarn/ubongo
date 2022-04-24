@@ -104,6 +104,6 @@ func (p *Piece) Rotate(deg float64) {
 func (p *Piece) rotate() {
 	for i, point := range p.points {
 		p.points[i].X = -point.Y + p.origin.X
-		p.points[i].Y = point.X + p.origin.Y
+		p.points[i].Y = point.X - p.origin.Y
 	}
 }
