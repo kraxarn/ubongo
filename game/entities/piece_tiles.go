@@ -149,3 +149,10 @@ func PieceOrigin(points []image.Point) image.Point {
 	y := math.Ceil(float64(size.Y) / 2.0)
 	return image.Pt(int(x), int(y))
 }
+
+func RotatePiece(points []image.Point, origin image.Point) {
+	for i, point := range points {
+		points[i].X = -point.Y + origin.X
+		points[i].Y = point.X - origin.Y
+	}
+}
