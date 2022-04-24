@@ -139,8 +139,7 @@ func PieceSize(points []image.Point) image.Point {
 		}
 	}
 
-	max.Sub(min).Add(image.Pt(1, 1))
-	return max
+	return max.Sub(min).Add(image.Pt(1, 1))
 }
 
 func PieceOrigin(points []image.Point) image.Point {
