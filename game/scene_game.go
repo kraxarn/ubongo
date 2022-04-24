@@ -146,6 +146,7 @@ func (s *SceneGame) Draw(screen *ebiten.Image) {
 
 	if s.debugPoint != nil {
 		s.drawDebugOrigin(screen)
+		s.drawDebugRect(screen)
 	}
 }
 

@@ -50,3 +50,20 @@ func (s *SceneGame) drawDebugOrigin(screen *ebiten.Image) {
 		screen.DrawImage(s.debugPoint, &opt)
 	}
 }
+
+func (s *SceneGame) drawDebugRect(screen *ebiten.Image) {
+	opt := ebiten.DrawImageOptions{}
+	for _, piece := range s.pieces {
+		rect := piece.Rect()
+		for _, point := range []image.Point{
+			rect.Min,
+			image.Pt(rect.Max.X, rect.Min.Y),
+			image.Pt(rect.Min.X, rect.Max.Y),
+			rect.Max,
+		} {
+			opt.GeoM.Reset()
+			opt.GeoM.Translate(float64(point.X), float64(point.Y))
+			screen.DrawImage(s.debugPoint, &opt)
+		}
+	}
+}
