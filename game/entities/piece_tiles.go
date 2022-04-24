@@ -2,6 +2,7 @@ package entities
 
 import (
 	"image"
+	"math"
 )
 
 func PieceTiles(index int) []image.Point {
@@ -143,5 +144,8 @@ func PieceSize(points []image.Point) image.Point {
 }
 
 func PieceOrigin(points []image.Point) image.Point {
-	return PieceSize(points).Div(2)
+	size := PieceSize(points)
+	x := math.Ceil(float64(size.X) / 2.0)
+	y := math.Ceil(float64(size.Y) / 2.0)
+	return image.Pt(int(x), int(y))
 }
