@@ -143,6 +143,10 @@ func (s *SceneGame) Draw(screen *ebiten.Image) {
 	if s.debugTile != nil {
 		s.drawDebugTile(screen)
 	}
+
+	if s.debugPoint != nil {
+		s.drawDebugOrigin(screen)
+	}
 }
 
 func (s *SceneGame) updatePiece(pos []image.Point) {

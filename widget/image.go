@@ -16,7 +16,7 @@ type Image struct {
 	deg        float64
 	sourceRect image.Rectangle
 	position   image.Point
-	origin     image.Point
+	Origin     image.Point
 }
 
 func NewImage(src *ebiten.Image, x, y, w, h int) *Image {
@@ -37,8 +37,8 @@ func (i *Image) Draw(dst *ebiten.Image) {
 	opt := &ebiten.DrawImageOptions{}
 
 	if i.theta != 0 {
-		originX := float64(i.origin.X)
-		originY := float64(i.origin.Y)
+		originX := float64(i.Origin.X)
+		originY := float64(i.Origin.Y)
 
 		opt.GeoM.Translate(-originX, -originY)
 		opt.GeoM.Rotate(i.theta)
@@ -105,10 +105,6 @@ func (i *Image) SetWidth(w int) {
 func (i *Image) GetHeight() int {
 	size := i.Size()
 	return int(float64(size.Y) * i.scaleY)
-}
-
-func (i *Image) SetOrigin(origin image.Point) {
-	i.origin = origin
 }
 
 func (i *Image) GetPosition() image.Point {

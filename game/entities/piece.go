@@ -27,7 +27,7 @@ func NewPiece(pieces *ebiten.Image, tileSize, index, x, y int) *Piece {
 
 	points := PieceTiles(index)
 	origin := PieceOrigin(points)
-	img.SetOrigin(origin.Mul(tileSize))
+	img.Origin = origin.Mul(tileSize)
 
 	size := sourceRect.Size()
 	w := int(float64(size.X) * scale)
@@ -73,6 +73,10 @@ func (p *Piece) GetPosition() image.Point {
 
 func (p *Piece) SetPosition(x, y int) {
 	p.image.SetPosition(x, y)
+}
+
+func (p *Piece) Origin() image.Point {
+	return p.image.Origin
 }
 
 func (p *Piece) Rect() image.Rectangle {

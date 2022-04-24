@@ -22,7 +22,7 @@ func debugTile(tileSize int) *ebiten.Image {
 }
 
 func debugPoint() *ebiten.Image {
-	return debugImage(3)
+	return debugImage(5)
 }
 
 func (s *SceneGame) drawDebugTile(screen *ebiten.Image) {
@@ -38,5 +38,15 @@ func (s *SceneGame) drawDebugTile(screen *ebiten.Image) {
 			opt.GeoM.Translate(float64(pos.X), float64(pos.Y))
 			screen.DrawImage(s.debugTile, &opt)
 		}
+	}
+}
+
+func (s *SceneGame) drawDebugOrigin(screen *ebiten.Image) {
+	opt := ebiten.DrawImageOptions{}
+	for _, piece := range s.pieces {
+		pos := piece.GetPosition().Add(piece.Origin())
+		opt.GeoM.Reset()
+		opt.GeoM.Translate(float64(pos.X), float64(pos.Y))
+		screen.DrawImage(s.debugPoint, &opt)
 	}
 }
