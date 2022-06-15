@@ -1,7 +1,11 @@
-# Manifest copied from dist/
-AndroidManifest.xml
+.gradle
+gradle-app.setting
+build/
 
-# Built binaries
-ubongo
-ubongo.exe
-ubongo.apk
+.idea/
+*.ipr
+*.iws
+*.iml
+out/
+
+.DS_Store
