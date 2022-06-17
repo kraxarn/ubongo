@@ -6,6 +6,7 @@ import com.soywiz.korim.bitmap.NativeImage
 import com.soywiz.korim.bitmap.asNinePatch
 import com.soywiz.korim.bitmap.context2d
 import com.soywiz.korim.color.Colors
+import com.soywiz.korio.lang.InvalidArgumentException
 import com.soywiz.korma.geom.vector.roundRect
 
 class ButtonSkin : UISkin()
@@ -28,7 +29,7 @@ class ButtonSkin : UISkin()
 				UiSkinType.OVER -> Colors["#757de8"]     // Indigo 500 (Light)
 				UiSkinType.DOWN -> Colors["#002984"]     // Indigo 500 (Dark)
 				UiSkinType.DISABLED -> Colors["#607d8b"] // Blue grey 500
-				else -> TODO()
+				else -> throw InvalidArgumentException(type.toString())
 			}
 
 			fill(fillColor) {
