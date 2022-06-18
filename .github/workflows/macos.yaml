@@ -1,0 +1,25 @@
+name: Desktop
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build
+        run: ./gradlew packageMacosX64AppRelease
+
+      - name: Test
+        run: ./gradlew macosX64Test
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ubongo-macos
+          path: ./build/ubongo-release.app
