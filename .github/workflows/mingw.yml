@@ -2,7 +2,7 @@ name: Linux
 
 on:
   push:
-    branches: [ master ]
+    branches: [ korge ]
   pull_request:
     branches: [ master ]
 
