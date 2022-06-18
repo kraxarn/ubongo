@@ -14,7 +14,6 @@ jobs:
 
       # https://docs.korge.org/korge/deployment/desktop
       - name: Install dependencies
-        if: contains(matrix.os, 'ubuntu')
         run: |
           sudo apt update
           sudo apt install freeglut3-dev libopenal-dev
