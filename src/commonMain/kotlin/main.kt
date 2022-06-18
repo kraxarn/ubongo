@@ -28,6 +28,7 @@ object Game : Module()
 
 	override suspend fun AsyncInjector.configure()
 	{
-		mapPrototype { MenuScene() }
+		mapInstance(GameState())
+		mapPrototype { MenuScene(get()) }
 	}
 }

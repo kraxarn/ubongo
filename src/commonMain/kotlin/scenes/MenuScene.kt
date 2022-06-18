@@ -1,5 +1,6 @@
 package scenes
 
+import GameState
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.component.length.*
 import com.soywiz.korge.scene.Scene
@@ -16,7 +17,7 @@ import images.background
 import skins.ButtonSkin
 
 @KorgeExperimental
-class MenuScene : Scene()
+class MenuScene(private val gameState: GameState) : Scene()
 {
 	private lateinit var logoBitmap: Bitmap
 
