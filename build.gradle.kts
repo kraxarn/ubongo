@@ -43,8 +43,5 @@ korge {
 	targetJs()
 	targetDesktop()
 	targetIos()
-
-	// AndroidDirect is required for version code to be set properly
-	// AndroidIndirect is required for atlases to work properly
-	targetAndroidIndirect()
+	targetAndroidDirect()
 }
