@@ -12,9 +12,9 @@ import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korim.format.readBitmap
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.file.std.resourcesVfs
+import components.Background
 import constants.GameColors
 import constants.TextSize
-import images.background
 import skins.ButtonSkin
 import utils.randomWord
 
@@ -30,8 +30,6 @@ class MenuScene(private val gameState: GameState) : Scene()
 	override suspend fun Container.sceneInit()
 	{
 		logoBitmap = resourcesVfs["images/logo.png"].readBitmap()
-
-		image(background(views.virtualWidth, views.virtualHeight))
 
 		titleSkin = UISkin {
 			textFont = resourcesVfs["fonts/title.ttf"].readTtfFont()
@@ -51,6 +49,8 @@ class MenuScene(private val gameState: GameState) : Scene()
 
 	override suspend fun Container.sceneMain()
 	{
+		addComponent(Background(views))
+
 		container {
 			image(logoBitmap).centered
 			uiText("Ubongo") {
