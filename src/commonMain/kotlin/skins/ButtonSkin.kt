@@ -7,9 +7,6 @@ import com.soywiz.korim.bitmap.asNinePatchSimple
 import com.soywiz.korim.bitmap.context2d
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
-import com.soywiz.korim.format.writeTo
-import com.soywiz.korio.async.runBlockingNoJs
-import com.soywiz.korio.file.std.applicationVfs
 import com.soywiz.korio.lang.InvalidArgumentException
 import extensions.roundRect
 
@@ -67,10 +64,6 @@ class ButtonSkin : UISkin()
 			}
 		}
 
-		runBlockingNoJs {
-			img.writeTo(applicationVfs["button/${type.name}.png"])
-		}
-
 		return img.asNinePatchSimple(INSET, INSET, INSET, INSET)
 	}
 
@@ -83,13 +76,3 @@ class ButtonSkin : UISkin()
 		const val INSET = 22
 	}
 }
-
-private val UiSkinType.name
-	get() = when (this)
-	{
-		UiSkinType.NORMAL -> "normal"
-		UiSkinType.OVER -> "over"
-		UiSkinType.DOWN -> "down"
-		UiSkinType.DISABLED -> "disabled"
-		else -> null
-	}
