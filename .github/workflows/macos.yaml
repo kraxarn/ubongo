@@ -19,11 +19,11 @@ jobs:
           java-version: 11
           cache: gradle
 
-      - name: Build
-        run: ./gradlew packageMacosX64AppRelease
-
       - name: Test
         run: ./gradlew macosX64Test
+
+      - name: Build
+        run: ./gradlew packageMacosX64AppRelease
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2

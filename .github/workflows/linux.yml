@@ -18,11 +18,11 @@ jobs:
           sudo apt update
           sudo apt install freeglut3-dev libopenal-dev
 
-      - name: Build
-        run: ./gradlew linkReleaseExecutableLinuxX64
-
       - name: Test
         run: ./gradlew linuxX64Test
+
+      - name: Build
+        run: ./gradlew linkReleaseExecutableLinuxX64
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2

@@ -19,11 +19,11 @@ jobs:
           java-version: 11
           cache: gradle
 
-      - name: Build
-        run: ./gradlew linkReleaseExecutableMingwX64
-
       - name: Test
         run: ./gradlew mingwX64Test
+
+      - name: Build
+        run: ./gradlew linkReleaseExecutableMingwX64
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
