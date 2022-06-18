@@ -20,7 +20,7 @@ jobs:
           sudo apt install freeglut3-dev libopenal-dev
 
       - name: Build
-        run: ./gradlew android:assembleRelease
+        run: ./gradlew assembleRelease
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
