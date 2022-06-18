@@ -1,5 +1,6 @@
 package scenes
 
+import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.component.length.*
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.*
@@ -19,6 +20,7 @@ import constants.GameColors
 import constants.TextSize
 import skins.ButtonSkin
 
+@KorgeExperimental
 class MenuScene : Scene()
 {
 	private lateinit var logoBitmap: Bitmap

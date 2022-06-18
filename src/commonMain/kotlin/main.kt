@@ -1,4 +1,5 @@
 import com.soywiz.korge.Korge
+import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.scene.Module
 import com.soywiz.korim.format.PNG
 import com.soywiz.korinject.AsyncInjector
@@ -8,8 +9,10 @@ import com.soywiz.korma.geom.SizeInt
 import constants.GameColors
 import scenes.MenuScene
 
+@KorgeExperimental
 suspend fun main() = Korge(Korge.Config(Game))
 
+@KorgeExperimental
 object Game : Module()
 {
 	override val mainScene get() = MenuScene::class
