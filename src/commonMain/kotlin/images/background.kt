@@ -1,5 +1,6 @@
 package images
 
+import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.component.length.height
 import com.soywiz.korge.component.length.lengths
 import com.soywiz.korge.component.length.width
@@ -10,6 +11,7 @@ import com.soywiz.korim.paint.LinearGradientPaint
 import com.soywiz.korma.geom.vector.rect
 import constants.GameColors
 
+@KorgeExperimental
 fun background(width: Int, height: Int): Image
 {
 	val bitmap = NativeImage(width, height).context2d {
