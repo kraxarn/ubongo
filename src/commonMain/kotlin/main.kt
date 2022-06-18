@@ -1,5 +1,6 @@
 import com.soywiz.korge.Korge
 import com.soywiz.korge.scene.Module
+import com.soywiz.korim.format.PNG
 import com.soywiz.korinject.AsyncInjector
 import com.soywiz.korma.geom.Anchor
 import com.soywiz.korma.geom.ScaleMode
@@ -20,6 +21,7 @@ object Game : Module()
 	override val scaleMode get() = ScaleMode.SHOW_ALL
 	override val clipBorders get() = false
 	override val scaleAnchor get() = Anchor.TOP_LEFT
+	override val imageFormats get() = listOf(PNG)
 
 	override suspend fun AsyncInjector.configure()
 	{
