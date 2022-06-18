@@ -31,8 +31,6 @@ class MenuScene(private val gameState: GameState) : Scene()
 	{
 		logoBitmap = resourcesVfs["images/logo.png"].readBitmap()
 
-		image(background(views.virtualWidth, views.virtualHeight))
-
 		titleSkin = UISkin {
 			textFont = resourcesVfs["fonts/title.ttf"].readTtfFont()
 			textColor = GameColors.foregroundAlt
@@ -51,6 +49,8 @@ class MenuScene(private val gameState: GameState) : Scene()
 
 	override suspend fun Container.sceneMain()
 	{
+		addChild(background(views.virtualWidth, views.virtualHeight))
+
 		container {
 			image(logoBitmap).centered
 			uiText("Ubongo") {
