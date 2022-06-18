@@ -5,8 +5,6 @@ import com.soywiz.korge.component.length.*
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
-import com.soywiz.korim.atlas.Atlas
-import com.soywiz.korim.atlas.readAtlas
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.bitmap.Bitmap32
 import com.soywiz.korim.bitmap.context2d
@@ -24,7 +22,6 @@ import skins.ButtonSkin
 class MenuScene : Scene()
 {
 	private lateinit var logoBitmap: Bitmap
-	private lateinit var uiAtlas: Atlas
 
 	private lateinit var titleSkin: UISkin
 	private lateinit var buttonSkin: UISkin
@@ -32,7 +29,6 @@ class MenuScene : Scene()
 	override suspend fun Container.sceneInit()
 	{
 		logoBitmap = resourcesVfs["images/logo.png"].readBitmap()
-		uiAtlas = resourcesVfs["images/ui.atlas.json"].readAtlas()
 
 		val width = views.virtualWidth
 		val height = views.virtualHeight
