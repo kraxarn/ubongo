@@ -12,6 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # https://docs.korge.org/korge/deployment/desktop
+      # Linux dependencies are also required for Android
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install freeglut3-dev libopenal-dev
+
       - name: Build
         run: ./gradlew android:assembleRelease
 
