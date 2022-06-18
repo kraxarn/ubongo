@@ -8,7 +8,6 @@ import com.soywiz.korim.atlas.Atlas
 import com.soywiz.korim.atlas.readAtlas
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.bitmap.Bitmap32
-import com.soywiz.korim.bitmap.asNinePatchSimple
 import com.soywiz.korim.bitmap.context2d
 import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korim.format.readBitmap
@@ -16,9 +15,9 @@ import com.soywiz.korim.paint.LinearGradientPaint
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korma.geom.vector.rect
-import com.soywiz.korma.geom.vector.roundRect
 import constants.GameColors
 import constants.TextSize
+import skins.ButtonSkin
 
 class MenuScene : Scene()
 {
@@ -33,10 +32,6 @@ class MenuScene : Scene()
 		logoBitmap = resourcesVfs["images/logo.png"].readBitmap()
 		uiAtlas = resourcesVfs["images/ui.atlas.json"].readAtlas()
 
-//		roundRect(512, 512, 32) {
-//			position(64, 64)
-//		}
-
 		val width = views.virtualWidth
 		val height = views.virtualHeight
 
@@ -50,20 +45,7 @@ class MenuScene : Scene()
 			}
 		}
 
-		val buttonSize = 128
-		val border = 12
-
-		val button = Bitmap32(buttonSize, buttonSize).context2d {
-			fill(GameColors.shadow) {
-				roundRect(border, border, buttonSize - border, buttonSize - border, 16)
-			}
-			fill(GameColors.buttonBackground) {
-				roundRect(0, 0, buttonSize - border, buttonSize - border, 16)
-			}
-		}
-
 		image(background)
-		image(button, -0.4, -0.4)
 
 		titleSkin = UISkin {
 			textFont = resourcesVfs["fonts/title.ttf"].readTtfFont()
@@ -71,13 +53,8 @@ class MenuScene : Scene()
 			textSize = TextSize.title
 		}
 
-		buttonSkin = UISkin {
-			textFont = resourcesVfs["fonts/regular.ttf"].readTtfFont()
-			textColor = GameColors.foregroundAlt
-			textSize = TextSize.button
-			buttonNormal = button.asNinePatchSimple(22, 22, 22, 22)
-//			buttonNormal = uiAtlas["button.9.png"].asNinePatch()
-		}
+		val buttonFont = resourcesVfs["fonts/regular.ttf"].readTtfFont()
+		buttonSkin = ButtonSkin(buttonFont)
 	}
 
 	override suspend fun Container.sceneMain()
@@ -99,7 +76,7 @@ class MenuScene : Scene()
 		}
 
 		val startGame = uiButton("Start Game") {
-//			uiSkin = buttonSkin
+			uiSkin = buttonSkin
 		}
 
 		val generateSeed = uiButton("Generate Seed") {
