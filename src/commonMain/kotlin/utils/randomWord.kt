@@ -1,6 +1,7 @@
 package utils
 
 import com.soywiz.korio.file.std.resourcesVfs
+import kotlin.math.abs
 import kotlin.random.Random
 
 private suspend fun read(name: String): List<String>
@@ -13,7 +14,7 @@ private suspend fun read(name: String): List<String>
 private suspend fun readLine(name: String, index: Int): String
 {
 	val words = read(name)
-	return if (words.isEmpty()) "" else words[index % words.size]
+	return if (words.isEmpty()) "" else words[abs(index) % words.size]
 }
 
 private suspend fun adjective(index: Int): String
