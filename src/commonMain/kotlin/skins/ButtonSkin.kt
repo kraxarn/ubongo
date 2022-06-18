@@ -7,13 +7,20 @@ import com.soywiz.korim.bitmap.asNinePatchSimple
 import com.soywiz.korim.bitmap.context2d
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
+import com.soywiz.korim.font.Font
 import com.soywiz.korio.lang.InvalidArgumentException
+import constants.GameColors
+import constants.TextSize
 import extensions.roundRect
 
-class ButtonSkin : UISkin()
+class ButtonSkin(font: Font) : UISkin()
 {
 	init
 	{
+		textFont = font
+		textColor = GameColors.foregroundAlt
+		textSize = TextSize.button
+
 		buttonNormal = buildButton(UiSkinType.NORMAL)
 		buttonOver = buildButton(UiSkinType.OVER)
 		buttonDown = buildButton(UiSkinType.DOWN)
