@@ -6,14 +6,13 @@ import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
-import com.soywiz.korim.bitmap.Bitmap32
-import com.soywiz.korim.bitmap.context2d
 import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korim.format.readBitmap
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.file.std.resourcesVfs
 import constants.GameColors
 import constants.TextSize
+import images.background
 import skins.ButtonSkin
 
 @KorgeExperimental
