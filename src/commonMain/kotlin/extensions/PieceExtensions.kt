@@ -9,7 +9,7 @@ val Piece.color
 	get() = when (this)
 	{
 		Piece.I1 -> Colors["#9c27b0"] // Purple
-		Piece.I2 -> Colors["#2196f3"] // Dark blue
+		Piece.I2 -> Colors["#00bcd4"] // Cyan (Dark blue)
 		Piece.I3 -> Colors["#795548"] // Brown
 		Piece.L1 -> Colors["#009688"] // Teal
 		Piece.L2 -> Colors["#8bc34a"] // Light green
