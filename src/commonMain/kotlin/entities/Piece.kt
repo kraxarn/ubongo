@@ -89,7 +89,7 @@ enum class Piece(val shape: Array2<Boolean>)
 	/**
 	 * O (square)
 	 */
-	O(
+	O1(
 		shape(
 			"""
 			##
@@ -101,7 +101,7 @@ enum class Piece(val shape: Array2<Boolean>)
 	/**
 	 * P
 	 */
-	P(
+	P1(
 		shape(
 			"""
 			##
