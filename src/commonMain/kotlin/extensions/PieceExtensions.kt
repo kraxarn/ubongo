@@ -1,6 +1,11 @@
 package extensions
 
+import com.soywiz.korim.bitmap.Bitmap
+import com.soywiz.korim.bitmap.NativeImage
+import com.soywiz.korim.bitmap.context2d
 import com.soywiz.korim.color.Colors
+import com.soywiz.korma.geom.PointInt
+import com.soywiz.korma.geom.vector.rect
 import entities.Piece
 
 val Piece.size get() = this.shape.size2
@@ -37,4 +42,28 @@ val Piece.displayName
 		Piece.T2 -> "T (large"
 		Piece.Z1 -> "Z (small)"
 		Piece.Z2 -> "Z (large)"
+	}
+
+val Piece.points: Sequence<PointInt>
+	get() = sequence {
+		for (x in 0 until this@points.shape.width)
+		{
+			for (y in 0 until this@points.shape.height)
+			{
+				if (this@points.shape[x, y]) yield(PointInt(x, y))
+			}
+		}
+	}
+
+val Piece.bitmap: Bitmap
+	get()
+	{
+		return NativeImage(this.shape.width, this.shape.height).context2d {
+			this.fill(this@bitmap.color) {
+				for (point in this@bitmap.points)
+				{
+					this.rect(point.x, point.y, 1, 1)
+				}
+			}
+		}
 	}
