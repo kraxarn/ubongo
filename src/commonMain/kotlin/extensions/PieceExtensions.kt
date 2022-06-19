@@ -21,3 +21,20 @@ val Piece.color
 		Piece.Z1 -> Colors["#3f51b5"] // Indigo
 		Piece.Z2 -> Colors["#fbc02d"] // Dark yellow
 	}
+
+val Piece.displayName
+	get() = when (this)
+	{
+		Piece.I1 -> "I (small)"
+		Piece.I2 -> "I (medium)"
+		Piece.I3 -> "I (large)"
+		Piece.L1 -> "L (small)"
+		Piece.L2 -> "L (medium)"
+		Piece.L3 -> "L (large)"
+		Piece.O1 -> "O"
+		Piece.P1 -> "P"
+		Piece.T1 -> "T (small)"
+		Piece.T2 -> "T (large"
+		Piece.Z1 -> "Z (small)"
+		Piece.Z2 -> "Z (large)"
+	}
