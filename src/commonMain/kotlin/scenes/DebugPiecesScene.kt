@@ -12,7 +12,6 @@ import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.file.std.resourcesVfs
 import entities.Piece
 import extensions.bitmap
-import extensions.displayName
 import skins.ButtonSkin
 
 @KorgeExperimental
@@ -74,7 +73,7 @@ class DebugPiecesScene : Scene()
 		else if (index >= pieces.size) index = 0
 
 		piece.bitmap = pieces[index].bitmap.slice()
-		text.text = "$index: ${pieces[index].displayName}"
+		text.text = "$index: ${pieces[index].name}"
 	}
 
 	companion object

@@ -27,23 +27,6 @@ val Piece.color
 		Piece.Z2 -> Colors["#fbc02d"] // Dark yellow
 	}
 
-val Piece.displayName
-	get() = when (this)
-	{
-		Piece.I1 -> "I (small)"
-		Piece.I2 -> "I (medium)"
-		Piece.I3 -> "I (large)"
-		Piece.L1 -> "L (small)"
-		Piece.L2 -> "L (medium)"
-		Piece.L3 -> "L (large)"
-		Piece.O1 -> "O"
-		Piece.P1 -> "P"
-		Piece.T1 -> "T (small)"
-		Piece.T2 -> "T (large"
-		Piece.Z1 -> "Z (small)"
-		Piece.Z2 -> "Z (large)"
-	}
-
 val Piece.points: Sequence<PointInt>
 	get() = sequence {
 		for (x in 0 until this@points.shape.width)
