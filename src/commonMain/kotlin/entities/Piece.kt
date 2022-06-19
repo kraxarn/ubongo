@@ -1,115 +1,141 @@
 package entities
 
-import com.soywiz.korma.geom.IPointInt
-import com.soywiz.korma.geom.PointInt
+import com.soywiz.kds.Array2
 
-enum class Piece(val points: Array<IPointInt>)
+enum class Piece(val shape: Array2<Boolean>)
 {
-	ONE(
-		arrayOf(
-			PointInt(0, 0),
-			PointInt(1, 0),
-			PointInt(1, 1),
-			PointInt(1, 2),
-			PointInt(2, 2),
+	/**
+	 * Large Z
+	 */
+	Z2(
+		shape(
+			"""
+			##.
+			.#.
+			.##
+		""".trimIndent(),
 		),
 	),
 
-	TWO(
-		arrayOf(
-			PointInt(0, 0),
-			PointInt(1, 0),
-			PointInt(0, 1),
-			PointInt(0, 2),
+	/**
+	 * Medium L
+	 */
+	L2(
+		shape(
+			"""
+			##
+			#.
+			#.
+		""".trimIndent(),
 		),
 	),
 
-	THREE(
-		arrayOf(
-			PointInt(0, 0),
-			PointInt(1, 0),
-			PointInt(0, 1),
-			PointInt(1, 1),
+	/**
+	 * O (square)
+	 */
+	O(
+		shape(
+			"""
+			##
+			##
+		""".trimIndent(),
 		),
 	),
 
-	FOUR(
-		arrayOf(
-			PointInt(0, 0),
-			PointInt(0, 1),
+	/**
+	 * Small I
+	 */
+	I1(
+		shape(
+			"""
+			#
+			#
+		""".trimIndent(),
 		),
 	),
 
-	FIVE(
-		arrayOf(
-			PointInt(0, 0),
-			PointInt(1, 0),
-			PointInt(2, 0),
-			PointInt(3, 0),
+	/**
+	 * Large I
+	 */
+	I3(
+		shape(
+			"""
+			####
+		""".trimIndent(),
 		),
 	),
 
-	SIX(
-		arrayOf(
-			PointInt(0, 0),
-			PointInt(1, 0),
-			PointInt(2, 0),
-			PointInt(2, 1),
-			PointInt(3, 0),
+	/**
+	 * Large T
+	 */
+	T2(
+		shape(
+			"""
+			####
+			..#.
+		""".trimIndent(),
 		),
 	),
 
-	SEVEN(
-		arrayOf(
-			PointInt(0, 0),
-			PointInt(1, 0),
-			PointInt(2, 0),
-			PointInt(1, 1),
-			PointInt(2, 1),
+	/**
+	 * P
+	 */
+	P(
+		shape(
+			"""
+			###
+			.##
+		""".trimIndent(),
 		),
 	),
 
-	EIGHT(
-		arrayOf(
-			PointInt(1, 0),
-			PointInt(2, 0),
-			PointInt(0, 1),
-			PointInt(1, 1),
+	/**
+	 * Small Z
+	 */
+	Z1(
+		shape(
+			"""
+			.##
+			##.
+		""".trimIndent(),
 		),
 	),
 
-	NINE(
-		arrayOf(
-			PointInt(0, 0),
-			PointInt(1, 0),
-			PointInt(2, 0),
+	/**
+	 * Medium I
+	 */
+	I2(
+		shape(
+			"""
+			###
+		""".trimIndent(),
 		),
 	),
 
-	TEN(
-		arrayOf(
-			PointInt(0, 0),
-			PointInt(1, 0),
-			PointInt(2, 0),
-			PointInt(3, 0),
-			PointInt(3, 1),
+	/**
+	 * Large L
+	 */
+	L3(
+		shape(
+			"""
+		####
+		...#
+	""".trimIndent(),
 		),
 	),
 
-	ELEVEN(
-		arrayOf(
-			PointInt(0, 0),
-			PointInt(1, 0),
-			PointInt(1, 1),
-			PointInt(2, 0),
-		),
-	),
-
-	TWELVE(
-		arrayOf(
-			PointInt(0, 0),
-			PointInt(1, 0),
-			PointInt(0, 1),
+	/**
+	 * Small L
+	 */
+	L1(
+		shape(
+			"""
+		##
+		#.
+	""".trimIndent(),
 		),
 	),
 }
+
+private fun shape(map: String): Array2<Boolean> =
+	Array2(map) { char, _, _ -> char == '#' }
