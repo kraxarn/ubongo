@@ -74,6 +74,9 @@ class MenuScene(private val gameState: GameState) : Scene()
 
 		val startGame = uiButton("Start Game") {
 			uiSkin = buttonSkin
+			onClick {
+				sceneContainer.changeTo<GameScene>()
+			}
 		}
 
 		val generateSeed = uiButton("Generate Seed") {

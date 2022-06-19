@@ -40,12 +40,17 @@ object GameColors
 	/**
 	 * Background for board of pieces
 	 */
-	val boardBackground = Colors["#63aff3"]
+	val boardBackground = Colors["#03a9f4"] // Light blue 500
 
 	/**
 	 * Background for cells in board of pieces
 	 */
-	val cellBackground = Colors["#5ca2e0"]
+	val cellBackground = Colors["#29b6f6"] // Light blue 400
+
+	/**
+	 * Background for pieces panel
+	 */
+	val panelBackground = Colors["#d7ccc8"] // Brown 100
 
 	/**
 	 * Shadow behind buttons
