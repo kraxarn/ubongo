@@ -4,43 +4,7 @@ import com.soywiz.kds.Array2
 
 enum class Piece(val shape: Array2<Boolean>)
 {
-	/**
-	 * Large Z
-	 */
-	Z2(
-		shape(
-			"""
-			##.
-			.#.
-			.##
-		""".trimIndent(),
-		),
-	),
-
-	/**
-	 * Medium L
-	 */
-	L2(
-		shape(
-			"""
-			##
-			#.
-			#.
-		""".trimIndent(),
-		),
-	),
-
-	/**
-	 * O (square)
-	 */
-	O(
-		shape(
-			"""
-			##
-			##
-		""".trimIndent(),
-		),
-	),
+	//region I
 
 	/**
 	 * Small I
@@ -48,55 +12,7 @@ enum class Piece(val shape: Array2<Boolean>)
 	I1(
 		shape(
 			"""
-			#
-			#
-		""".trimIndent(),
-		),
-	),
-
-	/**
-	 * Large I
-	 */
-	I3(
-		shape(
-			"""
-			####
-		""".trimIndent(),
-		),
-	),
-
-	/**
-	 * Large T
-	 */
-	T2(
-		shape(
-			"""
-			####
-			..#.
-		""".trimIndent(),
-		),
-	),
-
-	/**
-	 * P
-	 */
-	P(
-		shape(
-			"""
-			###
-			.##
-		""".trimIndent(),
-		),
-	),
-
-	/**
-	 * Small Z
-	 */
-	Z1(
-		shape(
-			"""
-			.##
-			##.
+			##
 		""".trimIndent(),
 		),
 	),
@@ -113,16 +29,19 @@ enum class Piece(val shape: Array2<Boolean>)
 	),
 
 	/**
-	 * Large L
+	 * Large I
 	 */
-	L3(
+	I3(
 		shape(
 			"""
-		####
-		...#
-	""".trimIndent(),
+			####
+		""".trimIndent(),
 		),
 	),
+
+	//endregion
+
+	//region L
 
 	/**
 	 * Small L
@@ -130,11 +49,124 @@ enum class Piece(val shape: Array2<Boolean>)
 	L1(
 		shape(
 			"""
-		##
 		#.
+		##
 	""".trimIndent(),
 		),
 	),
+
+	/**
+	 * Medium L
+	 */
+	L2(
+		shape(
+			"""
+			#-
+			#.
+			##
+		""".trimIndent(),
+		),
+	),
+
+	/**
+	 * Large L
+	 */
+	L3(
+		shape(
+			"""
+			#.
+			#.
+			#.
+			##
+	""".trimIndent(),
+		),
+	),
+
+	//endregion
+
+	//region O/P
+
+	/**
+	 * O (square)
+	 */
+	O(
+		shape(
+			"""
+			##
+			##
+		""".trimIndent(),
+		),
+	),
+
+	/**
+	 * P
+	 */
+	P(
+		shape(
+			"""
+			##
+			##
+			#.
+		""".trimIndent(),
+		),
+	),
+
+	//endregion
+
+	//region T
+
+	T1(
+		shape(
+			"""
+			###
+			.#.
+			""".trimIndent(),
+		),
+	),
+
+	/**
+	 * Large T
+	 */
+	T2(
+		shape(
+			"""
+			####
+			..#.
+		""".trimIndent(),
+		),
+	),
+
+	//endregion
+
+	//region Z
+
+	/**
+	 * Small Z
+	 */
+	Z1(
+		shape(
+			"""
+			#.
+			##
+			.#
+		""".trimIndent(),
+		),
+	),
+
+	/**
+	 * Large Z
+	 */
+	Z2(
+		shape(
+			"""
+			##.
+			.#.
+			.##
+		""".trimIndent(),
+		),
+	),
+
+	//endregion
 }
 
 private fun shape(map: String): Array2<Boolean> =
