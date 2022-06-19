@@ -9,7 +9,6 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korio.util.toStringDecimal
-import com.soywiz.korma.geom.vector.roundRect
 import constants.GameColors
 import constants.TextSize
 import entities.Board
@@ -68,26 +67,9 @@ class GameScene(private val gameState: GameState) : Scene()
 			}
 		}
 
-		val board = roundRect(size, size, 16.0, fill = GameColors.boardBackground) {
+		val board = Board(size).addTo(this) {
 			position(PADDING, 0.0)
 			alignTopToBottomOf(hud, PADDING / 2)
-		}
-
-		val cellSize = (board.width - CELL_SPACING * (Board.TILE_COUNT + 1)) / Board.TILE_COUNT
-
-		graphics {
-			position(board.pos)
-			fill(GameColors.cellBackground) {
-				for (x in 0 until Board.TILE_COUNT)
-				{
-					for (y in 0 until Board.TILE_COUNT)
-					{
-						val xPos = CELL_SPACING + (CELL_SPACING + cellSize) * x
-						val yPos = CELL_SPACING + (CELL_SPACING + cellSize) * y
-						roundRect(xPos, yPos, cellSize, cellSize, 8.0)
-					}
-				}
-			}
 		}
 
 		roundRect(size, 630.0, 16.0, fill = GameColors.boardBackground) {
@@ -104,6 +86,5 @@ class GameScene(private val gameState: GameState) : Scene()
 	companion object
 	{
 		const val PADDING = 64.0
-		const val CELL_SPACING = 12.0
 	}
 }
