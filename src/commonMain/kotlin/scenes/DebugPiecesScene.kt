@@ -11,7 +11,8 @@ import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.file.std.resourcesVfs
 import entities.Piece
-import extensions.bitmap
+import extensions.piece.bitmap
+import extensions.piece.corners
 import skins.ButtonSkin
 
 @KorgeExperimental
@@ -19,6 +20,7 @@ class DebugPiecesScene : Scene()
 {
 	private var index = 0
 	private lateinit var text: UIText
+	private lateinit var debugText: UIText
 	private lateinit var piece: Image
 
 	override suspend fun Container.sceneInit()
@@ -41,6 +43,12 @@ class DebugPiecesScene : Scene()
 			textAlignment = TextAlignment.MIDDLE_CENTER
 			size(views.virtualWidth, 128)
 			position(0, views.virtualHeight - 200)
+		}
+
+		debugText = uiText("") {
+			textAlignment = TextAlignment.MIDDLE_RIGHT
+			centerOn(this@sceneMain)
+			alignRightToRightOf(this@sceneMain, PADDING)
 		}
 
 		uiButton("<- Previous", width = BUTTON_WIDTH, height = BUTTON_HEIGHT) {
@@ -74,6 +82,9 @@ class DebugPiecesScene : Scene()
 
 		piece.bitmap = pieces[index].bitmap.slice()
 		text.text = "$index: ${pieces[index].name}"
+
+		debugText.text = pieces[index].corners
+			.joinToString("\n") { "${it.x},${it.y}" }
 	}
 
 	companion object
