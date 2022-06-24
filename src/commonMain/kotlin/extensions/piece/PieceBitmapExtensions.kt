@@ -33,7 +33,7 @@ val Piece.bitmap: Bitmap
 			) {
 				moveTo(borderSize, borderSize)
 
-				for (corner in this@bitmap.corners)
+				for (corner in this@bitmap.corners.drop(1))
 				{
 					lineTo(corner.x * scale + borderSize, corner.y * scale + borderSize)
 				}
