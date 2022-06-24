@@ -89,7 +89,6 @@ class DebugPiecesScene : Scene()
 		}
 
 		piece = image(NativeImage(0, 0)) {
-			smoothing = false
 			center()
 			position(views.virtualWidth / 2, views.virtualHeight / 2)
 			size(3, 3)
