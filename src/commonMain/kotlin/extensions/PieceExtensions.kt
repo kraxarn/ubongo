@@ -67,8 +67,6 @@ val Piece.corners: Sequence<PointInt>
 		// Start at 0,0 and find next empty right tile
 		yield(PointInt(0, 0))
 
-		Gestures.Direction
-
 		// Right-most
 		for (x in shape.width - 1 downTo 0)
 		{
