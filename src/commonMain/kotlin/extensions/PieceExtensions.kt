@@ -60,22 +60,113 @@ val Piece.points: Sequence<PointInt>
 		}
 	}
 
-val Piece.corners: Sequence<PointInt>
-	get() = sequence {
-		val shape = this@corners.shape
-
-		// Start at 0,0 and find next empty right tile
-		yield(PointInt(0, 0))
-
-		// Right-most
-		for (x in shape.width - 1 downTo 0)
+val Piece.corners: List<PointInt>
+	get() = when (this)
+	{
+		Piece.I1, Piece.I2, Piece.I3 ->
 		{
-			if ((shape[x, 0] && (x == shape.width - 1 || !shape[x + 1, 0])))
+			val size = when (this)
 			{
-				yield(PointInt(x + 1, 0))
-				break
+				Piece.I1 -> 2
+				Piece.I2 -> 3
+				Piece.I3 -> 4
+				else -> 0
 			}
+
+			listOf(
+				PointInt(0, 0),
+				PointInt(size, 0),
+				PointInt(size, 1),
+				PointInt(0, 1),
+				PointInt(0, 0),
+			)
 		}
+
+		Piece.L1, Piece.L2, Piece.L3 ->
+		{
+			val size = when (this)
+			{
+				Piece.L1 -> 1
+				Piece.L2 -> 2
+				Piece.L3 -> 3
+				else -> 0
+			}
+
+			listOf(
+				PointInt(0, 0),
+				PointInt(1, 0),
+				PointInt(1, size),
+				PointInt(2, size),
+				PointInt(2, size + 1),
+				PointInt(0, size + 1),
+				PointInt(0, 0),
+			)
+		}
+
+		Piece.O1 -> listOf(
+			PointInt(0, 0),
+			PointInt(2, 0),
+			PointInt(2, 2),
+			PointInt(0, 2),
+			PointInt(0, 0),
+		)
+
+		Piece.P1 -> listOf(
+			PointInt(0, 0),
+			PointInt(2, 0),
+			PointInt(2, 2),
+			PointInt(1, 2),
+			PointInt(1, 3),
+			PointInt(0, 3),
+			PointInt(0, 0),
+		)
+
+		Piece.T1, Piece.T2 ->
+		{
+			val size = when (this)
+			{
+				Piece.T1 -> 1
+				Piece.T2 -> 2
+				else -> 0
+			}
+
+			listOf(
+				PointInt(0, 0),
+				PointInt(size + 2, 0),
+				PointInt(size + 2, 1),
+				PointInt(size + 1, 1),
+				PointInt(size + 1, 2),
+				PointInt(size, 2),
+				PointInt(size, 1),
+				PointInt(0, 1),
+				PointInt(0, 0),
+			)
+		}
+
+		Piece.Z1 -> listOf(
+			PointInt(0, 0),
+			PointInt(1, 0),
+			PointInt(1, 1),
+			PointInt(1, 1),
+			PointInt(2, 1),
+			PointInt(2, 3),
+			PointInt(1, 3),
+			PointInt(1, 2),
+			PointInt(0, 2),
+			PointInt(0, 0),
+		)
+
+		Piece.Z2 -> listOf(
+			PointInt(0, 0),
+			PointInt(2, 0),
+			PointInt(2, 2),
+			PointInt(3, 2),
+			PointInt(3, 3),
+			PointInt(1, 3),
+			PointInt(1, 1),
+			PointInt(0, 1),
+			PointInt(0, 0),
+		)
 	}
 
 val Piece.bitmap: Bitmap
