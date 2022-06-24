@@ -173,7 +173,7 @@ val Piece.bitmap: Bitmap
 	get()
 	{
 		val scale = 64
-		val borderSize = 6
+		val borderSize = 4
 		val borderCap = LineCap.ROUND
 		val size = this.shape.size2 * scale
 
