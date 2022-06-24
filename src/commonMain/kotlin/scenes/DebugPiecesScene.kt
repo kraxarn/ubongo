@@ -59,7 +59,7 @@ class DebugPiecesScene : Scene()
 			smoothing = false
 			center()
 			position(views.virtualWidth / 2, views.virtualHeight / 2)
-			size(128, 128)
+			size(3, 3)
 		}
 
 		navigate(0)
