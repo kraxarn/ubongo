@@ -16,6 +16,8 @@ import enums.PieceShape
 import extensions.piece.borderColor
 import extensions.piece.color
 import extensions.piece.corners
+import extensions.piece.size
+import kotlin.math.floor
 
 class Piece(private val pieceShape: PieceShape, private val tileSize: Double) : Container()
 {
@@ -48,6 +50,9 @@ class Piece(private val pieceShape: PieceShape, private val tileSize: Double) : 
 					lineTo(corner.x * tileSize + borderSize, corner.y * tileSize + borderSize)
 				}
 			}
+
+			x = -(floor(pieceShape.size.x / 2.0) * tileSize + borderSize)
+			y = -(floor(pieceShape.size.y / 2.0) * tileSize + borderSize)
 		}
 	}
 
