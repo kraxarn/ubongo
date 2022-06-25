@@ -16,6 +16,3 @@ val Piece.points: Sequence<PointInt>
 			}
 		}
 	}
-
-
-
