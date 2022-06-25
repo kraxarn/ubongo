@@ -17,7 +17,7 @@ suspend fun main() = Korge(Korge.Config(Game))
 object Game : Module()
 {
 	override val mainScene get() = MenuScene::class
-	override val windowSize get() = SizeInt(540, 960)
+	override val windowSize get() = SizeInt(540, 1080)
 	override val size get() = SizeInt(1080, 1920)
 	override val bgcolor get() = GameColors.backgroundStart
 	override val title get() = "Ubongo"
