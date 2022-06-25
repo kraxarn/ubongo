@@ -107,6 +107,6 @@ class DebugPiecesScene : Scene()
 		private const val BUTTON_WIDTH = 320.0
 		private const val BUTTON_HEIGHT = 128.0
 		private const val PADDING = 42.0
-		private const val PIECE_SIZE = 160
+		private const val PIECE_SIZE = 160.0
 	}
 }

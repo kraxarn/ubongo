@@ -17,7 +17,7 @@ import extensions.piece.borderColor
 import extensions.piece.color
 import extensions.piece.corners
 
-class Piece(private val pieceShape: PieceShape, private val tileSize: Int) : Container()
+class Piece(private val pieceShape: PieceShape, private val tileSize: Double) : Container()
 {
 	private val borderSize get() = tileSize / 16.0
 
@@ -30,8 +30,8 @@ class Piece(private val pieceShape: PieceShape, private val tileSize: Int) : Con
 				for (point in points)
 				{
 					rect(
-						borderSize.toInt() + point.x * tileSize,
-						borderSize.toInt() + point.y * tileSize,
+						borderSize + point.x * tileSize,
+						borderSize + point.y * tileSize,
 						tileSize, tileSize,
 					)
 				}
