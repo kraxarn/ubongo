@@ -12,7 +12,9 @@ import com.soywiz.korio.util.toStringDecimal
 import constants.GameColors
 import constants.TextSize
 import entities.Board
+import entities.Piece
 import extensions.now
+import extensions.pieceShapes
 import images.background
 
 @KorgeExperimental
@@ -22,6 +24,8 @@ class GameScene(private val gameState: GameState) : Scene()
 	private lateinit var textSkin: UISkin
 
 	private var startTime = TimeSpan.NIL
+
+	private lateinit var pieces: List<Piece>
 
 	override suspend fun Container.sceneInit()
 	{
@@ -67,7 +71,12 @@ class GameScene(private val gameState: GameState) : Scene()
 			}
 		}
 
-		val board = Board(size).addTo(this) {
+		pieces = gameState.random.pieceShapes()
+			.take(Board.PIECE_COUNT)
+			.map { Piece(it, Board.getTileSize(size)) }
+			.toList()
+
+		val board = Board(gameState.random, pieces, size).addTo(this) {
 			position(PADDING, 0.0)
 			alignTopToBottomOf(hud, PADDING / 2)
 		}

@@ -4,17 +4,22 @@ import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.graphics
 import com.soywiz.korge.view.position
 import com.soywiz.korge.view.roundRect
+import com.soywiz.korma.geom.PointInt
 import com.soywiz.korma.geom.vector.roundRect
 import constants.GameColors
+import utils.generateBoard
+import kotlin.random.Random
 
-class Board(width: Double, height: Double = width) : Container()
+class Board(random: Random, pieces: Iterable<Piece>, width: Double, height: Double = width) : Container()
 {
 	val tileSize: Double
 
 	init
 	{
 		val board = roundRect(width, height, 16.0, fill = GameColors.boardBackground)
-		tileSize = (board.width - TILE_SPACING * (TILE_COUNT + 1)) / TILE_COUNT
+		tileSize = getTileSize(board.width)
+
+		val tiles = generateBoard(random, pieces).toHashSet()
 
 		graphics {
 			position(board.pos)
@@ -23,6 +28,11 @@ class Board(width: Double, height: Double = width) : Container()
 				{
 					for (y in 0 until TILE_COUNT)
 					{
+						if (PointInt(x, y) !in tiles)
+						{
+							continue
+						}
+
 						val xPos = TILE_SPACING + (TILE_SPACING + tileSize) * x
 						val yPos = TILE_SPACING + (TILE_SPACING + tileSize) * y
 						roundRect(xPos, yPos, tileSize, tileSize, 8.0)
@@ -48,5 +58,7 @@ class Board(width: Double, height: Double = width) : Container()
 		 * Spacing between each cell
 		 */
 		const val TILE_SPACING = 12.0
+
+		fun getTileSize(width: Double) = (width - TILE_SPACING * (TILE_COUNT + 1)) / TILE_COUNT
 	}
 }

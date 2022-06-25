@@ -82,7 +82,7 @@ class MenuScene(private val gameState: GameState) : Scene()
 		val generateSeed = uiButton("Generate Seed") {
 			uiSkin = buttonSkin
 			onClick {
-				gameState.seed = GameState.generateSeed()
+				gameState.regenerate()
 				seedName.text = randomWord(gameState.seed)
 			}
 		}
