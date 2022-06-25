@@ -1,2 +1,5 @@
 # Android project files, generated on build
 main/
+
+# Version generated on build
+src/commonMain/kotlin/constants/Application.kt

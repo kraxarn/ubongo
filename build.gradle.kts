@@ -1,7 +1,6 @@
 import com.soywiz.korge.gradle.KorgeGradlePlugin
 import com.soywiz.korge.gradle.Orientation
 import com.soywiz.korge.gradle.korge
-import com.soywiz.korge.gradle.util.get
 import java.time.Year.now
 
 buildscript {
@@ -20,15 +19,15 @@ buildscript {
 
 apply<KorgeGradlePlugin>()
 
+val projectVersion: String by project
+
 korge {
 	id = "com.kraxarn.ubongo2"
 	name = "Ubongo"
 	copyright = "Copyright (c) ${now().value} kraxarn"
 
-	val version: String by project
-	this.version = version
-
-	versionCode = version
+	version = projectVersion
+	versionCode = projectVersion
 		.split('.')
 		.joinToString("") { it.padStart(2, '0') }
 		.toInt()
@@ -44,4 +43,9 @@ korge {
 	targetDesktop()
 	targetIos()
 	targetAndroidDirect()
+}
+
+val versionFile = File("src/commonMain/kotlin/constants/Application.kt")
+versionFile.writer().use {
+	it.write("package constants\nobject Application { const val Version = \"$projectVersion\" }")
 }
