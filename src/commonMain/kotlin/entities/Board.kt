@@ -12,13 +12,10 @@ import kotlin.random.Random
 
 class Board(random: Random, pieces: Iterable<Piece>, width: Double, height: Double = width) : Container()
 {
-	val tileSize: Double
-
 	init
 	{
 		val board = roundRect(width, height, 16.0, fill = GameColors.boardBackground)
-		tileSize = getTileSize(board.width)
-
+		val tileSize = getTileSize(board.width)
 		val tiles = generateBoard(random, pieces).toHashSet()
 
 		graphics {
