@@ -7,6 +7,7 @@ import com.soywiz.korma.geom.Anchor
 import com.soywiz.korma.geom.ScaleMode
 import com.soywiz.korma.geom.SizeInt
 import constants.GameColors
+import scenes.DebugPiecesScene
 import scenes.GameScene
 import scenes.MenuScene
 
@@ -32,5 +33,8 @@ object Game : Module()
 		mapInstance(GameState())
 		mapPrototype { MenuScene(get()) }
 		mapPrototype { GameScene(get()) }
+
+		// Debug scenes
+		mapPrototype { DebugPiecesScene() }
 	}
 }
