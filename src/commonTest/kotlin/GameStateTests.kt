@@ -16,9 +16,11 @@ class GameStateTests
 		}
 
 		// A new seed one second later should be the same
-		val seed1 = GameState.generateSeed()
+		val gameState = GameState()
+		val seed1 = gameState.seed
 		blockingSleep(1.seconds)
-		val seed2 = GameState.generateSeed()
+		gameState.regenerate()
+		val seed2 = gameState.seed
 
 		assertEquals(seed1, seed2)
 	}
