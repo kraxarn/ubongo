@@ -17,8 +17,10 @@ import extensions.piece.borderColor
 import extensions.piece.color
 import extensions.piece.corners
 
-class Piece(private val pieceShape: PieceShape) : Container()
+class Piece(private val pieceShape: PieceShape, private val tileSize: Int) : Container()
 {
+	private val borderSize get() = tileSize / 16.0
+
 	init
 	{
 		val borderCap = LineCap.ROUND
@@ -28,22 +30,22 @@ class Piece(private val pieceShape: PieceShape) : Container()
 				for (point in points)
 				{
 					rect(
-						BORDER_SIZE.toInt() + point.x * TILE_SIZE,
-						BORDER_SIZE.toInt() + point.y * TILE_SIZE,
-						TILE_SIZE, TILE_SIZE,
+						borderSize.toInt() + point.x * tileSize,
+						borderSize.toInt() + point.y * tileSize,
+						tileSize, tileSize,
 					)
 				}
 			}
 
 			stroke(
 				pieceShape.borderColor,
-				StrokeInfo(BORDER_SIZE, startCap = borderCap, endCap = borderCap)
+				StrokeInfo(borderSize, startCap = borderCap, endCap = borderCap)
 			) {
-				moveTo(BORDER_SIZE, BORDER_SIZE)
+				moveTo(borderSize, borderSize)
 
 				for (corner in pieceShape.corners.drop(1))
 				{
-					lineTo(corner.x * TILE_SIZE + BORDER_SIZE, corner.y * TILE_SIZE + BORDER_SIZE)
+					lineTo(corner.x * tileSize + borderSize, corner.y * tileSize + borderSize)
 				}
 			}
 		}
@@ -71,10 +73,4 @@ class Piece(private val pieceShape: PieceShape) : Container()
 				}
 			}
 		}
-
-	companion object
-	{
-		const val BORDER_SIZE = 4.0
-		const val TILE_SIZE = 64
-	}
 }

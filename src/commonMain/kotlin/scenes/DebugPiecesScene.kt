@@ -73,7 +73,7 @@ class DebugPiecesScene : Scene()
 			onClick { piece.rotate() }
 		}
 
-		piece = Piece(PieceShape.values()[index])
+		piece = Piece(PieceShape.values()[index], PIECE_SIZE)
 		this@DebugPiecesScene.addPiece(piece)
 	}
 
@@ -81,7 +81,6 @@ class DebugPiecesScene : Scene()
 	{
 		piece.addTo(root) {
 			centerOn(root)
-			scale(2.5)
 		}
 	}
 
@@ -94,7 +93,7 @@ class DebugPiecesScene : Scene()
 		val pieceShape = pieceShapes[index]
 
 		root.removeChild(piece)
-		piece = Piece(pieceShape)
+		piece = Piece(pieceShape, PIECE_SIZE)
 		addPiece(piece)
 
 		text.text = "$index: ${pieceShapes[index].name}"
@@ -108,5 +107,6 @@ class DebugPiecesScene : Scene()
 		private const val BUTTON_WIDTH = 320.0
 		private const val BUTTON_HEIGHT = 128.0
 		private const val PADDING = 42.0
+		private const val PIECE_SIZE = 160
 	}
 }
