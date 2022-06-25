@@ -79,7 +79,7 @@ class ButtonSkin(font: Font) : UISkin()
 		const val BUTTON_SIZE = 64
 		const val PADDING = 4
 		const val BORDER_RADIUS = 12
-		const val SHADOW_WIDTH = 10
+		const val SHADOW_WIDTH = 6
 		const val INSET = 22
 	}
 }
