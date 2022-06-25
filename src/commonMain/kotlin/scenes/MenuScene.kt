@@ -2,7 +2,6 @@ package scenes
 
 import GameState
 import com.soywiz.korge.annotations.KorgeExperimental
-import com.soywiz.korge.component.length.*
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.*
@@ -60,7 +59,13 @@ class MenuScene(private val gameState: GameState) : Scene()
 		addChild(background(views.virtualWidth, views.virtualHeight))
 
 		container {
-			image(logoBitmap).centered
+			centerXOn(this@sceneMain)
+			alignTopToTopOf(this@sceneMain, views.virtualHeight * 0.2)
+
+			image(logoBitmap) {
+				anchor(0.5, 0.0)
+			}
+
 			val title = uiText("Ubongo") {
 				textAlignment = TextAlignment.MIDDLE_RIGHT
 				uiSkin = titleSkin
@@ -68,58 +73,49 @@ class MenuScene(private val gameState: GameState) : Scene()
 				alignBottomToBottomOf(this@container)
 				alignLeftToLeftOf(this@container)
 			}
+
 			uiText(Application.VERSION) {
 				uiSkin = title2Skin
 				textAlignment = TextAlignment.MIDDLE_RIGHT
 				alignTopToBottomOf(title)
 				alignRightToRightOf(title)
 			}
-		}.lengths {
-			x = 50.vw
-			y = 30.vh
-			width = min(50.vw, 40.vh)
-			height = width
 		}
 
-		val seedName = uiText(randomWord(gameState.seed)) {
-			uiSkin = textSkin
-			textAlignment = TextAlignment.BOTTOM_CENTER
+		val generateSeed = uiButton("Generate Seed") {
+			uiSkin = buttonSkin
+			x = PADDING
+			size(views.virtualWidth - PADDING * 2, BUTTON_HEIGHT)
+			alignBottomToBottomOf(this@sceneMain, PADDING * 2)
 		}
 
 		val startGame = uiButton("Start Game") {
 			uiSkin = buttonSkin
+			size(views.virtualWidth - PADDING * 2, BUTTON_HEIGHT)
+			alignBottomToTopOf(generateSeed, PADDING)
+			alignLeftToLeftOf(generateSeed)
 			onClick {
 				sceneContainer.changeTo<GameScene>()
 			}
 		}
 
-		val generateSeed = uiButton("Generate Seed") {
-			uiSkin = buttonSkin
-			onClick {
-				gameState.regenerate()
-				seedName.text = randomWord(gameState.seed)
-			}
+		val seedName = uiText(randomWord(gameState.seed)) {
+			uiSkin = textSkin
+			textAlignment = TextAlignment.BOTTOM_CENTER
+			size(startGame.width, 0.0)
+			alignBottomToTopOf(startGame, PADDING)
+			alignLeftToLeftOf(startGame)
 		}
 
-		generateSeed.lengths {
-			width = 100.vw - 120.pt
-			height = 160.pt
-			x = 60.pt
-			y = 100.vh - (height ?: 0.pt) - 15.percent
-		}
-
-		startGame.lengths {
-			width = generateSeed.lengths.width
-			height = generateSeed.lengths.height
-			x = generateSeed.lengths.x
-			y = (generateSeed.lengths.y ?: 0.pt) - (height ?: 0.pt) - 60.pt
-		}
-
-		seedName.lengths {
-			y = (startGame.lengths.y ?: 0.pt) - 120.pt
-			width = 100.vw
+		generateSeed.onClick {
+			gameState.regenerate()
+			seedName.text = randomWord(gameState.seed)
 		}
 	}
+
+	companion object
+	{
+		private const val PADDING = 64.0
+		private const val BUTTON_HEIGHT = 180.0
+	}
 }
-
-
