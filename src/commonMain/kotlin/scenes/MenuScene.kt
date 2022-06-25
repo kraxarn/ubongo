@@ -12,6 +12,7 @@ import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korim.format.readBitmap
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.file.std.resourcesVfs
+import constants.Application
 import constants.GameColors
 import constants.TextSize
 import images.background
@@ -24,6 +25,7 @@ class MenuScene(private val gameState: GameState) : Scene()
 	private lateinit var logoBitmap: Bitmap
 
 	private lateinit var titleSkin: UISkin
+	private lateinit var title2Skin: UISkin
 	private lateinit var buttonSkin: UISkin
 	private lateinit var textSkin: UISkin
 
@@ -35,6 +37,12 @@ class MenuScene(private val gameState: GameState) : Scene()
 			textFont = resourcesVfs["fonts/title.ttf"].readTtfFont()
 			textColor = GameColors.foregroundAlt
 			textSize = TextSize.title
+		}
+
+		title2Skin = UISkin {
+			textFont = resourcesVfs["fonts/debug.ttf"].readTtfFont()
+			textColor = GameColors.foregroundAlt
+			textSize = TextSize.button
 		}
 
 		val regularFont = resourcesVfs["fonts/regular.ttf"].readTtfFont()
@@ -53,12 +61,18 @@ class MenuScene(private val gameState: GameState) : Scene()
 
 		container {
 			image(logoBitmap).centered
-			uiText("Ubongo") {
+			val title = uiText("Ubongo") {
 				textAlignment = TextAlignment.MIDDLE_RIGHT
 				uiSkin = titleSkin
 				size(340, 100)
 				alignBottomToBottomOf(this@container)
 				alignLeftToLeftOf(this@container)
+			}
+			uiText(Application.VERSION) {
+				uiSkin = title2Skin
+				textAlignment = TextAlignment.MIDDLE_RIGHT
+				alignTopToBottomOf(title)
+				alignRightToRightOf(title)
 			}
 		}.lengths {
 			x = 50.vw
