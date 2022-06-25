@@ -1,12 +1,12 @@
 package extensions.piece
 
 import com.soywiz.korma.geom.PointInt
-import entities.Piece
+import enums.PieceShape
 import extensions.size2
 
-val Piece.size get() = this.shape.size2
+val PieceShape.size get() = this.shape.size2
 
-val Piece.points: Sequence<PointInt>
+val PieceShape.points: Sequence<PointInt>
 	get() = sequence {
 		for (x in 0 until this@points.shape.width)
 		{

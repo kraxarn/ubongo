@@ -10,7 +10,7 @@ import com.soywiz.korim.bitmap.slice
 import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.file.std.resourcesVfs
-import entities.Piece
+import enums.PieceShape
 import extensions.piece.bitmap
 import extensions.piece.corners
 import extensions.piece.rotatePiece
@@ -87,15 +87,15 @@ class DebugPiecesScene : Scene()
 
 	private fun navigate(steps: Int)
 	{
-		val pieces = Piece.values()
+		val pieceShapes = PieceShape.values()
 		index += steps
-		if (index < 0) index = pieces.size - 1
-		else if (index >= pieces.size) index = 0
+		if (index < 0) index = pieceShapes.size - 1
+		else if (index >= pieceShapes.size) index = 0
 
-		piece.bitmap = pieces[index].bitmap.slice()
-		text.text = "$index: ${pieces[index].name}"
+		piece.bitmap = pieceShapes[index].bitmap.slice()
+		text.text = "$index: ${pieceShapes[index].name}"
 
-		debugText.text = pieces[index].corners
+		debugText.text = pieceShapes[index].corners
 			.joinToString("\n") { it.toString() }
 	}
 

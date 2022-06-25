@@ -8,11 +8,11 @@ import com.soywiz.korma.geom.vector.LineCap
 import com.soywiz.korma.geom.vector.lineTo
 import com.soywiz.korma.geom.vector.moveTo
 import com.soywiz.korma.geom.vector.rect
-import entities.Piece
+import enums.PieceShape
 import extensions.size2
 import extensions.times
 
-val Piece.bitmap: Bitmap
+val PieceShape.bitmap: Bitmap
 	get()
 	{
 		val scale = 64

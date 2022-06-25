@@ -1,8 +1,8 @@
-package entities
+package enums
 
 import com.soywiz.kds.Array2
 
-enum class Piece(val shape: Array2<Boolean>)
+enum class PieceShape(val shape: Array2<Boolean>)
 {
 	//region I
 

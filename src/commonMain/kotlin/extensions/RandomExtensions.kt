@@ -1,6 +1,6 @@
 package extensions
 
-import entities.Piece
+import enums.PieceShape
 import kotlin.random.Random
 
-fun Random.nextPiece() = Piece.values().random(this)
+fun Random.nextPiece() = PieceShape.values().random(this)

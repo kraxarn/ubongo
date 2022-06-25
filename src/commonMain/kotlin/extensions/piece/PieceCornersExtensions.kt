@@ -1,29 +1,29 @@
 package extensions.piece
 
 import com.soywiz.korma.geom.PointInt
-import entities.Piece
+import enums.PieceShape
 
-private val Piece.cornerSize
+private val PieceShape.cornerSize
 	get() = when (this)
 	{
-		Piece.I1 -> 2
-		Piece.I2 -> 3
-		Piece.I3 -> 4
+		PieceShape.I1 -> 2
+		PieceShape.I2 -> 3
+		PieceShape.I3 -> 4
 
-		Piece.L1 -> 1
-		Piece.L2 -> 2
-		Piece.L3 -> 3
+		PieceShape.L1 -> 1
+		PieceShape.L2 -> 2
+		PieceShape.L3 -> 3
 
-		Piece.T1 -> 1
-		Piece.T2 -> 2
+		PieceShape.T1 -> 1
+		PieceShape.T2 -> 2
 
 		else -> 0
 	}
 
-val Piece.corners: List<PointInt>
+val PieceShape.corners: List<PointInt>
 	get() = when (this)
 	{
-		Piece.I1, Piece.I2, Piece.I3 -> listOf(
+		PieceShape.I1, PieceShape.I2, PieceShape.I3 -> listOf(
 			PointInt(0, 0),
 			PointInt(this.cornerSize, 0),
 			PointInt(this.cornerSize, 1),
@@ -31,7 +31,7 @@ val Piece.corners: List<PointInt>
 			PointInt(0, 0),
 		)
 
-		Piece.L1, Piece.L2, Piece.L3 ->
+		PieceShape.L1, PieceShape.L2, PieceShape.L3 ->
 			listOf(
 				PointInt(0, 0),
 				PointInt(1, 0),
@@ -42,7 +42,7 @@ val Piece.corners: List<PointInt>
 				PointInt(0, 0),
 			)
 
-		Piece.O1 -> listOf(
+		PieceShape.O1 -> listOf(
 			PointInt(0, 0),
 			PointInt(2, 0),
 			PointInt(2, 2),
@@ -50,7 +50,7 @@ val Piece.corners: List<PointInt>
 			PointInt(0, 0),
 		)
 
-		Piece.P1 -> listOf(
+		PieceShape.P1 -> listOf(
 			PointInt(0, 0),
 			PointInt(2, 0),
 			PointInt(2, 2),
@@ -60,7 +60,7 @@ val Piece.corners: List<PointInt>
 			PointInt(0, 0),
 		)
 
-		Piece.T1, Piece.T2 -> listOf(
+		PieceShape.T1, PieceShape.T2 -> listOf(
 			PointInt(0, 0),
 			PointInt(this.cornerSize + 2, 0),
 			PointInt(this.cornerSize + 2, 1),
@@ -72,7 +72,7 @@ val Piece.corners: List<PointInt>
 			PointInt(0, 0),
 		)
 
-		Piece.Z1 -> listOf(
+		PieceShape.Z1 -> listOf(
 			PointInt(0, 0),
 			PointInt(1, 0),
 			PointInt(1, 1),
@@ -85,7 +85,7 @@ val Piece.corners: List<PointInt>
 			PointInt(0, 0),
 		)
 
-		Piece.Z2 -> listOf(
+		PieceShape.Z2 -> listOf(
 			PointInt(0, 0),
 			PointInt(2, 0),
 			PointInt(2, 2),
