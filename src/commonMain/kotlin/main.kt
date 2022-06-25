@@ -25,7 +25,7 @@ object Game : Module()
 	override val icon get() = "images/logo.png"
 	override val scaleMode get() = ScaleMode.SHOW_ALL
 	override val clipBorders get() = false
-	override val scaleAnchor get() = Anchor.TOP_LEFT
+	override val scaleAnchor get() = Anchor.CENTER
 	override val imageFormats get() = listOf(PNG)
 
 	override suspend fun AsyncInjector.configure()
