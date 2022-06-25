@@ -1,11 +1,8 @@
 package scenes
 
-import com.soywiz.klock.milliseconds
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.tween.get
-import com.soywiz.korge.tween.tween
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.NativeImage
@@ -13,12 +10,10 @@ import com.soywiz.korim.bitmap.slice
 import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.file.std.resourcesVfs
-import com.soywiz.korma.geom.degrees
-import com.soywiz.korma.geom.plus
-import com.soywiz.korma.interpolation.Easing
 import entities.Piece
 import extensions.piece.bitmap
 import extensions.piece.corners
+import extensions.piece.rotatePiece
 import skins.ButtonSkin
 
 @KorgeExperimental
@@ -78,14 +73,7 @@ class DebugPiecesScene : Scene()
 		uiButton("Rotate", width = next.width, height = next.height) {
 			alignRightToRightOf(next)
 			alignBottomToTopOf(next, PADDING)
-			onClick {
-				if (piece.rotation.degrees.toInt() % 90 != 0) return@onClick
-				piece.tween(
-					piece::rotation[piece.rotation + 90.degrees],
-					time = 200.milliseconds,
-					easing = Easing.EASE_OUT,
-				)
-			}
+			onClick { piece.rotatePiece() }
 		}
 
 		piece = image(NativeImage(0, 0)) {
