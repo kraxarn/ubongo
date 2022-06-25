@@ -23,6 +23,8 @@ class Piece(private val pieceShape: PieceShape, private val tileSize: Double) : 
 {
 	private val borderSize get() = tileSize / 16.0
 
+	val shapeSize get() = pieceShape.size
+
 	init
 	{
 		val borderCap = LineCap.ROUND
