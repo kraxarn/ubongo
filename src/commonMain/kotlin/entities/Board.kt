@@ -9,10 +9,12 @@ import constants.GameColors
 
 class Board(width: Double, height: Double = width) : Container()
 {
+	val tileSize: Double
+
 	init
 	{
 		val board = roundRect(width, height, 16.0, fill = GameColors.boardBackground)
-		val tileSize = (board.width - TILE_SPACING * (TILE_COUNT + 1)) / TILE_COUNT
+		tileSize = (board.width - TILE_SPACING * (TILE_COUNT + 1)) / TILE_COUNT
 
 		graphics {
 			position(board.pos)
