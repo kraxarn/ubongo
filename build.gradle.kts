@@ -47,5 +47,5 @@ korge {
 
 val versionFile = File("src/commonMain/kotlin/constants/Application.kt")
 versionFile.writer().use {
-	it.write("package constants\nobject Application { const val Version = \"$projectVersion\" }")
+	it.write("package constants\nobject Application { const val VERSION = \"$projectVersion\" }")
 }
