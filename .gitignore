@@ -13,3 +13,6 @@ local.properties
 
 # Auto generated keystore
 korge.keystore
+
+# Yarn lock files (web)
+yarn.lock
