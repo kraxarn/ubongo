@@ -10,6 +10,8 @@ import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korim.format.readBitmap
 import com.soywiz.korim.text.TextAlignment
+import com.soywiz.korim.vector.format.SVG
+import com.soywiz.korim.vector.render
 import com.soywiz.korio.file.std.resourcesVfs
 import constants.Application
 import constants.GameColors
@@ -27,6 +29,8 @@ class MenuScene(private val gameState: GameState) : Scene()
 	private lateinit var title2Skin: UISkin
 	private lateinit var buttonSkin: UISkin
 	private lateinit var textSkin: UISkin
+
+	private lateinit var refreshIcon: Bitmap
 
 	override suspend fun Container.sceneInit()
 	{
@@ -52,6 +56,8 @@ class MenuScene(private val gameState: GameState) : Scene()
 			textColor = GameColors.foregroundAlt
 			textSize = TextSize.button
 		}
+
+		refreshIcon = SVG(resourcesVfs["images/ui/refresh.svg"].readString()).render()
 	}
 
 	override suspend fun Container.sceneMain()
@@ -82,18 +88,11 @@ class MenuScene(private val gameState: GameState) : Scene()
 			}
 		}
 
-		val generateSeed = uiButton("Generate Seed") {
+		val startGame = uiButton("Start Game") {
 			uiSkin = buttonSkin
 			x = PADDING
 			size(views.virtualWidth - PADDING * 2, BUTTON_HEIGHT)
-			alignBottomToBottomOf(this@sceneMain, PADDING * 2)
-		}
-
-		val startGame = uiButton("Start Game") {
-			uiSkin = buttonSkin
-			size(views.virtualWidth - PADDING * 2, BUTTON_HEIGHT)
-			alignBottomToTopOf(generateSeed, PADDING)
-			alignLeftToLeftOf(generateSeed)
+			alignBottomToBottomOf(this@sceneMain, views.virtualHeight * 0.15)
 			onClick {
 				sceneContainer.changeTo<GameScene>()
 			}
@@ -101,16 +100,22 @@ class MenuScene(private val gameState: GameState) : Scene()
 
 		val seedName = uiText(randomWord(gameState.seed)) {
 			uiSkin = textSkin
-			textAlignment = TextAlignment.BOTTOM_CENTER
+			textAlignment = TextAlignment.MIDDLE_LEFT
 			size(startGame.width, 0.0)
-			alignBottomToTopOf(startGame, PADDING)
-			alignLeftToLeftOf(startGame)
+			alignLeftToLeftOf(startGame, PADDING / 2)
 		}
 
-		generateSeed.onClick {
-			gameState.regenerate()
-			seedName.text = randomWord(gameState.seed)
+		val refreshButton = image(refreshIcon) {
+			size(96, 96)
+			alignRightToRightOf(startGame, PADDING / 2)
+			alignBottomToTopOf(startGame, PADDING)
+			onClick {
+				gameState.regenerate()
+				seedName.text = randomWord(gameState.seed)
+			}
 		}
+
+		seedName.centerYOn(refreshButton)
 	}
 
 	companion object
