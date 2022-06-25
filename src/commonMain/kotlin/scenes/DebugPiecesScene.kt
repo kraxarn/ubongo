@@ -5,15 +5,12 @@ import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
-import com.soywiz.korim.bitmap.NativeImage
-import com.soywiz.korim.bitmap.slice
 import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.file.std.resourcesVfs
+import entities.Piece
 import enums.PieceShape
-import extensions.piece.bitmap
 import extensions.piece.corners
-import extensions.piece.rotatePiece
 import skins.ButtonSkin
 
 @KorgeExperimental
@@ -22,7 +19,7 @@ class DebugPiecesScene : Scene()
 	private var index = 0
 	private lateinit var text: UIText
 	private lateinit var debugText: UIText
-	private lateinit var piece: Image
+	private lateinit var piece: Piece
 
 	override suspend fun Container.sceneInit()
 	{
@@ -73,16 +70,19 @@ class DebugPiecesScene : Scene()
 		uiButton("Rotate", width = next.width, height = next.height) {
 			alignRightToRightOf(next)
 			alignBottomToTopOf(next, PADDING)
-			onClick { piece.rotatePiece() }
+			onClick { piece.rotate() }
 		}
 
-		piece = image(NativeImage(0, 0)) {
-			center()
-			position(views.virtualWidth / 2, views.virtualHeight / 2)
-			size(3, 3)
-		}
+		piece = Piece(PieceShape.values()[index])
+		this@DebugPiecesScene.addPiece(piece)
+	}
 
-		navigate(0)
+	private fun addPiece(piece: Piece)
+	{
+		piece.addTo(root) {
+			centerOn(root)
+			scale(2.5)
+		}
 	}
 
 	private fun navigate(steps: Int)
@@ -91,8 +91,12 @@ class DebugPiecesScene : Scene()
 		index += steps
 		if (index < 0) index = pieceShapes.size - 1
 		else if (index >= pieceShapes.size) index = 0
+		val pieceShape = pieceShapes[index]
 
-		piece.bitmap = pieceShapes[index].bitmap.slice()
+		root.removeChild(piece)
+		piece = Piece(pieceShape)
+		addPiece(piece)
+
 		text.text = "$index: ${pieceShapes[index].name}"
 
 		debugText.text = pieceShapes[index].corners
