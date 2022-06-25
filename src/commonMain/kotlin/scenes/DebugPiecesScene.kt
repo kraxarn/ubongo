@@ -108,7 +108,7 @@ class DebugPiecesScene : Scene()
 		text.text = "$index: ${pieces[index].name}"
 
 		debugText.text = pieces[index].corners
-			.joinToString("\n") { "${it.x},${it.y}" }
+			.joinToString("\n") { it.toString() }
 	}
 
 	companion object
