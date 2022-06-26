@@ -1,3 +1,4 @@
+import com.soywiz.klogger.Logger
 import com.soywiz.korge.Korge
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.scene.Module
@@ -27,6 +28,11 @@ object Game : Module()
 	override val clipBorders get() = false
 	override val scaleAnchor get() = Anchor.CENTER
 	override val imageFormats get() = listOf(PNG)
+
+	init
+	{
+		Logger.defaultLevel = Logger.Level.DEBUG
+	}
 
 	override suspend fun AsyncInjector.configure()
 	{
