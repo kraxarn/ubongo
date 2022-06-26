@@ -16,7 +16,6 @@ import com.soywiz.korio.file.std.resourcesVfs
 import constants.Application
 import constants.GameColors
 import constants.TextSize
-import images.background
 import skins.ButtonSkin
 import utils.randomWord
 
@@ -62,11 +61,8 @@ class MenuScene(private val gameState: GameState) : Scene()
 
 	override suspend fun Container.sceneMain()
 	{
-		addChild(background(views.virtualWidth, views.virtualHeight))
-
 		container {
-			centerXOn(this@sceneMain)
-			alignTopToTopOf(this@sceneMain, views.virtualHeight * 0.2)
+			position(views.virtualWidth / 2.0, views.virtualHeight * 0.15)
 
 			image(logoBitmap) {
 				anchor(0.5, 0.0)
@@ -90,9 +86,8 @@ class MenuScene(private val gameState: GameState) : Scene()
 
 		val startGame = uiButton("Start Game") {
 			uiSkin = buttonSkin
-			x = PADDING
+			position(PADDING, views.virtualHeight * 0.8)
 			size(views.virtualWidth - PADDING * 2, BUTTON_HEIGHT)
-			alignBottomToBottomOf(this@sceneMain, views.virtualHeight * 0.15)
 			onClick {
 				sceneContainer.changeTo<GameScene>()
 			}
