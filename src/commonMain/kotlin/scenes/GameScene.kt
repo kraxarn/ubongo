@@ -15,7 +15,6 @@ import containers.Board
 import containers.Piece
 import extensions.now
 import extensions.pieceShapes
-import images.background
 
 @KorgeExperimental
 class GameScene(private val gameState: GameState) : Scene()
@@ -46,8 +45,6 @@ class GameScene(private val gameState: GameState) : Scene()
 
 	override suspend fun Container.sceneMain()
 	{
-		addChild(background(views.virtualWidth, views.virtualHeight))
-
 		val size = views.virtualWidth - PADDING * 2
 
 		val hud = uiGridFill(size * 0.8, 100.0, 2, 2) {
