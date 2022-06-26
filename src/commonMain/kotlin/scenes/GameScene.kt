@@ -11,8 +11,8 @@ import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korio.util.toStringDecimal
 import constants.GameColors
 import constants.TextSize
-import entities.Board
-import entities.Piece
+import containers.Board
+import containers.Piece
 import extensions.now
 import extensions.pieceShapes
 import images.background

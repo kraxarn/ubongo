@@ -8,7 +8,7 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.file.std.resourcesVfs
-import entities.Piece
+import containers.Piece
 import enums.PieceShape
 import extensions.piece.corners
 import skins.ButtonSkin

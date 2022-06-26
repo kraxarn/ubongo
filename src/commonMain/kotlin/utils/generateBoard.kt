@@ -3,8 +3,8 @@ package utils
 import com.soywiz.klogger.Logger
 import com.soywiz.korma.geom.PointInt
 import com.soywiz.korma.geom.plus
-import entities.Board
-import entities.Piece
+import containers.Board
+import containers.Piece
 import kotlin.random.Random
 
 fun generateBoard(random: Random, pieces: Iterable<Piece>): Iterable<PointInt>
