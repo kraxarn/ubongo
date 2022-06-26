@@ -13,24 +13,24 @@ import com.soywiz.korge.view.*
 import com.soywiz.korge.view.filter.TransitionFilter
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.font.readTtfFont
-import com.soywiz.korim.format.readBitmap
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korim.vector.format.SVG
 import com.soywiz.korim.vector.render
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.std.resourcesVfs
+import com.soywiz.korma.geom.degrees
 import com.soywiz.korma.interpolation.Easing
 import constants.Application
 import constants.GameColors
 import constants.TextSize
+import containers.Piece
+import enums.PieceShape
 import skins.ButtonSkin
 import utils.randomWord
 
 @KorgeExperimental
 class MenuScene(private val gameState: GameState) : Scene()
 {
-	private lateinit var logoBitmap: Bitmap
-
 	private lateinit var titleSkin: UISkin
 	private lateinit var title2Skin: UISkin
 	private lateinit var buttonSkin: UISkin
@@ -40,8 +40,6 @@ class MenuScene(private val gameState: GameState) : Scene()
 
 	override suspend fun Container.sceneInit()
 	{
-		logoBitmap = resourcesVfs["images/logo.png"].readBitmap()
-
 		titleSkin = UISkin {
 			textFont = resourcesVfs["fonts/bold.ttf"].readTtfFont()
 			textColor = GameColors.foregroundAlt
@@ -69,18 +67,23 @@ class MenuScene(private val gameState: GameState) : Scene()
 	override suspend fun Container.sceneMain()
 	{
 		container {
-			position(views.virtualWidth / 2.0, views.virtualHeight * 0.15)
+			val leftPiece = Piece(PieceShape.L2, 128.0)
+			leftPiece.position(0, 0)
 
-			image(logoBitmap) {
-				anchor(0.5, 0.0)
-			}
+			val rightPiece = Piece(PieceShape.T2, 128.0)
+			rightPiece.alignLeftToRightOf(leftPiece, -128)
+			rightPiece.alignBottomToBottomOf(leftPiece)
+			rightPiece.rotation = 90.degrees
+
+			addChild(leftPiece)
+			addChild(rightPiece)
 
 			val title = uiText("Ubongo") {
 				textAlignment = TextAlignment.MIDDLE_RIGHT
 				uiSkin = titleSkin
 				size(340, 100)
-				alignBottomToBottomOf(this@container)
-				alignLeftToLeftOf(this@container)
+				alignTopToBottomOf(leftPiece, 32)
+				alignRightToLeftOf(rightPiece, -96)
 			}
 
 			uiText(Application.VERSION) {
@@ -89,6 +92,8 @@ class MenuScene(private val gameState: GameState) : Scene()
 				alignTopToBottomOf(title, 32.0)
 				alignRightToRightOf(title)
 			}
+
+			position(views.virtualWidth / 2.0 - width / 4.0, views.virtualHeight * 0.15)
 		}
 
 		val startGame = uiButton("Start Game") {
