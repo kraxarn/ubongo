@@ -1,4 +1,4 @@
-package entities
+package containers
 
 import com.soywiz.klock.milliseconds
 import com.soywiz.korge.tween.get

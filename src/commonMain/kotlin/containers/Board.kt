@@ -1,4 +1,4 @@
-package entities
+package containers
 
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.graphics
