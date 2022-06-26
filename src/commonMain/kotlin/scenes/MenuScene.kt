@@ -1,18 +1,25 @@
 package scenes
 
 import GameState
+import com.soywiz.klock.DateTime
+import com.soywiz.klock.seconds
+import com.soywiz.korge.animate.animate
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
+import com.soywiz.korge.tween.get
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
+import com.soywiz.korge.view.filter.TransitionFilter
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korim.format.readBitmap
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korim.vector.format.SVG
 import com.soywiz.korim.vector.render
+import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.std.resourcesVfs
+import com.soywiz.korma.interpolation.Easing
 import constants.Application
 import constants.GameColors
 import constants.TextSize
@@ -96,21 +103,30 @@ class MenuScene(private val gameState: GameState) : Scene()
 		val seedName = uiText(randomWord(gameState.seed)) {
 			uiSkin = textSkin
 			textAlignment = TextAlignment.MIDDLE_LEFT
-			size(startGame.width, 0.0)
+			size(startGame.width, 68.0)
 			alignLeftToLeftOf(startGame, PADDING / 2)
+			alignBottomToTopOf(startGame, PADDING)
 		}
 
-		val refreshButton = image(refreshIcon) {
-			size(96, 96)
+		circle(seedName.height / 2.0, GameColors.foregroundAlt) {
 			alignRightToRightOf(startGame, PADDING / 2)
 			alignBottomToTopOf(startGame, PADDING)
-			onClick {
-				gameState.regenerate()
-				seedName.text = randomWord(gameState.seed)
+			val seedFilter = TransitionFilter(TransitionFilter.Transition.SWEEP, smooth = false)
+			filter = seedFilter
+			animate {
+				tween(seedFilter::ratio[0.5], time = (60 - DateTime.now().seconds).seconds, easing = Easing.LINEAR)
+				sequence(looped = true) {
+					block {
+						launch {
+							gameState.regenerate()
+							seedName.text = randomWord(gameState.seed)
+						}
+						seedFilter.ratio = 1.0
+					}
+					tween(seedFilter::ratio[0.5], time = 60.seconds, easing = Easing.LINEAR)
+				}
 			}
 		}
-
-		seedName.centerYOn(refreshButton)
 	}
 
 	companion object
