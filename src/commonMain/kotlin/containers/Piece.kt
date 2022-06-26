@@ -6,17 +6,13 @@ import com.soywiz.korge.tween.tween
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.graphics
 import com.soywiz.korim.vector.StrokeInfo
-import com.soywiz.korma.geom.PointInt
 import com.soywiz.korma.geom.degrees
 import com.soywiz.korma.geom.plus
 import com.soywiz.korma.geom.vector.LineCap
 import com.soywiz.korma.geom.vector.rect
 import com.soywiz.korma.interpolation.Easing
 import enums.PieceShape
-import extensions.piece.borderColor
-import extensions.piece.color
-import extensions.piece.corners
-import extensions.piece.size
+import extensions.piece.*
 import kotlin.math.floor
 
 class Piece(private val pieceShape: PieceShape, private val tileSize: Double) : Container()
@@ -70,14 +66,5 @@ class Piece(private val pieceShape: PieceShape, private val tileSize: Double) : 
 		)
 	}
 
-	val points: Sequence<PointInt>
-		get() = sequence {
-			for (x in 0 until pieceShape.shape.width)
-			{
-				for (y in 0 until pieceShape.shape.height)
-				{
-					if (pieceShape.shape[x, y]) yield(PointInt(x, y))
-				}
-			}
-		}
+	val points get() = pieceShape.points
 }
