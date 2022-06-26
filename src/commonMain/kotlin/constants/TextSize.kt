@@ -5,12 +5,12 @@ object TextSize
 	/**
 	 * Default font size for buttons
 	 */
-	const val button = 42.0
+	const val button = 76.0
 
 	/**
 	 * Default font size for titles
 	 */
-	const val title = 96.0
+	const val title = 112.0
 
 	/**
 	 * Default font size for smaller (debug) text

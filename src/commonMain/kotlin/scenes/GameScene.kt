@@ -29,9 +29,10 @@ class GameScene(private val gameState: GameState) : Scene()
 	override suspend fun Container.sceneInit()
 	{
 		val regularFont = resourcesVfs["fonts/regular.ttf"].readTtfFont()
+		val lightFont = resourcesVfs["fonts/light.ttf"].readTtfFont()
 
 		titleSkin = UISkin {
-			textFont = regularFont
+			textFont = lightFont
 			textColor = GameColors.foregroundAlt.withAd(0.75)
 			textSize = TextSize.button * 0.5
 		}
@@ -47,7 +48,7 @@ class GameScene(private val gameState: GameState) : Scene()
 	{
 		val size = views.virtualWidth - PADDING * 2
 
-		val hud = uiGridFill(size * 0.8, 100.0, 2, 2) {
+		val hud = uiGridFill(size * 0.8, 70.0, 2, 2) {
 			position(PADDING, PADDING)
 			uiText("Time") {
 				uiSkin = titleSkin
@@ -75,7 +76,7 @@ class GameScene(private val gameState: GameState) : Scene()
 
 		val board = Board(gameState.random, pieces, size).addTo(this) {
 			position(PADDING, 0.0)
-			alignTopToBottomOf(hud, PADDING / 2)
+			alignTopToBottomOf(hud, PADDING)
 		}
 
 		roundRect(size, 630.0, 16.0, fill = GameColors.boardBackground) {

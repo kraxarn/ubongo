@@ -36,15 +36,15 @@ class MenuScene(private val gameState: GameState) : Scene()
 		logoBitmap = resourcesVfs["images/logo.png"].readBitmap()
 
 		titleSkin = UISkin {
-			textFont = resourcesVfs["fonts/title.ttf"].readTtfFont()
+			textFont = resourcesVfs["fonts/bold.ttf"].readTtfFont()
 			textColor = GameColors.foregroundAlt
 			textSize = TextSize.title
 		}
 
 		title2Skin = UISkin {
-			textFont = resourcesVfs["fonts/debug.ttf"].readTtfFont()
+			textFont = resourcesVfs["fonts/light.ttf"].readTtfFont()
 			textColor = GameColors.foregroundAlt
-			textSize = TextSize.button
+			textSize = TextSize.button * 0.75
 		}
 
 		val regularFont = resourcesVfs["fonts/regular.ttf"].readTtfFont()
@@ -79,7 +79,7 @@ class MenuScene(private val gameState: GameState) : Scene()
 			uiText(Application.VERSION) {
 				uiSkin = title2Skin
 				textAlignment = TextAlignment.MIDDLE_RIGHT
-				alignTopToBottomOf(title)
+				alignTopToBottomOf(title, 32.0)
 				alignRightToRightOf(title)
 			}
 		}
