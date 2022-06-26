@@ -13,7 +13,7 @@ class GameState
 	val random: Random
 		get()
 		{
-			if (currentRandom == null) currentRandom = Random(seed)
+			if (currentRandom == null) currentRandom = FastRandom(seed)
 			return currentRandom!!
 		}
 
