@@ -2,7 +2,9 @@ package scenes
 
 import GameState
 import com.soywiz.klock.DateTime
+import com.soywiz.klock.milliseconds
 import com.soywiz.klock.seconds
+import com.soywiz.klogger.Logger
 import com.soywiz.korge.animate.animate
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.input.onClick
@@ -115,7 +117,8 @@ class MenuScene(private val gameState: GameState) : Scene()
 			filter = seedFilter
 			animate {
 				sequence(looped = true) {
-					tween(seedFilter::ratio[0.5], time = (60 - DateTime.now().seconds).seconds, easing = Easing.LINEAR)
+					val nextMinute = 60.seconds - DateTime.now().milliseconds.milliseconds
+					tween(seedFilter::ratio[0.5], time = nextMinute, easing = Easing.LINEAR)
 					block {
 						launch {
 							gameState.regenerate()
