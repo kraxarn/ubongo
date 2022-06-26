@@ -114,8 +114,8 @@ class MenuScene(private val gameState: GameState) : Scene()
 			val seedFilter = TransitionFilter(TransitionFilter.Transition.SWEEP, smooth = false)
 			filter = seedFilter
 			animate {
-				tween(seedFilter::ratio[0.5], time = (60 - DateTime.now().seconds).seconds, easing = Easing.LINEAR)
 				sequence(looped = true) {
+					tween(seedFilter::ratio[0.5], time = (60 - DateTime.now().seconds).seconds, easing = Easing.LINEAR)
 					block {
 						launch {
 							gameState.regenerate()
@@ -123,7 +123,6 @@ class MenuScene(private val gameState: GameState) : Scene()
 						}
 						seedFilter.ratio = 1.0
 					}
-					tween(seedFilter::ratio[0.5], time = 60.seconds, easing = Easing.LINEAR)
 				}
 			}
 		}
