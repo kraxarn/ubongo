@@ -15,10 +15,7 @@ import constants.GameColors
 import constants.TextSize
 import containers.Board
 import containers.Piece
-import extensions.nextPoint
-import extensions.now
-import extensions.pieceShapes
-import extensions.size2
+import extensions.*
 
 @KorgeExperimental
 class GameScene(private val gameState: GameState) : Scene()
@@ -104,11 +101,11 @@ class GameScene(private val gameState: GameState) : Scene()
 				if (piece.collidesWith(board))
 				{
 					// Snap to grid
-					val boardPos = board.pos
-					val tileSize = board.tileSize
-
-					val x = ((piece.x - boardPos.x) / tileSize * tileSize) + boardPos.x
-					val y = ((piece.y - boardPos.y) / tileSize * tileSize) + boardPos.y
+					val tileSize = board.tileSize.toInt()
+					val piecePos = piece.intPos
+					val boardPos = board.intPos
+					val x = ((piecePos.x - boardPos.x) / tileSize * tileSize) + boardPos.x
+					val y = ((piecePos.y - boardPos.y) / tileSize * tileSize) + boardPos.y
 					piece.position(x, y)
 				}
 			}
