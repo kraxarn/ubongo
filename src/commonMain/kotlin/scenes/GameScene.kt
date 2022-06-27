@@ -3,18 +3,22 @@ package scenes
 import GameState
 import com.soywiz.klock.TimeSpan
 import com.soywiz.korge.annotations.KorgeExperimental
+import com.soywiz.korge.input.draggable
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
 import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korio.util.toStringDecimal
+import com.soywiz.korma.geom.Point
 import constants.GameColors
 import constants.TextSize
 import containers.Board
 import containers.Piece
+import extensions.nextPoint
 import extensions.now
 import extensions.pieceShapes
+import extensions.size2
 
 @KorgeExperimental
 class GameScene(private val gameState: GameState) : Scene()
@@ -82,9 +86,32 @@ class GameScene(private val gameState: GameState) : Scene()
 			.map { Piece(it, board.tileSize) }
 			.toList()
 
-		roundRect(size, 630.0, 16.0, fill = GameColors.boardBackground) {
+		val pieceContainer = roundRect(size, 630.0, 16.0, fill = GameColors.boardBackground) {
 			position(PADDING, 0.0)
 			alignTopToBottomOf(board, PADDING)
+		}
+
+		for (piece in pieces)
+		{
+			val padding = Point(PADDING, PADDING)
+			val topLeft = pieceContainer.pos + piece.size2 * 0.5 + padding
+			val bottomRight = topLeft + pieceContainer.size2 - piece.size2 * 1.5 - padding
+
+			piece.position(gameState.random.nextPoint(topLeft, bottomRight))
+			addChild(piece)
+
+			piece.draggable {
+				if (piece.collidesWith(board))
+				{
+					// Snap to grid
+					val boardPos = board.pos
+					val tileSize = board.tileSize
+
+					val x = ((piece.x - boardPos.x) / tileSize * tileSize) + boardPos.x
+					val y = ((piece.y - boardPos.y) / tileSize * tileSize) + boardPos.y
+					piece.position(x, y)
+				}
+			}
 		}
 	}
 
