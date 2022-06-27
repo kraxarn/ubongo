@@ -92,7 +92,7 @@ class GameScene(private val gameState: GameState) : Scene()
 		{
 			val padding = Point(PADDING, PADDING)
 			val topLeft = pieceContainer.pos + piece.size2 * 0.5 + padding
-			val bottomRight = topLeft + pieceContainer.size2 - piece.size2 * 1.5 - padding
+			val bottomRight = topLeft + pieceContainer.size2 - piece.size2 * 0.5 - padding
 
 			piece.position(gameState.random.nextPoint(topLeft, bottomRight))
 			addChild(piece)
