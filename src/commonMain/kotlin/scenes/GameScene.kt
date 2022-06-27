@@ -97,17 +97,18 @@ class GameScene(private val gameState: GameState) : Scene()
 			piece.position(gameState.random.nextPoint(topLeft, bottomRight))
 			addChild(piece)
 
-			piece.draggable {
+			piece.draggable(autoMove = false) {
 				if (piece.collidesWith(board))
 				{
 					// Snap to grid
 					val tileSize = board.tileSize.toInt()
-					val piecePos = piece.intPos
-					val boardPos = board.intPos
+					val piecePos = it.viewNextXY.toInt()
+					val boardPos = board.pos.toInt()
 					val x = ((piecePos.x - boardPos.x) / tileSize * tileSize) + boardPos.x
 					val y = ((piecePos.y - boardPos.y) / tileSize * tileSize) + boardPos.y
 					piece.position(x, y)
 				}
+				else piece.position(it.viewNextXY)
 			}
 		}
 	}
