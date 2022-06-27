@@ -7,15 +7,18 @@ import com.soywiz.korge.view.roundRect
 import com.soywiz.korma.geom.PointInt
 import com.soywiz.korma.geom.vector.roundRect
 import constants.GameColors
+import enums.PieceShape
 import utils.generateBoard
 import kotlin.random.Random
 
-class Board(random: Random, pieces: Iterable<Piece>, width: Double, height: Double = width) : Container()
+class Board(random: Random, pieces: Iterable<PieceShape>, width: Double, height: Double = width) : Container()
 {
+	val tileSize: Double
+
 	init
 	{
 		val board = roundRect(width, height, 16.0, fill = GameColors.boardBackground)
-		val tileSize = getTileSize(board.width)
+		tileSize = (board.width - TILE_SPACING * (TILE_COUNT + 1)) / TILE_COUNT
 		val tiles = generateBoard(random, pieces).toHashSet()
 
 		graphics {
@@ -55,7 +58,5 @@ class Board(random: Random, pieces: Iterable<Piece>, width: Double, height: Doub
 		 * Spacing between each cell
 		 */
 		const val TILE_SPACING = 12.0
-
-		fun getTileSize(width: Double) = (width - TILE_SPACING * (TILE_COUNT + 1)) / TILE_COUNT
 	}
 }

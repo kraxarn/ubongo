@@ -69,15 +69,18 @@ class GameScene(private val gameState: GameState) : Scene()
 			}
 		}
 
-		pieces = gameState.random.pieceShapes()
+		val pieceShapes = gameState.random.pieceShapes()
 			.take(Board.PIECE_COUNT)
-			.map { Piece(it, Board.getTileSize(size)) }
 			.toList()
 
-		val board = Board(gameState.random, pieces, size).addTo(this) {
+		val board = Board(gameState.random, pieceShapes, size).addTo(this) {
 			position(PADDING, 0.0)
 			alignTopToBottomOf(hud, PADDING)
 		}
+
+		pieces = pieceShapes
+			.map { Piece(it, board.tileSize) }
+			.toList()
 
 		roundRect(size, 630.0, 16.0, fill = GameColors.boardBackground) {
 			position(PADDING, 0.0)

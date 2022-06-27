@@ -19,15 +19,13 @@ class Piece(private val pieceShape: PieceShape, private val tileSize: Double) : 
 {
 	private val borderSize get() = tileSize / 16.0
 
-	val shapeSize get() = pieceShape.size
-
 	init
 	{
 		val borderCap = LineCap.ROUND
 
 		graphics {
 			fill(pieceShape.color) {
-				for (point in points)
+				for (point in pieceShape.points)
 				{
 					rect(
 						borderSize + point.x * tileSize,
@@ -65,6 +63,4 @@ class Piece(private val pieceShape: PieceShape, private val tileSize: Double) : 
 			easing = Easing.EASE_OUT,
 		)
 	}
-
-	val points get() = pieceShape.points
 }
