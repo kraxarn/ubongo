@@ -101,6 +101,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			addChild(piece)
 
 			piece.draggable(autoMove = false) {
+				piece.bringToTop()
 				if (piece.collidesWith(board))
 				{
 					// Snap to grid
