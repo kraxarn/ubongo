@@ -156,7 +156,7 @@ class GameScene(private val gameState: GameState) : Scene()
 		pauseDialog = pauseDialog(views.virtualWidth * 0.75, views.virtualHeight * 0.25) {
 			position(views.virtualWidth * 0.125, views.virtualHeight / 2 - height / 2)
 			visible = false
-			onBack { sceneContainer.back() }
+			onBack { sceneContainer.changeTo<MenuScene>() }
 			onResume { paused = false }
 		}
 	}
