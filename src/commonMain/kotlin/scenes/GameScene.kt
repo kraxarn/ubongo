@@ -41,8 +41,10 @@ class GameScene(private val gameState: GameState) : Scene()
 		get() = pauseDialog?.visible == true || dialogBackdrop?.visible == true
 		set(value)
 		{
-			pauseDialog?.visible = value
+			dialogBackdrop?.bringToTop()
+			pauseDialog?.bringToTop()
 			dialogBackdrop?.visible = value
+			pauseDialog?.visible = value
 		}
 
 	private var duration = TimeSpan.NIL
