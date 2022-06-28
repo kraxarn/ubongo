@@ -69,8 +69,7 @@ class GameScene(private val gameState: GameState) : Scene()
 
 			addUpdater {
 				duration += it
-				val diff = duration.seconds
-				time.text = diff.toStringDecimal(1)
+				time.text = duration.seconds.toStringDecimal(1)
 			}
 		}
 
