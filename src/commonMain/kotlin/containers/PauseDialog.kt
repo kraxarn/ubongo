@@ -16,7 +16,7 @@ suspend fun Container.pauseDialog(
 	callback: @ViewDslMarker PauseDialog.() -> Unit = {},
 ): PauseDialog
 {
-	val backIcon = SVG(resourcesVfs["images/ui/pause.svg"].readString()).render()
+	val backIcon = SVG(resourcesVfs["images/ui/arrow-left.svg"].readString()).render()
 	val resumeIcon = SVG(resourcesVfs["images/ui/play.svg"].readString()).render()
 
 	val titleFont = resourcesVfs["fonts/bold.ttf"].readTtfFont()
