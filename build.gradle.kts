@@ -25,6 +25,7 @@ korge {
 	id = "com.kraxarn.ubongo2"
 	name = "Ubongo"
 	copyright = "Copyright (c) ${now().value} kraxarn"
+	icon = File("src/commonMain/resources/images/logo.png")
 
 	version = projectVersion
 	versionCode = projectVersion
