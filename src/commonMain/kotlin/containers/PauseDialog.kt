@@ -1,26 +1,27 @@
 package containers
 
+import Resources
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.ViewDslMarker
 import com.soywiz.korge.view.addTo
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.font.Font
-import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korim.vector.format.SVG
 import com.soywiz.korim.vector.render
-import com.soywiz.korio.file.std.resourcesVfs
+import enums.ResFont
+import enums.ResImage
 
-suspend fun Container.pauseDialog(
+fun Container.pauseDialog(
 	width: Double, height: Double,
 	callback: @ViewDslMarker PauseDialog.() -> Unit = {},
 ): PauseDialog
 {
-	val backIcon = SVG(resourcesVfs["images/ui/arrow-left.svg"].readString()).render()
-	val resumeIcon = SVG(resourcesVfs["images/ui/play.svg"].readString()).render()
+	val backIcon = SVG(Resources[ResImage.UI_ARROW_LEFT]).render()
+	val resumeIcon = SVG(Resources[ResImage.UI_PLAY]).render()
 
-	val titleFont = resourcesVfs["fonts/bold.ttf"].readTtfFont()
-	val bodyFont = resourcesVfs["fonts/regular.ttf"].readTtfFont()
+	val titleFont = Resources[ResFont.BOLD]
+	val bodyFont = Resources[ResFont.REGULAR]
 
 	return PauseDialog(width, height, titleFont, bodyFont, backIcon, resumeIcon)
 		.addTo(this, callback)

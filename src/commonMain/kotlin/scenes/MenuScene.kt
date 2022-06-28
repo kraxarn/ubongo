@@ -1,6 +1,7 @@
 package scenes
 
 import GameState
+import Resources
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.seconds
 import com.soywiz.korge.animate.animate
@@ -11,13 +12,8 @@ import com.soywiz.korge.tween.get
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
 import com.soywiz.korge.view.filter.TransitionFilter
-import com.soywiz.korim.bitmap.Bitmap
-import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korim.text.TextAlignment
-import com.soywiz.korim.vector.format.SVG
-import com.soywiz.korim.vector.render
 import com.soywiz.korio.async.launch
-import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korma.geom.degrees
 import com.soywiz.korma.interpolation.Easing
 import constants.Application
@@ -25,6 +21,7 @@ import constants.GameColors
 import constants.TextSize
 import containers.Piece
 import enums.PieceShape
+import enums.ResFont
 import skins.ButtonSkin
 import utils.randomWord
 
@@ -40,19 +37,21 @@ class MenuScene(private val gameState: GameState) : Scene()
 
 	override suspend fun Container.sceneInit()
 	{
+		Resources.loadAll()
+
 		titleSkin = UISkin {
-			textFont = resourcesVfs["fonts/bold.ttf"].readTtfFont()
+			textFont = Resources[ResFont.BOLD]
 			textColor = GameColors.foregroundAlt
 			textSize = TextSize.title
 		}
 
 		title2Skin = UISkin {
-			textFont = resourcesVfs["fonts/light.ttf"].readTtfFont()
+			textFont = Resources[ResFont.LIGHT]
 			textColor = GameColors.foregroundAlt
 			textSize = TextSize.button * 0.75
 		}
 
-		val regularFont = resourcesVfs["fonts/regular.ttf"].readTtfFont()
+		val regularFont = Resources[ResFont.REGULAR]
 		buttonSkin = ButtonSkin(regularFont)
 
 		textSkin = UISkin {

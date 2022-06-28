@@ -1,6 +1,7 @@
 package scenes
 
 import GameState
+import Resources
 import com.soywiz.klock.TimeSpan
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.input.draggable
@@ -10,10 +11,8 @@ import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
-import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korim.vector.format.SVG
 import com.soywiz.korim.vector.render
-import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korio.util.toStringDecimal
 import com.soywiz.korma.geom.Point
 import constants.GameColors
@@ -22,6 +21,8 @@ import containers.Board
 import containers.PauseDialog
 import containers.Piece
 import containers.pauseDialog
+import enums.ResFont
+import enums.ResImage
 import extensions.*
 
 @KorgeExperimental
@@ -50,22 +51,21 @@ class GameScene(private val gameState: GameState) : Scene()
 
 	override suspend fun Container.sceneInit()
 	{
-		val regularFont = resourcesVfs["fonts/regular.ttf"].readTtfFont()
-		val lightFont = resourcesVfs["fonts/light.ttf"].readTtfFont()
+		Resources.loadAll()
 
 		titleSkin = UISkin {
-			textFont = lightFont
+			textFont = Resources[ResFont.LIGHT]
 			textColor = GameColors.foregroundAlt.withAd(0.75)
 			textSize = TextSize.button * 0.5
 		}
 
 		textSkin = UISkin {
-			textFont = regularFont
+			textFont = Resources[ResFont.REGULAR]
 			textColor = GameColors.foregroundAlt
 			textSize = TextSize.button
 		}
 
-		pauseIcon = SVG(resourcesVfs["images/ui/pause.svg"].readString()).render()
+		pauseIcon = SVG(Resources[ResImage.UI_PAUSE]).render()
 	}
 
 	override suspend fun Container.sceneMain()
