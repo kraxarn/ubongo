@@ -90,7 +90,7 @@ class GameScene(private val gameState: GameState) : Scene()
 
 		for (piece in pieces)
 		{
-			val padding = Point(PADDING, PADDING)
+			val padding = Point(PADDING)
 			val topLeft = pieceContainer.pos + piece.size2 * 0.5 + padding
 			val bottomRight = topLeft + pieceContainer.size2 - piece.size2 * 0.5 - padding
 
@@ -103,7 +103,7 @@ class GameScene(private val gameState: GameState) : Scene()
 					// Snap to grid
 					val tileSize = board.tileSize.toInt()
 					val piecePos = it.viewNextXY.toInt()
-					val boardPos = board.pos.toInt()
+					val boardPos = (board.pos + Point(Board.TILE_SPACING)).toInt()
 					val x = ((piecePos.x - boardPos.x) / tileSize * tileSize) + boardPos.x
 					val y = ((piecePos.y - boardPos.y) / tileSize * tileSize) + boardPos.y
 					piece.position(x, y)
