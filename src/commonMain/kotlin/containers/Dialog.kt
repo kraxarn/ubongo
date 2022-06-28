@@ -9,6 +9,7 @@ import com.soywiz.korim.font.Font
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.async.AsyncSignal
 import com.soywiz.korma.geom.vector.roundRect
+import extensions.maxWidthOrHeight
 
 open class Dialog(
 	width: Double, height: Double,
@@ -83,8 +84,8 @@ open class Dialog(
 
 	private fun actionIcon(icon: Bitmap, callback: @ViewDslMarker Image.() -> Unit): Image
 	{
-		return image(icon, 0.0, -0.25) {
-			size(96, 96)
+		return image(icon, 0.0, 0.0) {
+			maxWidthOrHeight(80.0)
 			callback(this)
 		}
 	}
