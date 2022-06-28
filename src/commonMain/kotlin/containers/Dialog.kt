@@ -1,11 +1,13 @@
 package containers
 
+import com.soywiz.korge.input.MouseEvents
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.font.Font
 import com.soywiz.korim.text.TextAlignment
+import com.soywiz.korio.async.AsyncSignal
 import com.soywiz.korma.geom.vector.roundRect
 
 fun Container.dialog(
@@ -19,6 +21,9 @@ open class Dialog(
 	private val titleFont: Font, private val bodyFont: Font,
 ) : UIContainer(width, height)
 {
+	val onLeftAction = AsyncSignal<MouseEvents>()
+	val onRightAction = AsyncSignal<MouseEvents>()
+
 	private var title: UIText? = null
 	private var body: UIText? = null
 

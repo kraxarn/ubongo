@@ -32,17 +32,20 @@ class PauseDialog(
 	backIcon: Bitmap, resumeIcon: Bitmap,
 ) : Dialog(width, height, titleFont, bodyFont)
 {
+	val onBack = onLeftAction
+	val onResume = onRightAction
+
 	init
 	{
 		title("Paused")
 		body("Game is paused")
 
 		leftAction("Back to menu", backIcon) {
-			onClick { TODO() }
+			onClick { onBack(it) }
 		}
 
 		rightAction("Resume", resumeIcon) {
-			onClick { TODO() }
+			onClick { onResume(it) }
 		}
 	}
 }
