@@ -10,7 +10,6 @@ import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
-import com.soywiz.korim.font.Font
 import com.soywiz.korim.font.readTtfFont
 import com.soywiz.korim.vector.format.SVG
 import com.soywiz.korim.vector.render
@@ -45,17 +44,13 @@ class GameScene(private val gameState: GameState) : Scene()
 			dialogBackdrop?.visible = value
 		}
 
-	lateinit var boldFont: Font
-	lateinit var regularFont: Font
-
 	private var duration = TimeSpan.NIL
 
 	private lateinit var pieces: List<Piece>
 
 	override suspend fun Container.sceneInit()
 	{
-		boldFont = resourcesVfs["fonts/bold.ttf"].readTtfFont()
-		regularFont = resourcesVfs["fonts/regular.ttf"].readTtfFont()
+		val regularFont = resourcesVfs["fonts/regular.ttf"].readTtfFont()
 		val lightFont = resourcesVfs["fonts/light.ttf"].readTtfFont()
 
 		titleSkin = UISkin {
