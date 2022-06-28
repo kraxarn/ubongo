@@ -33,8 +33,6 @@ class MenuScene(private val gameState: GameState) : Scene()
 	private lateinit var buttonSkin: UISkin
 	private lateinit var textSkin: UISkin
 
-	private lateinit var refreshIcon: Bitmap
-
 	override suspend fun Container.sceneInit()
 	{
 		Resources.loadAll()
@@ -59,8 +57,6 @@ class MenuScene(private val gameState: GameState) : Scene()
 			textColor = GameColors.foregroundAlt
 			textSize = TextSize.button
 		}
-
-		refreshIcon = SVG(resourcesVfs["images/ui/refresh.svg"].readString()).render()
 	}
 
 	override suspend fun Container.sceneMain()
