@@ -15,7 +15,10 @@ import constants.GameColors
 import constants.TextSize
 import containers.Board
 import containers.Piece
-import extensions.*
+import extensions.nextPoint
+import extensions.pieceShapes
+import extensions.size2
+import extensions.toInt
 
 @KorgeExperimental
 class GameScene(private val gameState: GameState) : Scene()
@@ -23,7 +26,7 @@ class GameScene(private val gameState: GameState) : Scene()
 	private lateinit var titleSkin: UISkin
 	private lateinit var textSkin: UISkin
 
-	private var startTime = TimeSpan.NIL
+	private var duration = TimeSpan.NIL
 
 	private lateinit var pieces: List<Piece>
 
@@ -65,7 +68,8 @@ class GameScene(private val gameState: GameState) : Scene()
 			}
 
 			addUpdater {
-				val diff = (TimeSpan.now() - startTime).seconds
+				duration += it
+				val diff = duration.seconds
 				time.text = diff.toStringDecimal(1)
 			}
 		}
@@ -115,7 +119,7 @@ class GameScene(private val gameState: GameState) : Scene()
 
 	override suspend fun sceneAfterInit()
 	{
-		startTime = TimeSpan.now()
+		duration = TimeSpan.ZERO
 	}
 
 	companion object
