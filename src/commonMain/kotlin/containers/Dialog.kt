@@ -10,12 +10,6 @@ import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.async.AsyncSignal
 import com.soywiz.korma.geom.vector.roundRect
 
-fun Container.dialog(
-	width: Double, height: Double,
-	titleFont: Font, bodyFont: Font,
-	callback: @ViewDslMarker Dialog.() -> Unit = {},
-) = Dialog(width, height, titleFont, bodyFont).addTo(this, callback)
-
 open class Dialog(
 	width: Double, height: Double,
 	private val titleFont: Font, private val bodyFont: Font,
