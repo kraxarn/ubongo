@@ -14,13 +14,11 @@ import com.soywiz.korge.view.*
 import com.soywiz.korge.view.filter.TransitionFilter
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.async.launch
-import com.soywiz.korma.geom.degrees
 import com.soywiz.korma.interpolation.Easing
 import constants.Application
 import constants.GameColors
 import constants.TextSize
-import containers.Piece
-import enums.PieceShape
+import containers.Logo
 import enums.ResFont
 import skins.ButtonSkin
 import utils.randomWord
@@ -62,23 +60,15 @@ class MenuScene(private val gameState: GameState) : Scene()
 	override suspend fun Container.sceneMain()
 	{
 		container {
-			val leftPiece = Piece(PieceShape.L2, 128.0)
-			leftPiece.position(0, 0)
-
-			val rightPiece = Piece(PieceShape.T2, 128.0)
-			rightPiece.alignLeftToRightOf(leftPiece, -128)
-			rightPiece.alignBottomToBottomOf(leftPiece)
-			rightPiece.rotation = 90.degrees
-
-			addChild(leftPiece)
-			addChild(rightPiece)
+			val logo = Logo()
+			addChild(logo)
 
 			val title = uiText("Ubongo") {
 				textAlignment = TextAlignment.MIDDLE_RIGHT
 				uiSkin = titleSkin
 				size(340, 100)
-				alignTopToBottomOf(leftPiece, 32)
-				alignRightToLeftOf(rightPiece, -96)
+				alignTopToBottomOf(logo, -96)
+				alignRightToRightOf(logo, 160)
 			}
 
 			uiText(Application.VERSION) {
