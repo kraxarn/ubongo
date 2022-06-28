@@ -13,7 +13,7 @@ import com.soywiz.korio.file.std.resourcesVfs
 
 suspend fun Container.pauseDialog(
 	width: Double, height: Double,
-	callback: @ViewDslMarker Dialog.() -> Unit = {},
+	callback: @ViewDslMarker PauseDialog.() -> Unit = {},
 ): PauseDialog
 {
 	val backIcon = SVG(resourcesVfs["images/ui/pause.svg"].readString()).render()
