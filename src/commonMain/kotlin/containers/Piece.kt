@@ -1,19 +1,13 @@
 package containers
 
-import com.soywiz.klock.milliseconds
-import com.soywiz.korge.tween.get
-import com.soywiz.korge.tween.tween
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.graphics
 import com.soywiz.korge.view.hitShape
 import com.soywiz.korim.vector.StrokeInfo
 import com.soywiz.korma.geom.Point
-import com.soywiz.korma.geom.degrees
-import com.soywiz.korma.geom.plus
 import com.soywiz.korma.geom.vector.LineCap
 import com.soywiz.korma.geom.vector.VectorBuilder
 import com.soywiz.korma.geom.vector.rect
-import com.soywiz.korma.interpolation.Easing
 import enums.PieceShape
 import extensions.piece.*
 import kotlin.math.floor
@@ -63,17 +57,5 @@ class Piece(private val pieceShape: PieceShape, private val tileSize: Double) : 
 				borderOffset.y + corner.y * tileSize + borderSize,
 			)
 		}
-	}
-
-	suspend fun rotate()
-	{
-		// Don't allow rotation while already rotating
-		if (rotation.degrees.toInt() % 90 != 0) return
-
-		tween(
-			::rotation[rotation + 90.degrees],
-			time = 200.milliseconds,
-			easing = Easing.EASE_OUT,
-		)
 	}
 }
