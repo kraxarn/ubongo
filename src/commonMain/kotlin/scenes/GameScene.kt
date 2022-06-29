@@ -37,6 +37,10 @@ class GameScene(private val gameState: GameState) : Scene()
 	private var pauseDialog: PauseDialog? = null
 	private var dialogBackdrop: View? = null
 
+	private var duration = TimeSpan.NIL
+
+	private lateinit var pieces: List<Piece>
+
 	private var paused
 		get() = pauseDialog?.visible == true || dialogBackdrop?.visible == true
 		set(value)
@@ -46,10 +50,6 @@ class GameScene(private val gameState: GameState) : Scene()
 			dialogBackdrop?.visible = value
 			pauseDialog?.visible = value
 		}
-
-	private var duration = TimeSpan.NIL
-
-	private lateinit var pieces: List<Piece>
 
 	override suspend fun Container.sceneInit()
 	{
