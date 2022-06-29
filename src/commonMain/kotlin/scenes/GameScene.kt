@@ -159,7 +159,10 @@ class GameScene(private val gameState: GameState) : Scene()
 						winDialog = winDialog(duration, dialogSize.x, dialogSize.y) {
 							position(views.virtualWidth * 0.125, views.virtualHeight / 2 - height / 2)
 							onBack { sceneContainer.changeTo<MenuScene>() }
-							onNext { TODO() }
+							onNext {
+								gameState.currentLevel++
+								sceneContainer.changeTo<GameScene>()
+							}
 						}
 						paused = true
 					}
