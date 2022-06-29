@@ -2,7 +2,7 @@ name: Web (JS)
 
 on:
   push:
-    branches: [ korge ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
