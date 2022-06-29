@@ -17,10 +17,7 @@ import com.soywiz.korio.util.toStringDecimal
 import com.soywiz.korma.geom.Point
 import constants.GameColors
 import constants.TextSize
-import containers.Board
-import containers.PauseDialog
-import containers.Piece
-import containers.pauseDialog
+import containers.*
 import enums.ResFont
 import enums.ResImage
 import extensions.*
@@ -35,6 +32,7 @@ class GameScene(private val gameState: GameState) : Scene()
 	private lateinit var pauseButton: Image
 
 	private var pauseDialog: PauseDialog? = null
+	private var winDialog: WinDialog? = null
 	private var dialogBackdrop: View? = null
 
 	private var duration = TimeSpan.NIL
@@ -42,13 +40,21 @@ class GameScene(private val gameState: GameState) : Scene()
 	private lateinit var pieces: List<Piece>
 
 	private var paused
-		get() = pauseDialog?.visible == true || dialogBackdrop?.visible == true
+		get() = dialogBackdrop?.visible == true
 		set(value)
 		{
 			dialogBackdrop?.bringToTop()
-			pauseDialog?.bringToTop()
 			dialogBackdrop?.visible = value
-			pauseDialog?.visible = value
+
+			if (winDialog == null)
+			{
+				pauseDialog?.bringToTop()
+				pauseDialog?.visible = value
+			}
+			else
+			{
+				winDialog?.bringToTop()
+			}
 		}
 
 	override suspend fun Container.sceneInit()
@@ -121,6 +127,8 @@ class GameScene(private val gameState: GameState) : Scene()
 			alignTopToBottomOf(board, PADDING)
 		}
 
+		val dialogSize = Point(views.virtualWidth * 0.75, views.virtualHeight * 0.25)
+
 		for (piece in pieces)
 		{
 			val padding = Point(PADDING)
@@ -143,6 +151,19 @@ class GameScene(private val gameState: GameState) : Scene()
 					piece.position(x, y)
 				}
 				else piece.position(it.viewNextXY)
+
+				if (it.end)
+				{
+					if (board.allTilesFilled(pieces))
+					{
+						winDialog = winDialog(duration, dialogSize.x, dialogSize.y) {
+							position(views.virtualWidth * 0.125, views.virtualHeight / 2 - height / 2)
+							onBack { sceneContainer.changeTo<MenuScene>() }
+							onNext { TODO() }
+						}
+						paused = true
+					}
+				}
 			}
 		}
 
@@ -153,7 +174,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			onMouseDrag { }
 		}
 
-		pauseDialog = pauseDialog(views.virtualWidth * 0.75, views.virtualHeight * 0.25) {
+		pauseDialog = pauseDialog(dialogSize.x, dialogSize.y) {
 			position(views.virtualWidth * 0.125, views.virtualHeight / 2 - height / 2)
 			visible = false
 			onBack { sceneContainer.changeTo<MenuScene>() }
