@@ -8,7 +8,7 @@ class GameState
 	val level get() = currentLevel
 
 	private var currentSeed = generateSeed()
-	val seed get() = currentSeed
+	val seed get() = currentSeed + currentLevel
 
 	private var currentRandom: Random? = null
 	val random: Random
@@ -33,7 +33,6 @@ class GameState
 	fun nextLevel()
 	{
 		currentLevel++
-		currentSeed++
 		currentRandom = null
 	}
 
