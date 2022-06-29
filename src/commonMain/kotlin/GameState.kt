@@ -4,7 +4,8 @@ import kotlin.random.Random
 
 class GameState
 {
-	var currentLevel = 1
+	private var currentLevel = 1
+	val level get() = currentLevel
 
 	private var currentSeed = generateSeed()
 	val seed get() = currentSeed
@@ -23,6 +24,16 @@ class GameState
 	fun regenerate()
 	{
 		currentSeed = generateSeed()
+		currentRandom = null
+	}
+
+	/**
+	 * Go to the next level, generating a new seed
+	 */
+	fun nextLevel()
+	{
+		currentLevel++
+		currentSeed++
 		currentRandom = null
 	}
 

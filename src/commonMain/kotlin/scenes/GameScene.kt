@@ -91,7 +91,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			val time = uiText("0.0") {
 				uiSkin = textSkin
 			}
-			uiText(gameState.currentLevel.toString()) {
+			uiText(gameState.level.toString()) {
 				uiSkin = textSkin
 			}
 
@@ -160,7 +160,7 @@ class GameScene(private val gameState: GameState) : Scene()
 							position(views.virtualWidth * 0.125, views.virtualHeight / 2 - height / 2)
 							onBack { sceneContainer.changeTo<MenuScene>() }
 							onNext {
-								gameState.currentLevel++
+								gameState.nextLevel()
 								sceneContainer.changeTo<GameScene>()
 							}
 						}
