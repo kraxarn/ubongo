@@ -11,7 +11,6 @@ import constants.GameColors
 import enums.PieceShape
 import extensions.containsPoint
 import extensions.localToGlobalXY
-import extensions.logger
 import utils.generateBoard
 import kotlin.random.Random
 
@@ -63,11 +62,10 @@ class Board(random: Random, pieces: Iterable<PieceShape>, width: Double, height:
 	{
 		val tileCenterOffset = tileSize / 2.0
 		val tileCenter = Point(tileCenterOffset, tileCenterOffset)
-		val count = tiles
+
+		return tiles
 			.map { localToGlobalXY(getTilePosition(it) + tileCenter) }
-			.count { tile -> pieces.any { it.hitShape2d.containsPoint(it.globalToLocal(tile)) } }
-		logger.debug { "Tiles: $count/${tiles.count()}" }
-		return count >= tiles.count()
+			.all { tile -> pieces.any { it.hitShape2d.containsPoint(it.globalToLocal(tile)) } }
 	}
 
 	companion object
