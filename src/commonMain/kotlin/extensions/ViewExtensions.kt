@@ -16,9 +16,6 @@ val View.size2 get() = Point(this.width, this.height)
 fun <T : View> T.maxWidthOrHeight(scale: Double) =
 	this.scale(scale / max(this.width, this.height))
 
-fun View.hitTestAny(point: Point) =
-	this.hitTestAny(point.x, point.y)
-
 fun View.localToGlobalXY(point: Point) =
 	this.localToGlobalXY(point.x, point.y)
 

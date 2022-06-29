@@ -9,7 +9,7 @@ import com.soywiz.korma.geom.PointInt
 import com.soywiz.korma.geom.vector.roundRect
 import constants.GameColors
 import enums.PieceShape
-import extensions.hitTestAny
+import extensions.containsPoint
 import extensions.localToGlobalXY
 import extensions.logger
 import utils.generateBoard
@@ -65,7 +65,7 @@ class Board(random: Random, pieces: Iterable<PieceShape>, width: Double, height:
 		val tileCenter = Point(tileCenterOffset, tileCenterOffset)
 		val count = tiles
 			.map { localToGlobalXY(getTilePosition(it) + tileCenter) }
-			.count { tile -> pieces.any { it.hitTestAny(tile) } }
+			.count { tile -> pieces.any { it.hitShape2d.containsPoint(it.globalToLocal(tile)) } }
 		logger.debug { "Tiles: $count/${tiles.count()}" }
 		return count >= tiles.count()
 	}
