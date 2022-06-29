@@ -29,4 +29,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ubongo-macos
-          path: ./build/ubongo-release.app
+          path: ./build/Ubongo-release.app
