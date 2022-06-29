@@ -64,7 +64,7 @@ class Board(random: Random, pieces: Iterable<PieceShape>, width: Double, height:
 		val tileCenter = Point(tileCenterOffset, tileCenterOffset)
 
 		return tiles
-			.map { localToGlobalXY(getTilePosition(it) + tileCenter) }
+			.map { localToGlobal(getTilePosition(it) + tileCenter) }
 			.all { tile -> pieces.any { it.hitShape2d.containsPoint(it.globalToLocal(tile)) } }
 	}
 
