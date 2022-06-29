@@ -10,7 +10,6 @@ import com.soywiz.korma.geom.vector.roundRect
 import constants.GameColors
 import enums.PieceShape
 import extensions.containsPoint
-import extensions.localToGlobalXY
 import utils.generateBoard
 import kotlin.random.Random
 
@@ -24,14 +23,15 @@ class Board(random: Random, pieces: Iterable<PieceShape>, width: Double, height:
 	/**
 	 * Top-left position of all tiles that should be filled
 	 */
-	private val tiles: Iterable<PointInt>
+	private val tilePositions: Iterable<Point>
 
 	init
 	{
 		val board = roundRect(width, height, 16.0, fill = GameColors.boardBackground)
 		tileSize = (board.width - TILE_SPACING * 2) / TILE_COUNT
 		val rectSize = tileSize - TILE_SPACING
-		tiles = generateBoard(random, pieces).toHashSet()
+		val tiles = generateBoard(random, pieces).toHashSet()
+		val positions = mutableListOf<Point>()
 
 		graphics {
 			position(board.pos)
@@ -40,22 +40,18 @@ class Board(random: Random, pieces: Iterable<PieceShape>, width: Double, height:
 				{
 					for (y in 0 until TILE_COUNT)
 					{
-						val point = PointInt(x, y)
-						if (point !in tiles) continue
+						if (PointInt(x, y) !in tiles) continue
 
-						val pos = getTilePosition(point)
-						roundRect(pos.x, pos.y, rectSize, rectSize, 8.0)
+						val xPos = (TILE_SPACING * 1.5) + (tileSize * x)
+						val yPos = (TILE_SPACING * 1.5) + (tileSize * y)
+						roundRect(xPos, yPos, rectSize, rectSize, 8.0)
+						positions.add(Point(xPos, yPos))
 					}
 				}
 			}
 		}
-	}
 
-	private fun getTilePosition(pos: PointInt): Point
-	{
-		val xPos = (TILE_SPACING * 1.5) + (tileSize * pos.x)
-		val yPos = (TILE_SPACING * 1.5) + (tileSize * pos.y)
-		return Point(xPos, yPos)
+		tilePositions = positions
 	}
 
 	fun allTilesFilled(pieces: Iterable<Piece>): Boolean
@@ -63,8 +59,8 @@ class Board(random: Random, pieces: Iterable<PieceShape>, width: Double, height:
 		val tileCenterOffset = tileSize / 2.0
 		val tileCenter = Point(tileCenterOffset, tileCenterOffset)
 
-		return tiles
-			.map { localToGlobal(getTilePosition(it) + tileCenter) }
+		return tilePositions
+			.map { localToGlobal(it + tileCenter) }
 			.all { tile -> pieces.any { it.hitShape2d.containsPoint(it.globalToLocal(tile)) } }
 	}
 
