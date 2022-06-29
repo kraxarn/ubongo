@@ -23,6 +23,7 @@ class GameState
 	 */
 	fun regenerate()
 	{
+		currentLevel = 1
 		currentSeed = generateSeed()
 		currentRandom = null
 	}

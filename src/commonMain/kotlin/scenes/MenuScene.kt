@@ -59,6 +59,8 @@ class MenuScene(private val gameState: GameState) : Scene()
 
 	override suspend fun Container.sceneMain()
 	{
+		gameState.regenerate()
+
 		container {
 			val logo = Logo()
 			addChild(logo)
