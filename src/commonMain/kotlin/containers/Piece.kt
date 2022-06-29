@@ -5,10 +5,13 @@ import com.soywiz.korge.tween.get
 import com.soywiz.korge.tween.tween
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.graphics
+import com.soywiz.korge.view.hitShape
 import com.soywiz.korim.vector.StrokeInfo
+import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.degrees
 import com.soywiz.korma.geom.plus
 import com.soywiz.korma.geom.vector.LineCap
+import com.soywiz.korma.geom.vector.VectorBuilder
 import com.soywiz.korma.geom.vector.rect
 import com.soywiz.korma.interpolation.Easing
 import enums.PieceShape
@@ -18,6 +21,7 @@ import kotlin.math.floor
 class Piece(private val pieceShape: PieceShape, private val tileSize: Double) : Container()
 {
 	private val borderSize get() = tileSize / 16.0
+	private val borderOffset = Point()
 
 	init
 	{
@@ -38,17 +42,26 @@ class Piece(private val pieceShape: PieceShape, private val tileSize: Double) : 
 			stroke(
 				pieceShape.borderColor,
 				StrokeInfo(borderSize, startCap = borderCap, endCap = borderCap)
-			) {
-				moveTo(borderSize, borderSize)
-
-				for (corner in pieceShape.corners.drop(1))
-				{
-					lineTo(corner.x * tileSize + borderSize, corner.y * tileSize + borderSize)
-				}
-			}
+			) { drawBorder(this) }
 
 			x = -(floor(pieceShape.size.x / 2.0) * tileSize + borderSize)
 			y = -(floor(pieceShape.size.y / 2.0) * tileSize + borderSize)
+			borderOffset.setTo(x, y)
+		}
+
+		hitShape { drawBorder(this) }
+	}
+
+	private fun drawBorder(builder: VectorBuilder)
+	{
+		builder.moveTo(borderOffset.x + borderSize, borderOffset.y + borderSize)
+
+		for (corner in pieceShape.corners.drop(1))
+		{
+			builder.lineTo(
+				borderOffset.x + corner.x * tileSize + borderSize,
+				borderOffset.y + corner.y * tileSize + borderSize,
+			)
 		}
 	}
 
