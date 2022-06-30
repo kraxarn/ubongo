@@ -61,7 +61,7 @@ class Board(random: Random, pieces: Iterable<PieceShape>, width: Double, height:
 
 		return tilePositions
 			.map { localToGlobal(it + tileCenter) }
-			.all { tile -> pieces.any { it.hitShape2d.containsPoint(it.globalToLocal(tile)) } }
+			.all { tile -> pieces.any { it.containsPoint(it.globalToLocal(tile)) } }
 	}
 
 	companion object

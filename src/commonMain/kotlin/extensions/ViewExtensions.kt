@@ -16,6 +16,9 @@ val View.size2 get() = Point(this.width, this.height)
 fun <T : View> T.maxWidthOrHeight(scale: Double) =
 	this.scale(scale / max(this.width, this.height))
 
+fun View.containsPoint(point: Point) =
+	this.hitShape2d.containsPoint(point.x, point.y)
+
 /**
  * Move view by 90 degrees.
  *
