@@ -1,7 +1,6 @@
 package scenes
 
 import GameState
-import Resources
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.seconds
 import com.soywiz.korge.animate.animate
@@ -33,21 +32,19 @@ class MenuScene(private val gameState: GameState) : Scene()
 
 	override suspend fun Container.sceneInit()
 	{
-		Resources.loadAll()
-
 		titleSkin = UISkin {
-			textFont = Resources[ResFont.BOLD]
+			textFont = gameState.res[ResFont.BOLD]
 			textColor = GameColors.foregroundAlt
 			textSize = TextSize.title
 		}
 
 		title2Skin = UISkin {
-			textFont = Resources[ResFont.LIGHT]
+			textFont = gameState.res[ResFont.LIGHT]
 			textColor = GameColors.foregroundAlt
 			textSize = TextSize.button * 0.75
 		}
 
-		val regularFont = Resources[ResFont.REGULAR]
+		val regularFont = gameState.res[ResFont.REGULAR]
 		buttonSkin = ButtonSkin(regularFont)
 
 		textSkin = UISkin {

@@ -4,7 +4,7 @@ import com.soywiz.korio.file.std.resourcesVfs
 import enums.ResFont
 import enums.ResImage
 
-object Resources
+class Resources
 {
 	private val images = mutableMapOf<ResImage, String>()
 	private val fonts = mutableMapOf<ResFont, Font>()

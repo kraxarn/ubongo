@@ -18,6 +18,8 @@ class GameState
 			return currentRandom!!
 		}
 
+	val res = Resources()
+
 	/**
 	 * Generate a new seed and reset random number generator
 	 */

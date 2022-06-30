@@ -1,7 +1,6 @@
 package scenes
 
 import GameState
-import Resources
 import com.soywiz.klock.TimeSpan
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.input.draggable
@@ -59,21 +58,19 @@ class GameScene(private val gameState: GameState) : Scene()
 
 	override suspend fun Container.sceneInit()
 	{
-		Resources.loadAll()
-
 		titleSkin = UISkin {
-			textFont = Resources[ResFont.LIGHT]
+			textFont = gameState.res[ResFont.LIGHT]
 			textColor = GameColors.foregroundAlt.withAd(0.75)
 			textSize = TextSize.button * 0.5
 		}
 
 		textSkin = UISkin {
-			textFont = Resources[ResFont.REGULAR]
+			textFont = gameState.res[ResFont.REGULAR]
 			textColor = GameColors.foregroundAlt
 			textSize = TextSize.button
 		}
 
-		pauseIcon = SVG(Resources[ResImage.UI_PAUSE]).render()
+		pauseIcon = SVG(gameState.res[ResImage.UI_PAUSE]).render()
 	}
 
 	override suspend fun Container.sceneMain()
@@ -156,7 +153,7 @@ class GameScene(private val gameState: GameState) : Scene()
 				{
 					if (board.allTilesFilled(pieces))
 					{
-						winDialog = winDialog(duration, dialogSize.x, dialogSize.y) {
+						winDialog = winDialog(gameState.res, duration, dialogSize.x, dialogSize.y) {
 							position(views.virtualWidth * 0.125, views.virtualHeight / 2 - height / 2)
 							onBack { sceneContainer.changeTo<MenuScene>() }
 							onNext {
@@ -177,7 +174,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			onMouseDrag { }
 		}
 
-		pauseDialog = pauseDialog(dialogSize.x, dialogSize.y) {
+		pauseDialog = pauseDialog(gameState.res, dialogSize.x, dialogSize.y) {
 			position(views.virtualWidth * 0.125, views.virtualHeight / 2 - height / 2)
 			visible = false
 			onBack { sceneContainer.changeTo<MenuScene>() }

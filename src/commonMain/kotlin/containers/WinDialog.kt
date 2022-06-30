@@ -15,15 +15,17 @@ import enums.ResFont
 import enums.ResImage
 
 fun Container.winDialog(
+	res: Resources,
 	total: TimeSpan,
 	width: Double, height: Double,
 	callback: @ViewDslMarker WinDialog.() -> Unit = {},
-) = WinDialog(total, width, height).addTo(this, callback)
+) = WinDialog(res, total, width, height).addTo(this, callback)
 
 class WinDialog(
+	res: Resources,
 	total: TimeSpan,
 	width: Double, height: Double,
-) : Dialog(width, height, Resources[ResFont.BOLD], Resources[ResFont.REGULAR])
+) : Dialog(width, height, res[ResFont.BOLD], res[ResFont.REGULAR])
 {
 	val onBack = onLeftAction
 	val onNext = onRightAction
@@ -33,8 +35,8 @@ class WinDialog(
 		title(randomMessage(total))
 		body("You completed in ${total.seconds.toStringDecimal(3)} seconds")
 
-		val backIcon = SVG(Resources[ResImage.UI_ARROW_LEFT]).render()
-		val nextIcon = SVG(Resources[ResImage.UI_PLAY]).render()
+		val backIcon = SVG(res[ResImage.UI_ARROW_LEFT]).render()
+		val nextIcon = SVG(res[ResImage.UI_PLAY]).render()
 
 		leftAction("Back to menu", backIcon) {
 			onClick { onBack(it) }

@@ -35,7 +35,10 @@ object Game : Module()
 
 	override suspend fun AsyncInjector.configure()
 	{
-		mapInstance(GameState())
+		val gameState = GameState()
+		gameState.res.loadAll()
+
+		mapInstance(gameState)
 		mapPrototype { MenuScene(get()) }
 		mapPrototype { GameScene(get()) }
 	}

@@ -13,15 +13,16 @@ import enums.ResFont
 import enums.ResImage
 
 fun Container.pauseDialog(
+	res: Resources,
 	width: Double, height: Double,
 	callback: @ViewDslMarker PauseDialog.() -> Unit = {},
 ): PauseDialog
 {
-	val backIcon = SVG(Resources[ResImage.UI_ARROW_LEFT]).render()
-	val resumeIcon = SVG(Resources[ResImage.UI_PLAY]).render()
+	val backIcon = SVG(res[ResImage.UI_ARROW_LEFT]).render()
+	val resumeIcon = SVG(res[ResImage.UI_PLAY]).render()
 
-	val titleFont = Resources[ResFont.BOLD]
-	val bodyFont = Resources[ResFont.REGULAR]
+	val titleFont = res[ResFont.BOLD]
+	val bodyFont = res[ResFont.REGULAR]
 
 	return PauseDialog(width, height, titleFont, bodyFont, backIcon, resumeIcon)
 		.addTo(this, callback)
