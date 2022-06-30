@@ -103,7 +103,9 @@ class MenuScene(private val gameState: GameState) : Scene()
 			val seedFilter = TransitionFilter(TransitionFilter.Transition.SWEEP, smooth = false)
 			filter = seedFilter
 			animate {
-				tween(seedFilter::ratio[0.5], time = (60 - DateTime.now().seconds).seconds, easing = Easing.LINEAR)
+				val nextMinute = 60 - DateTime.now().seconds
+				block { seedFilter.ratio = 0.5 + (nextMinute / 60.0 / 2.0) }
+				tween(seedFilter::ratio[0.5], time = nextMinute.seconds, easing = Easing.LINEAR)
 				sequence(looped = true) {
 					block {
 						launch {
