@@ -15,9 +15,9 @@ version is important. The app follows x.y.z versioning where:
 
 * [x] Random board generation *(0.1)*
 * [x] Multiple levels *(0.4)*
-* [ ] Better Android support *(0.6)*
-* [ ] Consistent piece style *(0.6)*
-* [ ] Improved detection for dragging pieces *(0.6)*
+* [x] Better Android support *(0.6)*
+* [x] Consistent piece style *(0.6)*
+* [x] Improved detection for dragging pieces *(0.6)*
 * [ ] Rotating pieces
 * [ ] Flipping/mirroring pieces
 * [ ] Sound effects
