@@ -24,6 +24,7 @@ class Resources
 		}
 	}
 
-	operator fun get(image: ResImage): String = images.getValue(image)
-	operator fun get(font: ResFont): Font = fonts.getValue(font)
+	operator fun get(image: ResImage) = images.getValue(image)
+
+	operator fun get(font: ResFont) = fonts.getValue(font)
 }
