@@ -19,7 +19,11 @@ import constants.TextSize
 import containers.*
 import enums.ResFont
 import enums.ResImage
-import extensions.*
+import extensions.maxWidthOrHeight
+import extensions.pieceShapes
+import extensions.size2
+import extensions.toInt
+import kotlin.math.ceil
 
 @KorgeExperimental
 class GameScene(private val gameState: GameState) : Scene()
@@ -33,9 +37,11 @@ class GameScene(private val gameState: GameState) : Scene()
 	private var pauseDialog: PauseDialog? = null
 	private var winDialog: WinDialog? = null
 	private var dialogBackdrop: View? = null
+	private val dialogSize get() = Point(views.virtualWidth * 0.75, views.virtualHeight * 0.25)
 
 	private var duration = TimeSpan.NIL
 
+	private lateinit var board: Board
 	private lateinit var pieces: List<Piece>
 
 	private var paused
@@ -103,7 +109,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			.take(Board.PIECE_COUNT)
 			.toList()
 
-		val board = Board(gameState.random, pieceShapes, size).addTo(this) {
+		board = Board(gameState.random, pieceShapes, size).addTo(this) {
 			position(PADDING, 0.0)
 			alignTopToBottomOf(hud, PADDING)
 		}
@@ -123,49 +129,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			position(PADDING, 0.0)
 			alignTopToBottomOf(board, PADDING)
 		}
-
-		val dialogSize = Point(views.virtualWidth * 0.75, views.virtualHeight * 0.25)
-
-		for (piece in pieces)
-		{
-			val padding = Point(PADDING)
-			val topLeft = pieceContainer.pos + piece.size2 * 0.5 + padding
-			val bottomRight = topLeft + pieceContainer.size2 - piece.size2 * 0.5 - padding
-
-			piece.position(gameState.random.nextPoint(topLeft, bottomRight))
-			addChild(piece)
-
-			piece.draggable(autoMove = false) {
-				piece.bringToTop()
-				if (piece.collidesWith(board))
-				{
-					// Snap to grid
-					val tileSize = board.tileSize.toInt()
-					val piecePos = it.viewNextXY.toInt()
-					val boardPos = (board.pos + Point(Board.TILE_SPACING)).toInt()
-					val x = ((piecePos.x - boardPos.x) / tileSize * tileSize) + boardPos.x
-					val y = ((piecePos.y - boardPos.y) / tileSize * tileSize) + boardPos.y
-					piece.position(x, y)
-				}
-				else piece.position(it.viewNextXY)
-
-				if (it.end)
-				{
-					if (board.allTilesFilled(pieces))
-					{
-						winDialog = winDialog(gameState.res, duration, dialogSize.x, dialogSize.y) {
-							position(views.virtualWidth * 0.125, views.virtualHeight / 2 - height / 2)
-							onBack { sceneContainer.changeTo<MenuScene>() }
-							onNext {
-								gameState.nextLevel()
-								sceneContainer.changeTo<GameScene>()
-							}
-						}
-						paused = true
-					}
-				}
-			}
-		}
+		addPieces(pieceContainer)
 
 		dialogBackdrop = solidRect(views.actualVirtualWidth, views.actualVirtualHeight, GameColors.dialogBackdrop) {
 			position(views.actualVirtualLeft, views.actualVirtualTop)
@@ -179,6 +143,65 @@ class GameScene(private val gameState: GameState) : Scene()
 			visible = false
 			onBack { sceneContainer.changeTo<MenuScene>() }
 			onResume { paused = false }
+		}
+	}
+
+	private fun addPieces(container: View)
+	{
+		val lines = pieces
+			.shuffled()
+			.chunked(ceil(pieces.size / 2.0).toInt())
+
+		val pos = container.pos + Point(PADDING)
+		val size = container.size2 - Point(PADDING * 2)
+		val chunkHeight = size.y / (lines.size + 1)
+
+		lines.forEachIndexed { line, pieces ->
+			val lineY = pos.y + (chunkHeight * line)
+			val chunkWidth = size.x / (pieces.size + 1)
+			pieces.forEachIndexed { index, piece ->
+				piece.position(
+					pos.x + (chunkWidth * index) + (piece.width / 2.0),
+					lineY + (piece.height / 2.0)
+				)
+				addPiece(piece)
+			}
+		}
+	}
+
+	private fun addPiece(piece: Piece)
+	{
+		root.addChild(piece)
+
+		piece.draggable(autoMove = false) {
+			piece.bringToTop()
+			if (piece.collidesWith(board))
+			{
+				// Snap to grid
+				val tileSize = board.tileSize.toInt()
+				val piecePos = it.viewNextXY.toInt()
+				val boardPos = (board.pos + Point(Board.TILE_SPACING)).toInt()
+				val x = ((piecePos.x - boardPos.x) / tileSize * tileSize) + boardPos.x
+				val y = ((piecePos.y - boardPos.y) / tileSize * tileSize) + boardPos.y
+				piece.position(x, y)
+			}
+			else piece.position(it.viewNextXY)
+
+			if (it.end)
+			{
+				if (board.allTilesFilled(pieces))
+				{
+					winDialog = root.winDialog(gameState.res, duration, dialogSize.x, dialogSize.y) {
+						position(views.virtualWidth * 0.125, views.virtualHeight / 2 - height / 2)
+						onBack { sceneContainer.changeTo<MenuScene>() }
+						onNext {
+							gameState.nextLevel()
+							sceneContainer.changeTo<GameScene>()
+						}
+					}
+					paused = true
+				}
+			}
 		}
 	}
 
