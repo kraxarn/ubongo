@@ -8,6 +8,7 @@ import com.soywiz.korge.input.draggable
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.input.onMouseDrag
 import com.soywiz.korge.scene.Scene
+import com.soywiz.korge.tween.V2
 import com.soywiz.korge.tween.get
 import com.soywiz.korge.tween.tween
 import com.soywiz.korge.ui.*
@@ -15,7 +16,7 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.vector.format.SVG
 import com.soywiz.korim.vector.render
-import com.soywiz.korio.async.launch
+import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korio.util.toStringDecimal
 import com.soywiz.korma.geom.Point
 import constants.GameColors
@@ -48,34 +49,30 @@ class GameScene(private val gameState: GameState) : Scene()
 	private lateinit var board: Board
 	private lateinit var pieces: List<Piece>
 
+	private fun View.visible(visible: Boolean, vararg animations: V2<*>)
+	{
+		this.bringToTop()
+		launchImmediately {
+			if (visible) this.visible = true
+			this.tween(*animations, time = 150.milliseconds)
+			if (!visible) this.visible = false
+		}
+	}
+
 	private var paused
 		get() = dialogBackdrop?.visible == true
 		set(value)
 		{
-			dialogBackdrop?.bringToTop()
-			launch {
-				if (value) dialogBackdrop?.visible = true
-				dialogBackdrop?.tween(
-					dialogBackdrop!!::alpha[if (value) 0.6 else 0.0],
-					time = 150.milliseconds
-				)
-				if (!value) dialogBackdrop?.visible = false
-			}
+			dialogBackdrop?.visible(
+				value,
+				dialogBackdrop!!::alpha[if (value) 0.6 else 0.0],
+			)
 
 			val dialog = if (winDialog != null) winDialog else pauseDialog
-			if (dialog != null)
-			{
-				dialog.bringToTop()
-				launch {
-					if (value) dialog.visible = true
-					dialog.tween(
-						dialog::scale[if (value) 1.0 else 0.5],
-						dialog::alpha[if (value) 1.0 else 0.0],
-						time = 150.milliseconds
-					)
-					if (!value) dialog.visible = false
-				}
-			}
+			dialog?.visible(
+				value, dialog::scale[if (value) 1.0 else 0.5],
+				dialog::alpha[if (value) 1.0 else 0.0],
+			)
 		}
 
 	override suspend fun Container.sceneInit()
