@@ -63,14 +63,12 @@ class GameScene(private val gameState: GameState) : Scene()
 		get() = dialogBackdrop?.visible == true
 		set(value)
 		{
-			dialogBackdrop?.visible(
-				value,
-				dialogBackdrop!!::alpha[if (value) 0.6 else 0.0],
-			)
+			dialogBackdrop?.visible(value, dialogBackdrop!!::alpha[if (value) 0.6 else 0.0])
 
 			val dialog = if (winDialog != null) winDialog else pauseDialog
 			dialog?.visible(
-				value, dialog::scale[if (value) 1.0 else 0.5],
+				value,
+				dialog::scale[if (value) 1.0 else 0.5],
 				dialog::alpha[if (value) 1.0 else 0.0],
 			)
 		}
