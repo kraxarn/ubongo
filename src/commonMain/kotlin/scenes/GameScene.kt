@@ -57,7 +57,7 @@ class GameScene(private val gameState: GameState) : Scene()
 				if (value) dialogBackdrop?.visible = true
 				dialogBackdrop?.tween(
 					dialogBackdrop!!::alpha[if (value) 0.6 else 0.0],
-					time = 100.milliseconds
+					time = 150.milliseconds
 				)
 				if (!value) dialogBackdrop?.visible = false
 			}
@@ -71,7 +71,7 @@ class GameScene(private val gameState: GameState) : Scene()
 					dialog.tween(
 						dialog::scale[if (value) 1.0 else 0.5],
 						dialog::alpha[if (value) 1.0 else 0.0],
-						time = 100.milliseconds
+						time = 150.milliseconds
 					)
 					if (!value) dialog.visible = false
 				}
