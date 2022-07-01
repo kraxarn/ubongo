@@ -10,6 +10,7 @@ import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.async.AsyncSignal
 import com.soywiz.korma.geom.vector.roundRect
 import extensions.maxWidthOrHeight
+import extensions.size2
 
 open class Dialog(
 	width: Double, height: Double,
@@ -22,12 +23,10 @@ open class Dialog(
 	private var title: UIText? = null
 	private var body: UIText? = null
 
-	init
-	{
-		graphics {
-			fill(Colors["#3f51b5"]) {
-				this.roundRect(0.0, 0.0, width, height, BORDER_RADIUS)
-			}
+	private val background = graphics {
+		position(this@Dialog.size2 / -2.0)
+		fill(Colors["#3f51b5"]) {
+			this.roundRect(0.0, 0.0, width, height, BORDER_RADIUS)
 		}
 	}
 
@@ -43,8 +42,8 @@ open class Dialog(
 			textFont = titleFont
 			textAlignment = TextAlignment.MIDDLE_CENTER
 			textSize = TITLE_TEXT_SIZE
-			position(PADDING, PADDING)
-			size(this@Dialog.width - PADDING * 2, 90.0)
+			position(PADDING - background.width / 2.0, PADDING - background.height / 2.0)
+			size(background.width - PADDING * 2, 90.0)
 		}
 	}
 
@@ -60,7 +59,7 @@ open class Dialog(
 			textFont = bodyFont
 			textAlignment = TextAlignment.TOP_CENTER
 			textSize = BODY_TEXT_SIZE
-			size(this@Dialog.width - PADDING * 4, 140.0)
+			size(background.width - PADDING * 4, 140.0)
 
 			if (title != null)
 			{
@@ -76,8 +75,8 @@ open class Dialog(
 			textFont = bodyFont
 			textAlignment = TextAlignment.TOP_CENTER
 			textSize = ACTION_TEXT_SIZE
-			size(this@Dialog.width / 2 - PADDING, 52.0)
-			alignBottomToBottomOf(this@Dialog, PADDING)
+			size(background.width / 2 - PADDING, 52.0)
+			alignBottomToBottomOf(background, PADDING)
 			block(this)
 		}
 	}
@@ -92,7 +91,7 @@ open class Dialog(
 
 	fun leftAction(text: String, icon: Bitmap, callback: @ViewDslMarker Image.() -> Unit = {})
 	{
-		val actionText = actionText(text) { alignLeftToLeftOf(this@Dialog, PADDING) }
+		val actionText = actionText(text) { alignLeftToLeftOf(background, PADDING) }
 		actionIcon(icon) {
 			centerXOn(actionText)
 			alignBottomToTopOf(actionText, PADDING)
@@ -102,7 +101,7 @@ open class Dialog(
 
 	fun rightAction(text: String, icon: Bitmap, callback: @ViewDslMarker Image.() -> Unit = {})
 	{
-		val actionText = actionText(text) { alignRightToRightOf(this@Dialog, PADDING) }
+		val actionText = actionText(text) { alignRightToRightOf(background, PADDING) }
 		actionIcon(icon) {
 			centerXOn(actionText)
 			alignBottomToTopOf(actionText, PADDING)
