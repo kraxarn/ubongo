@@ -2,16 +2,20 @@ package scenes
 
 import GameState
 import com.soywiz.klock.TimeSpan
+import com.soywiz.klock.milliseconds
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.input.draggable
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.input.onMouseDrag
 import com.soywiz.korge.scene.Scene
+import com.soywiz.korge.tween.get
+import com.soywiz.korge.tween.tween
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.vector.format.SVG
 import com.soywiz.korim.vector.render
+import com.soywiz.korio.async.launch
 import com.soywiz.korio.util.toStringDecimal
 import com.soywiz.korma.geom.Point
 import constants.GameColors
@@ -49,16 +53,28 @@ class GameScene(private val gameState: GameState) : Scene()
 		set(value)
 		{
 			dialogBackdrop?.bringToTop()
-			dialogBackdrop?.visible = value
-
-			if (winDialog == null)
-			{
-				pauseDialog?.bringToTop()
-				pauseDialog?.visible = value
+			launch {
+				if (value) dialogBackdrop?.visible = true
+				dialogBackdrop?.tween(
+					dialogBackdrop!!::alpha[if (value) 0.6 else 0.0],
+					time = 100.milliseconds
+				)
+				if (!value) dialogBackdrop?.visible = false
 			}
-			else
+
+			val dialog = if (winDialog != null) winDialog else pauseDialog
+			if (dialog != null)
 			{
-				winDialog?.bringToTop()
+				dialog.bringToTop()
+				launch {
+					if (value) dialog.visible = true
+					dialog.tween(
+						dialog::scale[if (value) 1.0 else 0.5],
+						dialog::alpha[if (value) 1.0 else 0.0],
+						time = 100.milliseconds
+					)
+					if (!value) dialog.visible = false
+				}
 			}
 		}
 
@@ -133,14 +149,17 @@ class GameScene(private val gameState: GameState) : Scene()
 
 		dialogBackdrop = solidRect(views.actualVirtualWidth, views.actualVirtualHeight, GameColors.dialogBackdrop) {
 			position(views.actualVirtualLeft, views.actualVirtualTop)
+			alpha = 0.0
 			visible = false
 			// Prevent pieces from being moved
 			onMouseDrag { }
 		}
 
 		pauseDialog = pauseDialog(gameState.res, dialogSize.x, dialogSize.y) {
-			position(views.virtualWidth * 0.125, views.virtualHeight / 2 - height / 2)
+			position(views.virtualWidth * 0.125 + width / 2.0, views.virtualHeight / 2.0)
 			visible = false
+			scale = 0.5
+			alpha = 0.0
 			onBack { sceneContainer.changeTo<MenuScene>() }
 			onResume { paused = false }
 		}
@@ -192,7 +211,9 @@ class GameScene(private val gameState: GameState) : Scene()
 				if (board.allTilesFilled(pieces))
 				{
 					winDialog = root.winDialog(gameState.res, duration, dialogSize.x, dialogSize.y) {
-						position(views.virtualWidth * 0.125, views.virtualHeight / 2 - height / 2)
+						position(views.virtualWidth * 0.125 + width / 2.0, views.virtualHeight / 2.0)
+						scale = 0.5
+						alpha = 0.0
 						onBack { sceneContainer.changeTo<MenuScene>() }
 						onNext {
 							gameState.nextLevel()

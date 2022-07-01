@@ -60,5 +60,5 @@ object GameColors
 	/**
 	 * Background color behind dialogs
 	 */
-	val dialogBackdrop = Colors["#0000007f"]
+	val dialogBackdrop = Colors["#000000"]
 }
