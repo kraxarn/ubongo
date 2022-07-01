@@ -5,34 +5,20 @@ import com.soywiz.korge.input.onClick
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.ViewDslMarker
 import com.soywiz.korge.view.addTo
-import com.soywiz.korim.bitmap.Bitmap
-import com.soywiz.korim.font.Font
 import com.soywiz.korim.vector.format.SVG
 import com.soywiz.korim.vector.render
-import enums.ResFont
 import enums.ResImage
 
 fun Container.pauseDialog(
 	res: Resources,
 	width: Double, height: Double,
 	callback: @ViewDslMarker PauseDialog.() -> Unit = {},
-): PauseDialog
-{
-	val backIcon = SVG(res[ResImage.UI_ARROW_LEFT]).render()
-	val resumeIcon = SVG(res[ResImage.UI_PLAY]).render()
-
-	val titleFont = res[ResFont.BOLD]
-	val bodyFont = res[ResFont.REGULAR]
-
-	return PauseDialog(width, height, titleFont, bodyFont, backIcon, resumeIcon)
-		.addTo(this, callback)
-}
+) = PauseDialog(width, height, res).addTo(this, callback)
 
 class PauseDialog(
 	width: Double, height: Double,
-	titleFont: Font, bodyFont: Font,
-	backIcon: Bitmap, resumeIcon: Bitmap,
-) : Dialog(width, height, titleFont, bodyFont)
+	res: Resources,
+) : Dialog(width, height, res)
 {
 	val onBack = onLeftAction
 	val onResume = onRightAction
@@ -42,11 +28,11 @@ class PauseDialog(
 		title("Paused")
 		body("Game is paused")
 
-		leftAction("Back to menu", backIcon) {
+		leftAction("Back to menu", SVG(res[ResImage.UI_ARROW_LEFT]).render()) {
 			onClick { onBack(it) }
 		}
 
-		rightAction("Resume", resumeIcon) {
+		rightAction("Resume", SVG(res[ResImage.UI_PLAY]).render()) {
 			onClick { onResume(it) }
 		}
 	}

@@ -1,20 +1,21 @@
 package containers
 
+import Resources
 import com.soywiz.korge.input.MouseEvents
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.color.Colors
-import com.soywiz.korim.font.Font
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korio.async.AsyncSignal
 import com.soywiz.korma.geom.vector.roundRect
+import enums.ResFont
 import extensions.maxWidthOrHeight
 import extensions.size2
 
 open class Dialog(
 	width: Double, height: Double,
-	private val titleFont: Font, private val bodyFont: Font,
+	private val res: Resources,
 ) : UIContainer(width, height)
 {
 	val onLeftAction = AsyncSignal<MouseEvents>()
@@ -39,7 +40,7 @@ open class Dialog(
 		}
 
 		title = uiText(text) {
-			textFont = titleFont
+			textFont = res[ResFont.BOLD]
 			textAlignment = TextAlignment.MIDDLE_CENTER
 			textSize = TITLE_TEXT_SIZE
 			position(PADDING - background.width / 2.0, PADDING - background.height / 2.0)
@@ -56,7 +57,7 @@ open class Dialog(
 		}
 
 		body = uiText(text) {
-			textFont = bodyFont
+			textFont = res[ResFont.REGULAR]
 			textAlignment = TextAlignment.TOP_CENTER
 			textSize = BODY_TEXT_SIZE
 			size(background.width - PADDING * 4, 140.0)
@@ -72,7 +73,7 @@ open class Dialog(
 	private fun actionText(text: String, block: @ViewDslMarker UIText.() -> Unit): UIText
 	{
 		return uiText(text) {
-			textFont = bodyFont
+			textFont = res[ResFont.REGULAR]
 			textAlignment = TextAlignment.TOP_CENTER
 			textSize = ACTION_TEXT_SIZE
 			size(background.width / 2 - PADDING, 52.0)

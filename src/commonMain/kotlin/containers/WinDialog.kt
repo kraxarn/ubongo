@@ -11,7 +11,6 @@ import com.soywiz.korge.view.addTo
 import com.soywiz.korim.vector.format.SVG
 import com.soywiz.korim.vector.render
 import com.soywiz.korio.util.toStringDecimal
-import enums.ResFont
 import enums.ResImage
 
 fun Container.winDialog(
@@ -25,7 +24,7 @@ class WinDialog(
 	res: Resources,
 	total: TimeSpan,
 	width: Double, height: Double,
-) : Dialog(width, height, res[ResFont.BOLD], res[ResFont.REGULAR])
+) : Dialog(width, height, res)
 {
 	val onBack = onLeftAction
 	val onNext = onRightAction
