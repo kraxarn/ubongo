@@ -168,24 +168,25 @@ class GameScene(private val gameState: GameState) : Scene()
 
 		val pos = container.pos + Point(PADDING)
 		val size = container.size2 - Point(PADDING * 2)
-		val chunkHeight = size.y / (lines.size + 1)
+		val chunkHeight = size.y / (lines.size)
 
 		lines.forEachIndexed { line, pieces ->
 			val lineY = pos.y + (chunkHeight * line)
-			val chunkWidth = size.x / (pieces.size + 1)
+			val chunkWidth = size.x / pieces.size
 			pieces.forEachIndexed { index, piece ->
-				piece.position(
-					pos.x + (chunkWidth * index) + (piece.width / 2.0),
-					lineY + (piece.height / 2.0)
-				)
-				addPiece(piece)
+				addPiece(piece) {
+					position(
+						pos.x + (chunkWidth * index) + (piece.width / 2.0),
+						lineY + (piece.height / if (line == 0) 2.0 else -2.0)
+					)
+				}
 			}
 		}
 	}
 
-	private fun addPiece(piece: Piece)
+	private fun addPiece(piece: Piece, callback: @ViewDslMarker Piece.() -> Unit)
 	{
-		sceneView.addChild(piece)
+		piece.addTo(sceneView, callback)
 
 		piece.draggable(autoMove = false) {
 			piece.bringToTop()
