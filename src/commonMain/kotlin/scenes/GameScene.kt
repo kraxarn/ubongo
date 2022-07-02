@@ -185,7 +185,7 @@ class GameScene(private val gameState: GameState) : Scene()
 
 	private fun addPiece(piece: Piece)
 	{
-		root.addChild(piece)
+		sceneView.addChild(piece)
 
 		piece.draggable(autoMove = false) {
 			piece.bringToTop()
@@ -205,7 +205,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			{
 				if (board.allTilesFilled(pieces))
 				{
-					winDialog = root.winDialog(gameState.res, duration, dialogSize.x, dialogSize.y) {
+					winDialog = sceneView.winDialog(gameState.res, duration, dialogSize.x, dialogSize.y) {
 						position(views.virtualWidth * 0.125 + width / 2.0, views.virtualHeight / 2.0)
 						scale = 0.5
 						alpha = 0.0
