@@ -14,15 +14,11 @@ import com.soywiz.korge.tween.tween
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
-import com.soywiz.korim.color.Colors
-import com.soywiz.korim.vector.StrokeInfo
 import com.soywiz.korim.vector.format.SVG
 import com.soywiz.korim.vector.render
 import com.soywiz.korio.async.launchImmediately
-import com.soywiz.korio.util.OS
 import com.soywiz.korio.util.toStringDecimal
 import com.soywiz.korma.geom.Point
-import com.soywiz.korma.geom.vector.rect
 import constants.GameColors
 import constants.TextSize
 import containers.*
@@ -167,19 +163,6 @@ class GameScene(private val gameState: GameState) : Scene()
 			val padding = Point(PADDING / 2.0)
 			val topLeft = container.pos + (padding)
 			val bottomRight = topLeft + container.size2 - (padding * 2)
-
-			if (OS.isJvm)
-			{
-				sceneView.graphics {
-					stroke(Colors.RED, StrokeInfo()) {
-						rect(
-							topLeft.x, topLeft.y,
-							bottomRight.x - topLeft.x,
-							bottomRight.y - topLeft.y,
-						)
-					}
-				}
-			}
 
 			val pos = gameState.random.nextPoint(topLeft, bottomRight)
 
