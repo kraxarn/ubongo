@@ -102,7 +102,7 @@ class MenuScene(private val gameState: GameState) : Scene()
 			alignBottomToTopOf(startGame, PADDING)
 			val seedFilter = TransitionFilter(TransitionFilter.Transition.SWEEP, smooth = false)
 			filter = seedFilter
-			animate {
+			launchAnimate {
 				val nextMinute = 60 - DateTime.now().seconds
 				block { seedFilter.ratio = 0.5 + (nextMinute / 60.0 / 2.0) }
 				tween(seedFilter::ratio[0.5], time = nextMinute.seconds, easing = Easing.LINEAR)
