@@ -67,12 +67,12 @@ class Board(random: Random, pieces: Iterable<PieceShape>, width: Double, height:
 	companion object
 	{
 		/**
-		 * Total amount of pieces
+		 * Total amount of pieces (1-12, default 5)
 		 */
 		const val PIECE_COUNT = 5
 
 		/**
-		 * Number of tiles horizontally and vertically
+		 * Number of tiles horizontally and vertically (4-12, default 8)
 		 */
 		const val TILE_COUNT = 8
 
