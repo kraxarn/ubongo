@@ -187,13 +187,14 @@ class GameScene(private val gameState: GameState) : Scene()
 			val pieceTopLeft = pos + piece.shapePos
 			val pieceBottomRight = pieceTopLeft + piece.shapeSize
 
-			// TODO: Actually calculate how much overflow and move accordingly
-
-			if (pieceTopLeft.x < topLeft.x) pos.x -= pieceCenter.x              // Left
-			else if (pieceBottomRight.x > bottomRight.x) pos.x += pieceCenter.x // Right
-
-			if (pieceTopLeft.y < topLeft.y) pos.y -= pieceCenter.y              // Top
-			else if (pieceBottomRight.y > bottomRight.y) pos.y += pieceCenter.y // Bottom
+			// Left
+			(topLeft.x - pieceTopLeft.x).takeIf { it > 0 }?.let { pos.x += it }
+			// Right
+			(pieceBottomRight.x - bottomRight.x).takeIf { it > 0 }?.let { pos.x -= it }
+			// Top
+			(topLeft.y - pieceTopLeft.y).takeIf { it > 0 }?.let { pos.y += it }
+			// Bottom
+			(pieceBottomRight.y - bottomRight.y).takeIf { it > 0 }?.let { pos.y -= it }
 
 			addPiece(piece) { position(pos) }
 		}
