@@ -14,21 +14,21 @@ import com.soywiz.korge.tween.tween
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
+import com.soywiz.korim.color.Colors
+import com.soywiz.korim.vector.StrokeInfo
 import com.soywiz.korim.vector.format.SVG
 import com.soywiz.korim.vector.render
 import com.soywiz.korio.async.launchImmediately
+import com.soywiz.korio.util.OS
 import com.soywiz.korio.util.toStringDecimal
 import com.soywiz.korma.geom.Point
+import com.soywiz.korma.geom.vector.rect
 import constants.GameColors
 import constants.TextSize
 import containers.*
 import enums.ResFont
 import enums.ResImage
-import extensions.maxWidthOrHeight
-import extensions.pieceShapes
-import extensions.size2
-import extensions.toInt
-import kotlin.math.ceil
+import extensions.*
 
 @KorgeExperimental
 class GameScene(private val gameState: GameState) : Scene()
@@ -162,25 +162,40 @@ class GameScene(private val gameState: GameState) : Scene()
 
 	private fun addPieces(container: View)
 	{
-		val lines = pieces
-			.shuffled()
-			.chunked(ceil(pieces.size / 2.0).toInt())
+		for (piece in pieces)
+		{
+			val pieceCenter = piece.shapePos
+			val padding = Point(PADDING / 2.0)
+			val topLeft = container.pos + (padding)
+			val bottomRight = topLeft + container.size2 - (padding * 2)
 
-		val pos = container.pos + Point(PADDING)
-		val size = container.size2 - Point(PADDING * 2)
-		val chunkHeight = size.y / (lines.size)
-
-		lines.forEachIndexed { line, pieces ->
-			val lineY = pos.y + (chunkHeight * line)
-			val chunkWidth = size.x / pieces.size
-			pieces.forEachIndexed { index, piece ->
-				addPiece(piece) {
-					position(
-						pos.x + (chunkWidth * index) + (piece.width / 2.0),
-						lineY + (piece.height / if (line == 0) 2.0 else -2.0)
-					)
+			if (OS.isJvm)
+			{
+				sceneView.graphics {
+					stroke(Colors.RED, StrokeInfo()) {
+						rect(
+							topLeft.x, topLeft.y,
+							bottomRight.x - topLeft.x,
+							bottomRight.y - topLeft.y,
+						)
+					}
 				}
 			}
+
+			val pos = gameState.random.nextPoint(topLeft, bottomRight)
+
+			val pieceTopLeft = pos + piece.shapePos
+			val pieceBottomRight = pieceTopLeft + piece.shapeSize
+
+			// TODO: Actually calculate how much overflow and move accordingly
+
+			if (pieceTopLeft.x < topLeft.x) pos.x -= pieceCenter.x              // Left
+			else if (pieceBottomRight.x > bottomRight.x) pos.x += pieceCenter.x // Right
+
+			if (pieceTopLeft.y < topLeft.y) pos.y -= pieceCenter.y              // Top
+			else if (pieceBottomRight.y > bottomRight.y) pos.y += pieceCenter.y // Bottom
+
+			addPiece(piece) { position(pos) }
 		}
 	}
 
