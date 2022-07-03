@@ -11,6 +11,7 @@ import com.soywiz.korma.geom.vector.VectorBuilder
 import com.soywiz.korma.geom.vector.rect
 import enums.PieceShape
 import extensions.piece.*
+import extensions.size2
 import kotlin.math.floor
 
 class Piece(private val pieceShape: PieceShape, private val tileSize: Double) : Container()
@@ -18,7 +19,9 @@ class Piece(private val pieceShape: PieceShape, private val tileSize: Double) : 
 	private val borderSize get() = tileSize / 16.0
 	private val borderOffset = Point()
 
-	val shape: View
+	private val shape: View
+	val shapePos get() = shape.pos
+	val shapeSize get() = shape.size2
 
 	init
 	{
