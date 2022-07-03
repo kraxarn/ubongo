@@ -1,6 +1,7 @@
 package containers
 
 import com.soywiz.korge.view.Container
+import com.soywiz.korge.view.View
 import com.soywiz.korge.view.graphics
 import com.soywiz.korge.view.hitShape
 import com.soywiz.korim.vector.StrokeInfo
@@ -17,11 +18,14 @@ class Piece(private val pieceShape: PieceShape, private val tileSize: Double) : 
 	private val borderSize get() = tileSize / 16.0
 	private val borderOffset = Point()
 
+	val shape: View
+
 	init
 	{
+		name = pieceShape.name
 		val borderCap = LineCap.ROUND
 
-		graphics {
+		shape = graphics {
 			fill(pieceShape.color) {
 				for (point in pieceShape.points)
 				{
