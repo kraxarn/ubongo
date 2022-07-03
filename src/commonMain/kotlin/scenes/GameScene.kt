@@ -22,7 +22,6 @@ import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korio.util.OS
 import com.soywiz.korio.util.toStringDecimal
 import com.soywiz.korma.geom.Point
-import com.soywiz.korma.geom.plus
 import com.soywiz.korma.geom.vector.rect
 import constants.GameColors
 import constants.TextSize
@@ -193,8 +192,8 @@ class GameScene(private val gameState: GameState) : Scene()
 				topLeft.y - pieceTopLeft.y to { Point(0.0, it) },          // Top
 				pieceBottomRight.y - bottomRight.y to { Point(0.0, -it) }) // Bottom
 				.filter { it.first > 0 }
-				.fold(Point.Zero) { sum, pair -> sum + pair.second(pair.first) }
-				as Point
+				.map { it.second(it.first) }
+				.sum()
 
 			addPiece(piece) { position(pos) }
 		}
