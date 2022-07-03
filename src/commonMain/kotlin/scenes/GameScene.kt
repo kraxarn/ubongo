@@ -22,6 +22,7 @@ import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korio.util.OS
 import com.soywiz.korio.util.toStringDecimal
 import com.soywiz.korma.geom.Point
+import com.soywiz.korma.geom.plus
 import com.soywiz.korma.geom.vector.rect
 import constants.GameColors
 import constants.TextSize
@@ -164,7 +165,6 @@ class GameScene(private val gameState: GameState) : Scene()
 	{
 		for (piece in pieces)
 		{
-			val pieceCenter = piece.shapePos
 			val padding = Point(PADDING / 2.0)
 			val topLeft = container.pos + (padding)
 			val bottomRight = topLeft + container.size2 - (padding * 2)
@@ -187,12 +187,14 @@ class GameScene(private val gameState: GameState) : Scene()
 			val pieceTopLeft = pos + piece.shapePos
 			val pieceBottomRight = pieceTopLeft + piece.shapeSize
 
-			sequenceOf<Pair<Double, (Double) -> Unit>>(
-				topLeft.x - pieceTopLeft.x to { pos.x += it },         // Left
-				pieceBottomRight.x - bottomRight.x to { pos.x -= it }, // Right
-				topLeft.y - pieceTopLeft.y to { pos.y += it },         // Top
-				pieceBottomRight.y - bottomRight.y to { pos.y -= it }, // Bottom
-			).filter { it.first > 0 }.forEach { it.second(it.first) }
+			pos += sequenceOf<Pair<Double, (Double) -> Point>>(
+				topLeft.x - pieceTopLeft.x to { Point(it, 0.0) },          // Left
+				pieceBottomRight.x - bottomRight.x to { Point(-it, 0.0) }, // Right
+				topLeft.y - pieceTopLeft.y to { Point(0.0, it) },          // Top
+				pieceBottomRight.y - bottomRight.y to { Point(0.0, -it) }) // Bottom
+				.filter { it.first > 0 }
+				.fold(Point.Zero) { sum, pair -> sum + pair.second(pair.first) }
+				as Point
 
 			addPiece(piece) { position(pos) }
 		}
