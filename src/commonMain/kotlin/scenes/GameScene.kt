@@ -187,14 +187,12 @@ class GameScene(private val gameState: GameState) : Scene()
 			val pieceTopLeft = pos + piece.shapePos
 			val pieceBottomRight = pieceTopLeft + piece.shapeSize
 
-			// Left
-			(topLeft.x - pieceTopLeft.x).takeIf { it > 0 }?.let { pos.x += it }
-			// Right
-			(pieceBottomRight.x - bottomRight.x).takeIf { it > 0 }?.let { pos.x -= it }
-			// Top
-			(topLeft.y - pieceTopLeft.y).takeIf { it > 0 }?.let { pos.y += it }
-			// Bottom
-			(pieceBottomRight.y - bottomRight.y).takeIf { it > 0 }?.let { pos.y -= it }
+			sequenceOf<Pair<Double, (Double) -> Unit>>(
+				topLeft.x - pieceTopLeft.x to { pos.x += it },         // Left
+				pieceBottomRight.x - bottomRight.x to { pos.x -= it }, // Right
+				topLeft.y - pieceTopLeft.y to { pos.y += it },         // Top
+				pieceBottomRight.y - bottomRight.y to { pos.y -= it }, // Bottom
+			).filter { it.first > 0 }.forEach { it.second(it.first) }
 
 			addPiece(piece) { position(pos) }
 		}
