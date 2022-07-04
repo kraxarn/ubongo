@@ -20,6 +20,8 @@ class GameState
 
 	val res = Resources()
 
+	val settings = GameSettings()
+
 	/**
 	 * Generate a new seed and reset random number generator
 	 */
