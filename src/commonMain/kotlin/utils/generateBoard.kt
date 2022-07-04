@@ -3,13 +3,12 @@ package utils
 import com.soywiz.klogger.Logger
 import com.soywiz.korma.geom.PointInt
 import com.soywiz.korma.geom.plus
-import containers.Board
 import enums.PieceShape
 import extensions.piece.points
 import extensions.piece.size
 import kotlin.random.Random
 
-fun generateBoard(random: Random, pieces: Iterable<PieceShape>): Iterable<PointInt>
+fun generateBoard(random: Random, pieces: Iterable<PieceShape>, tileCount: Int): Iterable<PointInt>
 {
 	val log = Logger("generateBoard")
 	val tiles = mutableListOf<PointInt>()
@@ -24,8 +23,8 @@ fun generateBoard(random: Random, pieces: Iterable<PieceShape>): Iterable<PointI
 		if (i == 0)
 		{
 			val pieceSize = piece.size
-			val centerX = Board.TILE_COUNT / 2 - pieceSize.x / 2
-			val centerY = Board.TILE_COUNT / 2 - pieceSize.y / 2
+			val centerX = tileCount / 2 - pieceSize.x / 2
+			val centerY = tileCount / 2 - pieceSize.y / 2
 			val center = PointInt(centerX, centerY)
 
 			for (point in points)
@@ -39,12 +38,16 @@ fun generateBoard(random: Random, pieces: Iterable<PieceShape>): Iterable<PointI
 		var max = 0
 		var results = mutableListOf<PointInt>()
 
-		for (y in 0 until Board.TILE_COUNT)
+		for (y in 0 until tileCount)
 		{
-			for (x in 0 until Board.TILE_COUNT)
+			for (x in 0 until tileCount)
 			{
 				val offset = PointInt(x, y)
-				if (anyOverflow(points, offset) || !allTilesFree(tiles, points, offset)) continue
+				if (anyOverflow(points, offset, tileCount)
+					|| !allTilesFree(tiles, points, offset))
+				{
+					continue
+				}
 
 				val count = adjacentTileCount(tiles, points, offset)
 				if (count > max)
@@ -92,14 +95,14 @@ private fun allTilesFree(tiles: Iterable<PointInt>, piece: Iterable<PointInt>, o
 	return true
 }
 
-private fun anyOverflow(piece: Iterable<PointInt>, offset: PointInt): Boolean
+private fun anyOverflow(piece: Iterable<PointInt>, offset: PointInt, tileCount: Int): Boolean
 {
 	for (point in piece)
 	{
 		val current = offset + point
 		if (current.x < 0 || current.y < 0
-			|| current.x >= Board.TILE_COUNT
-			|| current.y >= Board.TILE_COUNT)
+			|| current.x >= tileCount
+			|| current.y >= tileCount)
 		{
 			return true
 		}

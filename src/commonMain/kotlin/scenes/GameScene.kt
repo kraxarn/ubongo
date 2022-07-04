@@ -113,10 +113,10 @@ class GameScene(private val gameState: GameState) : Scene()
 		}
 
 		val pieceShapes = gameState.random.pieceShapes()
-			.take(Board.PIECE_COUNT)
+			.take(gameState.settings.pieceCount.value)
 			.toList()
 
-		board = Board(gameState.random, pieceShapes, size).addTo(this) {
+		board = Board(gameState.random, pieceShapes, gameState.settings.boardSize.value, size).addTo(this) {
 			position(PADDING, 0.0)
 			alignTopToBottomOf(hud, PADDING)
 		}

@@ -13,7 +13,11 @@ import extensions.containsPoint
 import utils.generateBoard
 import kotlin.random.Random
 
-class Board(random: Random, pieces: Iterable<PieceShape>, width: Double, height: Double = width) : Container()
+class Board(
+	random: Random,
+	pieces: Iterable<PieceShape>, tileCount: Int,
+	width: Double, height: Double = width,
+) : Container()
 {
 	/**
 	 * Size of each tile, including margin
@@ -28,17 +32,17 @@ class Board(random: Random, pieces: Iterable<PieceShape>, width: Double, height:
 	init
 	{
 		val board = roundRect(width, height, 16.0, fill = GameColors.boardBackground)
-		tileSize = (board.width - TILE_SPACING * 2) / TILE_COUNT
+		tileSize = (board.width - TILE_SPACING * 2) / tileCount
 		val rectSize = tileSize - TILE_SPACING
-		val tiles = generateBoard(random, pieces).toHashSet()
+		val tiles = generateBoard(random, pieces, tileCount).toHashSet()
 		val positions = mutableListOf<Point>()
 
 		graphics {
 			position(board.pos)
 			fill(GameColors.cellBackground) {
-				for (x in 0 until TILE_COUNT)
+				for (x in 0 until tileCount)
 				{
-					for (y in 0 until TILE_COUNT)
+					for (y in 0 until tileCount)
 					{
 						if (PointInt(x, y) !in tiles) continue
 
@@ -66,16 +70,6 @@ class Board(random: Random, pieces: Iterable<PieceShape>, width: Double, height:
 
 	companion object
 	{
-		/**
-		 * Total amount of pieces (1-12, default 5)
-		 */
-		const val PIECE_COUNT = 5
-
-		/**
-		 * Number of tiles horizontally and vertically (4-12, default 8)
-		 */
-		const val TILE_COUNT = 8
-
 		/**
 		 * Spacing between each cell
 		 */
