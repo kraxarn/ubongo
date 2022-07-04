@@ -18,12 +18,12 @@ version is important. The app follows x.y.z versioning where:
 * [x] Better Android support *(0.6)*
 * [x] Consistent piece style *(0.6)*
 * [x] Improved detection for dragging pieces *(0.6)*
+* [x] Customizable piece count *(0.9)*
+* [x] Customizable board size *(0.9)*
 * [ ] Rotating pieces
 * [ ] Flipping/mirroring pieces
 * [ ] Sound effects
 * [ ] Looping music
-* [ ] Customizable piece count
-* [ ] Customizable board size
 * [ ] Animations
 
 ## Goals post 1.0
