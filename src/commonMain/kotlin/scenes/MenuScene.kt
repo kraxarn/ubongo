@@ -3,7 +3,7 @@ package scenes
 import GameState
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.seconds
-import com.soywiz.korge.animate.animate
+import com.soywiz.korge.animate.launchAnimate
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.scene.Scene
