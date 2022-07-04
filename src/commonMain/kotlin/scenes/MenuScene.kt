@@ -18,6 +18,7 @@ import constants.Application
 import constants.GameColors
 import constants.TextSize
 import containers.Logo
+import containers.quickSettings
 import enums.ResFont
 import skins.ButtonSkin
 import utils.randomWord
@@ -82,7 +83,7 @@ class MenuScene(private val gameState: GameState) : Scene()
 
 		val startGame = uiButton("Start Game") {
 			uiSkin = buttonSkin
-			position(PADDING, views.virtualHeight * 0.8)
+			position(PADDING, views.virtualHeight * 0.725)
 			size(views.virtualWidth - PADDING * 2, BUTTON_HEIGHT)
 			onClick {
 				sceneContainer.changeTo<GameScene>()
@@ -117,6 +118,11 @@ class MenuScene(private val gameState: GameState) : Scene()
 					tween(seedFilter::ratio[0.5], time = 60.seconds, easing = Easing.LINEAR)
 				}
 			}
+		}
+
+		quickSettings(gameState.res, gameState.settings, startGame.width, 240.0) {
+			alignTopToBottomOf(startGame)
+			alignLeftToLeftOf(startGame)
 		}
 	}
 
