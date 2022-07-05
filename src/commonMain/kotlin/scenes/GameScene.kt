@@ -183,10 +183,6 @@ class GameScene(private val gameState: GameState) : Scene()
 
 			addPiece(piece) {
 				position(pos)
-				if (gameState.settings.rotation.value)
-				{
-					onClick { rotate() }
-				}
 			}
 		}
 	}
@@ -209,24 +205,38 @@ class GameScene(private val gameState: GameState) : Scene()
 			}
 			else piece.position(it.viewNextXY)
 
-			if (it.end)
-			{
-				if (board.allTilesFilled(pieces))
-				{
-					winDialog = sceneView.winDialog(gameState.res, duration, dialogSize.x, dialogSize.y) {
-						position(views.virtualWidth * 0.125 + width / 2.0, views.virtualHeight / 2.0)
-						scale = 0.5
-						alpha = 0.0
-						onBack { sceneContainer.changeTo<MenuScene>() }
-						onNext {
-							gameState.nextLevel()
-							sceneContainer.changeTo<GameScene>()
-						}
-					}
-					paused = true
-				}
+			if (it.end) checkIfBoardFilled()
+		}
+
+		if (gameState.settings.rotation.value)
+		{
+			piece.onClick {
+				piece.rotate()
+				checkIfBoardFilled()
 			}
 		}
+	}
+
+	private fun checkIfBoardFilled(): Boolean
+	{
+		if (!board.allTilesFilled(pieces))
+		{
+			return false
+		}
+
+		winDialog = sceneView.winDialog(gameState.res, duration, dialogSize.x, dialogSize.y) {
+			position(views.virtualWidth * 0.125 + width / 2.0, views.virtualHeight / 2.0)
+			scale = 0.5
+			alpha = 0.0
+			onBack { sceneContainer.changeTo<MenuScene>() }
+			onNext {
+				gameState.nextLevel()
+				sceneContainer.changeTo<GameScene>()
+			}
+		}
+
+		paused = true
+		return true
 	}
 
 	override suspend fun sceneAfterInit()
