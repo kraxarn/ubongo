@@ -15,13 +15,16 @@ jobs:
           sudo apt update
           sudo apt install freeglut3-dev libopenal-dev
 
-      - name: Prepare keystore
+      - name: Prepare keystore file
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'release.jks'
+          encodedString: ${{secrets.KEYSTORE_FILE}}
+
+      - name: Prepare keystore properties
         env:
-          KEYSTORE_FILE: ${{secrets.KEYSTORE_FILE}}
           KEYSTORE_PROPERTIES: ${{secrets.KEYSTORE_PROPERTIES}}
-        run: |
-          echo $KEYSTORE_FILE | base64 -di > "release.jks"
-          echo $KEYSTORE_PROPERTIES | base64 -d > "key.properties"
+        run: echo $KEYSTORE_PROPERTIES | base64 -d > "key.properties"
 
       - name: Build
         run: ./gradlew assembleRelease
