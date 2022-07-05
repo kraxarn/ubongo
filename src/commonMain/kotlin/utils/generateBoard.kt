@@ -4,11 +4,14 @@ import com.soywiz.klogger.Logger
 import com.soywiz.korma.geom.PointInt
 import com.soywiz.korma.geom.plus
 import enums.PieceShape
+import extensions.piece.center
 import extensions.piece.points
 import extensions.piece.size
+import extensions.rotated
+import extensions.toInt
 import kotlin.random.Random
 
-fun generateBoard(random: Random, pieces: Iterable<PieceShape>, tileCount: Int): Iterable<PointInt>
+fun generateBoard(random: Random, pieces: Iterable<PieceShape>, tileCount: Int, rotation: Boolean): Iterable<PointInt>
 {
 	val log = Logger("generateBoard")
 	val tiles = mutableListOf<PointInt>()
@@ -17,7 +20,7 @@ fun generateBoard(random: Random, pieces: Iterable<PieceShape>, tileCount: Int):
 	for (i in shuffled.indices)
 	{
 		val piece = shuffled[i]
-		val points = piece.points.toList()
+		val points = (if (rotation) rotatedPoints(random, piece) else piece.points).toList()
 
 		// First is placed in center
 		if (i == 0)
@@ -125,4 +128,11 @@ private fun adjacentTileCount(tiles: Iterable<PointInt>, piece: Iterable<PointIn
 	}
 
 	return count
+}
+
+private fun rotatedPoints(random: Random, shape: PieceShape): Sequence<PointInt>
+{
+	return generateSequence(shape.points) { it.rotated(shape.center.toInt()) }
+		.take(random.nextInt(0, 4))
+		.last()
 }

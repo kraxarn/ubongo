@@ -15,7 +15,7 @@ import kotlin.random.Random
 
 class Board(
 	random: Random,
-	pieces: Iterable<PieceShape>, tileCount: Int,
+	pieces: Iterable<PieceShape>, tileCount: Int, rotation: Boolean,
 	width: Double, height: Double = width,
 ) : Container()
 {
@@ -34,7 +34,7 @@ class Board(
 		val board = roundRect(width, height, 16.0, fill = GameColors.boardBackground)
 		tileSize = (board.width - TILE_SPACING * 2) / tileCount
 		val rectSize = tileSize - TILE_SPACING
-		val tiles = generateBoard(random, pieces, tileCount).toHashSet()
+		val tiles = generateBoard(random, pieces, tileCount, rotation).toHashSet()
 		val positions = mutableListOf<Point>()
 
 		graphics {
