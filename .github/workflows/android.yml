@@ -15,8 +15,7 @@ jobs:
           sudo apt update
           sudo apt install freeglut3-dev libopenal-dev
 
-      # TODO: These shouldn't be needed but are required for unknown reasons
-
+      # TODO: This shouldn't be needed but files can't be decoded properly
       - name: Prepare keystore file
         uses: timheuer/base64-to-file@v1
         with:
@@ -24,10 +23,9 @@ jobs:
           encodedString: ${{secrets.KEYSTORE_FILE}}
 
       - name: Prepare keystore properties
-        uses: timheuer/base64-to-file@v1
-        with:
-          fileName: 'key.properties'
-          encodedString: ${{secrets.KEYSTORE_PROPERTIES}}
+        env:
+          KEYSTORE_PROPERTIES: ${{secrets.KEYSTORE_PROPERTIES}}
+        run: echo "$KEYSTORE_PROPERTIES" > "key.properties"
 
       - name: Build
         run: ./gradlew assembleRelease
