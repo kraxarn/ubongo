@@ -13,14 +13,12 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install freeglut3-dev libopenal-dev
+          sudo apt install coreutils freeglut3-dev libopenal-dev
 
-      # TODO: This shouldn't be needed but files can't be decoded properly
       - name: Prepare keystore file
-        uses: timheuer/base64-to-file@v1
-        with:
-          fileName: 'release.jks'
-          encodedString: ${{secrets.KEYSTORE_FILE}}
+        env:
+          KEYSTORE_FILE: ${{secrets.KEYSTORE_FILE}}
+        run: echo "$KEYSTORE_FILE" | base64 -di > "key.properties"
 
       - name: Prepare keystore properties
         env:
