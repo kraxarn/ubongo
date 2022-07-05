@@ -20,8 +20,8 @@ jobs:
           KEYSTORE_FILE: ${{secrets.KEYSTORE_FILE}}
           KEYSTORE_PROPERTIES: ${{secrets.KEYSTORE_PROPERTIES}}
         run: |
-          echo -n "$KEYSTORE_FILE" | base64 -d > "release.jks"
-          echo -n "$KEYSTORE_PROPERTIES" | base64 -d > "key.properties"
+          echo "$KEYSTORE_FILE" | base64 -d > "release.jks"
+          echo "$KEYSTORE_PROPERTIES" | base64 -d > "key.properties"
 
       - name: Build
         run: ./gradlew assembleRelease
