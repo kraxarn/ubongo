@@ -11,8 +11,8 @@ out/
 .DS_Store
 local.properties
 
-# Auto generated keystore
-korge.keystore
+# Android keystores
+*.keystore
 
 # Yarn lock files (web)
 yarn.lock
