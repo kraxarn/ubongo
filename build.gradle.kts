@@ -22,7 +22,7 @@ apply<KorgeGradlePlugin>()
 val projectVersion: String by project
 
 korge {
-	id = "com.kraxarn.ubongo2"
+	id = "com.kraxarn.ubongo"
 	name = "Ubongo"
 	copyright = "Copyright (c) ${now().value} kraxarn"
 	icon = File("src/commonMain/resources/images/logo.png")
