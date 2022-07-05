@@ -1,7 +1,9 @@
 import com.soywiz.korge.gradle.KorgeGradlePlugin
 import com.soywiz.korge.gradle.Orientation
 import com.soywiz.korge.gradle.korge
+import java.io.FileInputStream
 import java.time.Year.now
+import java.util.*
 
 buildscript {
 	val korgePluginVersion: String by project
@@ -38,6 +40,18 @@ korge {
 	androidMinSdk = 19
 	androidCompileSdk = 30
 	androidTargetSdk = 30
+
+	val keystorePropertiesFile = rootProject.file("key.properties")
+	if (keystorePropertiesFile.exists())
+	{
+		val properties = Properties()
+		properties.load(FileInputStream(keystorePropertiesFile))
+
+		androidReleaseSignStoreFile = properties.getProperty("storeFile")
+		androidReleaseSignStorePassword = properties.getProperty("storePassword")
+		androidReleaseSignKeyAlias = properties.getProperty("keyAlias")
+		androidReleaseSignKeyPassword = properties.getProperty("keyPassword")
+	}
 
 	targetJvm()
 	targetJs()
