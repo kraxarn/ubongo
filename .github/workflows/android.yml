@@ -9,11 +9,10 @@ jobs:
       - uses: actions/checkout@v2
 
       # https://docs.korge.org/korge/deployment/desktop
-      # Linux dependencies are also required for Android
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install coreutils freeglut3-dev libopenal-dev
+          sudo apt install freeglut3-dev libopenal-dev
 
       - name: Prepare keystore file
         env:
