@@ -14,15 +14,13 @@ jobs:
           sudo apt update
           sudo apt install freeglut3-dev libopenal-dev
 
-      - name: Prepare keystore file
+      - name: Prepare keystore
         env:
           KEYSTORE_FILE: ${{secrets.KEYSTORE_FILE}}
-        run: echo "$KEYSTORE_FILE" | base64 -di > "release.jks"
-
-      - name: Prepare keystore properties
-        env:
           KEYSTORE_PROPERTIES: ${{secrets.KEYSTORE_PROPERTIES}}
-        run: echo "$KEYSTORE_PROPERTIES" > "key.properties"
+        run: |
+          echo "$KEYSTORE_FILE" | base64 -di > "release.jks"
+          echo "$KEYSTORE_PROPERTIES" > "key.properties"
 
       - name: Build
         run: ./gradlew assembleRelease
