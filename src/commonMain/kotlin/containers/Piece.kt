@@ -12,7 +12,6 @@ import com.soywiz.korma.geom.vector.rect
 import enums.PieceShape
 import extensions.piece.*
 import extensions.size2
-import kotlin.math.floor
 
 class Piece(private val pieceShape: PieceShape, private val tileSize: Double) : Container()
 {
@@ -45,8 +44,8 @@ class Piece(private val pieceShape: PieceShape, private val tileSize: Double) : 
 				StrokeInfo(borderSize, startCap = borderCap, endCap = borderCap)
 			) { drawBorder(this) }
 
-			x = -(floor(pieceShape.size.x / 2.0) * tileSize + borderSize)
-			y = -(floor(pieceShape.size.y / 2.0) * tileSize + borderSize)
+			x = -(pieceShape.center.x * tileSize + borderSize)
+			y = -(pieceShape.center.y * tileSize + borderSize)
 			borderOffset.setTo(x, y)
 		}
 
