@@ -20,7 +20,7 @@ version is important. The app follows x.y.z versioning where:
 * [x] Improved detection for dragging pieces *(0.6)*
 * [x] Customizable piece count *(0.9)*
 * [x] Customizable board size *(0.9)*
-* [ ] Rotating pieces
+* [x] Rotating pieces *(0.9)*
 * [ ] Flipping/mirroring pieces
 * [ ] Sound effects
 * [ ] Looping music
