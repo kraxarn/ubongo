@@ -181,7 +181,13 @@ class GameScene(private val gameState: GameState) : Scene()
 				.map { it.second(it.first) }
 				.sum()
 
-			addPiece(piece) { position(pos) }
+			addPiece(piece) {
+				position(pos)
+				if (gameState.settings.rotation.value)
+				{
+					onClick { rotate() }
+				}
+			}
 		}
 	}
 
