@@ -132,9 +132,6 @@ private fun adjacentTileCount(tiles: Iterable<PointInt>, piece: Iterable<PointIn
 
 private fun rotatedPoints(random: Random, shape: PieceShape): Sequence<PointInt>
 {
-	var points = shape.points
-	repeat(random.nextInt(0, 4)) {
-		points = points.rotated(shape.center.toInt())
-	}
-	return points
+	return (0 until random.nextInt(4))
+		.fold(shape.points) { _, _ -> shape.points.rotated(shape.center.toInt()) }
 }
