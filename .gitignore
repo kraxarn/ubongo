@@ -13,6 +13,7 @@ local.properties
 
 # Android keystores
 *.keystore
+key.properties
 
 # Yarn lock files (web)
 yarn.lock
