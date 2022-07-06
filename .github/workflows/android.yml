@@ -26,10 +26,9 @@ jobs:
         run: ./gradlew assembleRelease
 
       - name: Prepare filename
-        working-directory: ${{runner.workspace}}/build/outputs/apk/release
         run: |
           TAG="$(git describe --abbrev=0 --tags)"
-          mv "ubongo-*.apk" "ubongo-$TAG.apk"
+          mv "./build/outputs/apk/release/ubongo-*.apk" "./build/outputs/apk/release/ubongo-$TAG.apk"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
