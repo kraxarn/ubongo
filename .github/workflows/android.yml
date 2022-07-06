@@ -31,7 +31,7 @@ jobs:
         working-directory: build/outputs/apk/release
         run: |
           TAG="$(git describe --abbrev=0 --tags)"
-          mv "ubongo-*.apk" "ubongo-$TAG.apk"
+          mv "ubongo-release.apk" "ubongo-$TAG.apk"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
