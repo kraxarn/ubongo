@@ -33,14 +33,6 @@ class ButtonSkin(font: Font) : UISkin()
 			|| type == UiSkinType.OVER
 
 		val img = NativeImage(BUTTON_SIZE, BUTTON_SIZE).context2d {
-			val fillColor = when (type)
-			{
-				UiSkinType.NORMAL -> Colors["#3f51b5"]   // Indigo 500
-				UiSkinType.OVER -> Colors["#757de8"]     // Indigo 500 (Light)
-				UiSkinType.DOWN -> Colors["#002984"]     // Indigo 500 (Dark)
-				UiSkinType.DISABLED -> Colors["#607d8b"] // Blue grey 500
-				else -> throw InvalidArgumentException(type.toString())
-			}
 
 			if (shadow)
 			{
@@ -60,7 +52,7 @@ class ButtonSkin(font: Font) : UISkin()
 				}
 			}
 
-			fill(fillColor) {
+			fill(fillColor(type)) {
 				roundRect(
 					PADDING
 						+ if (type == UiSkinType.DOWN) SHADOW_WIDTH else 0,
@@ -81,5 +73,14 @@ class ButtonSkin(font: Font) : UISkin()
 		const val BORDER_RADIUS = 12
 		const val SHADOW_WIDTH = 6
 		const val INSET = 22
+
+		fun fillColor(type: UiSkinType = UiSkinType.NORMAL) = when (type)
+		{
+			UiSkinType.NORMAL -> Colors["#3f51b5"]   // Indigo 500
+			UiSkinType.OVER -> Colors["#757de8"]     // Indigo 500 (Light)
+			UiSkinType.DOWN -> Colors["#002984"]     // Indigo 500 (Dark)
+			UiSkinType.DISABLED -> Colors["#607d8b"] // Blue grey 500
+			else -> throw InvalidArgumentException(type.toString())
+		}
 	}
 }
