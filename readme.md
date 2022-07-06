@@ -22,11 +22,12 @@ version is important. The app follows x.y.z versioning where:
 * [x] Customizable board size *(0.9)*
 * [x] Rotating pieces *(0.9)*
 * [ ] Flipping/mirroring pieces
-* [ ] Sound effects
-* [ ] Looping music
-* [ ] Animations
 
 ## Goals post 1.0
 
+* [ ] Sound effects
+* [ ] Music
+* [ ] Animations
 * [ ] "Time rush" game mode (+time for each completed)
 * [ ] Setting for snap to grid on drag or drop
+* [ ] Mode for "increasing" difficulty for each level
