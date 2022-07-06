@@ -27,7 +27,15 @@ jobs:
       - name: Build
         run: ./gradlew assembleRelease
 
-      - name: Prepare filename
+      - name: Prepare filename (master)
+        if: github.ref == 'refs/heads/master'
+        working-directory: build/outputs/apk/release
+        run: |
+          HASH="$(git rev-parse --short HEAD)"
+          mv "ubongo-release.apk" "ubongo-$HASH.apk"
+
+      - name: Prepare filename (tag)
+        if: startsWith(github.ref, 'refs/tags/')
         working-directory: build/outputs/apk/release
         run: |
           TAG="$(git describe --abbrev=0 --tags)"
@@ -43,4 +51,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: build/outputs/apk/release/*.apk
+          files: build/outputs/apk/release/ubongo-*.apk
