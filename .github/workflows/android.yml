@@ -26,7 +26,7 @@ jobs:
         run: ./gradlew assembleRelease
 
       - name: Prepare filename
-        working-directory: 'build/outputs/apk/release'
+        working-directory: ${{runner.workspace}}/build/outputs/apk/release
         run: |
           TAG="$(git describe --abbrev=0 --tags)"
           mv "ubongo-*.apk" "ubongo-$TAG.apk"
