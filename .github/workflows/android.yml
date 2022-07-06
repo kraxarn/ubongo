@@ -7,6 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       # https://docs.korge.org/korge/deployment/desktop
       - name: Install dependencies
@@ -25,13 +27,11 @@ jobs:
       - name: Build
         run: ./gradlew assembleRelease
 
-      - name: Get latest tag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
-
       - name: Prepare filename
+        working-directory: build/outputs/apk/release
         run: |
           TAG="$(git describe --abbrev=0 --tags)"
-          mv "./build/outputs/apk/release/ubongo-*.apk" "./build/outputs/apk/release/ubongo-$TAG.apk"
+          mv "ubongo-*.apk" "ubongo-$TAG.apk"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
