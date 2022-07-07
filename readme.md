@@ -21,7 +21,7 @@ version is important. The app follows x.y.z versioning where:
 * [x] Customizable piece count *(0.9)*
 * [x] Customizable board size *(0.9)*
 * [x] Rotating pieces *(0.9)*
-* [ ] Flipping/mirroring pieces
+* [x] Mirroring pieces *(1.0)*
 
 ## Goals post 1.0
 
