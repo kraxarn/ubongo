@@ -13,9 +13,9 @@ class GenerateBoardTests
 	@Test
 	fun canGenerateBoardWithoutWarnings()
 	{
-		for (i in 0L..100L)
+		for (difficulty in Difficulty.values())
 		{
-			for (difficulty in Difficulty.values())
+			for (i in 0L..100L)
 			{
 				val warnings = getWarningsOnGeneration(i, difficulty)
 				assertEquals(0, warnings, "$difficulty ($i)")
