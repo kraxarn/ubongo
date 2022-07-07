@@ -48,7 +48,7 @@ suspend fun View.rotate()
 suspend fun View.mirror()
 {
 	// Don't allow scaling while already mirroring
-	if (abs(this.scaleX) != 1.0) return
+	if (this.isMirroring) return
 
 	this.tween(
 		this::scaleX[-this.scaleX],
@@ -56,3 +56,8 @@ suspend fun View.mirror()
 		easing = DEFAULT_EASING,
 	)
 }
+
+/**
+ * View is currently animating being mirrored
+ */
+val View.isMirroring get() = abs(this.scaleX) != 1.0

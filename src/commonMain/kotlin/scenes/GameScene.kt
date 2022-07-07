@@ -6,6 +6,7 @@ import com.soywiz.klock.milliseconds
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.input.*
 import com.soywiz.korge.scene.Scene
+import com.soywiz.korge.scene.delay
 import com.soywiz.korge.tween.V2
 import com.soywiz.korge.tween.get
 import com.soywiz.korge.tween.tween
@@ -14,6 +15,7 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.vector.format.SVG
 import com.soywiz.korim.vector.render
+import com.soywiz.korio.async.launch
 import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korio.util.toStringDecimal
 import com.soywiz.korma.geom.Point
@@ -23,6 +25,7 @@ import containers.*
 import enums.ResFont
 import enums.ResImage
 import extensions.*
+import kotlinx.coroutines.Job
 
 @KorgeExperimental
 class GameScene(private val gameState: GameState) : Scene()
@@ -189,10 +192,10 @@ class GameScene(private val gameState: GameState) : Scene()
 		piece.apply {
 			addTo(sceneView, callback)
 
-			var downTime = TimeSpan.NIL
+			var holdJob: Job? = null
 
 			draggable(autoMove = false) {
-				downTime = TimeSpan.NIL
+				if (!isMirroring) holdJob?.cancel()
 				bringToTop()
 				if (collidesWith(board))
 				{
@@ -209,17 +212,21 @@ class GameScene(private val gameState: GameState) : Scene()
 				if (it.end) checkIfBoardFilled()
 			}
 
+			onClick {
+				rotate()
+				checkIfBoardFilled()
+			}
+
 			onDown {
-				downTime = TimeSpan.now()
+				holdJob = launch {
+					delay(500.milliseconds)
+					mirror()
+					checkIfBoardFilled()
+				}
 			}
 
 			onUp {
-				if (!downTime.isNil())
-				{
-					val time = TimeSpan.now() - downTime
-					downTime = TimeSpan.NIL
-					if (time >= 500.milliseconds) mirror() else rotate()
-				}
+				if (!isMirroring) holdJob?.cancel()
 			}
 		}
 	}
