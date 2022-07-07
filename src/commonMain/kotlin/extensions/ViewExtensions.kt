@@ -9,6 +9,7 @@ import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.degrees
 import com.soywiz.korma.geom.plus
 import com.soywiz.korma.interpolation.Easing
+import kotlin.math.abs
 import kotlin.math.max
 
 val View.size2 get() = Point(this.width, this.height)
@@ -18,6 +19,9 @@ fun <T : View> T.maxWidthOrHeight(scale: Double) =
 
 fun View.containsPoint(point: Point) =
 	this.hitShape2d.containsPoint(point.x, point.y)
+
+val DEFAULT_TIME = 200.milliseconds
+val DEFAULT_EASING = Easing.EASE_OUT
 
 /**
  * Move view by 90 degrees.
@@ -31,7 +35,24 @@ suspend fun View.rotate()
 
 	this.tween(
 		this::rotation[this.rotation + 90.degrees],
-		time = 200.milliseconds,
-		easing = Easing.EASE_OUT,
+		time = DEFAULT_TIME,
+		easing = DEFAULT_EASING,
+	)
+}
+
+/**
+ * Mirror view, or return if already mirrored.
+ *
+ * **Note:** Currently doesn't mirror if already mirroring.
+ */
+suspend fun View.mirror()
+{
+	// Don't allow scaling while already mirroring
+	if (abs(this.scaleX) != 1.0) return
+
+	this.tween(
+		this::scaleX[-this.scaleX],
+		time = DEFAULT_TIME,
+		easing = DEFAULT_EASING,
 	)
 }
