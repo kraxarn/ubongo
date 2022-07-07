@@ -189,28 +189,30 @@ class GameScene(private val gameState: GameState) : Scene()
 
 	private fun addPiece(piece: Piece, callback: @ViewDslMarker Piece.() -> Unit)
 	{
-		piece.addTo(sceneView, callback)
+		piece.apply {
+			addTo(sceneView, callback)
 
-		piece.draggable(autoMove = false) {
-			piece.bringToTop()
-			if (piece.collidesWith(board))
-			{
-				// Snap to grid
-				val tileSize = board.tileSize.toInt()
-				val piecePos = it.viewNextXY.toInt()
-				val boardPos = (board.pos + Point(Board.TILE_SPACING)).toInt()
-				val x = ((piecePos.x - boardPos.x) / tileSize * tileSize) + boardPos.x
-				val y = ((piecePos.y - boardPos.y) / tileSize * tileSize) + boardPos.y
-				piece.position(x, y)
+			draggable(autoMove = false) {
+				bringToTop()
+				if (collidesWith(board))
+				{
+					// Snap to grid
+					val tileSize = board.tileSize.toInt()
+					val piecePos = it.viewNextXY.toInt()
+					val boardPos = (board.pos + Point(Board.TILE_SPACING)).toInt()
+					val x = ((piecePos.x - boardPos.x) / tileSize * tileSize) + boardPos.x
+					val y = ((piecePos.y - boardPos.y) / tileSize * tileSize) + boardPos.y
+					position(x, y)
+				}
+				else position(it.viewNextXY)
+
+				if (it.end) checkIfBoardFilled()
 			}
-			else piece.position(it.viewNextXY)
 
-			if (it.end) checkIfBoardFilled()
-		}
-
-		piece.onClick {
-			piece.rotate()
-			checkIfBoardFilled()
+			onClick {
+				rotate()
+				checkIfBoardFilled()
+			}
 		}
 	}
 
