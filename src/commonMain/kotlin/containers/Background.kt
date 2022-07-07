@@ -24,7 +24,7 @@ class Background(private val views: Views) : Container()
 	private val actualX get() = views.actualVirtualLeft
 	private val actualY get() = views.actualVirtualTop
 
-	private val image = image(this.bitmap)
+	private val image = image(bitmap)
 
 	private val bitmap
 		get() = NativeImage(actualWidth, actualHeight).context2d {
