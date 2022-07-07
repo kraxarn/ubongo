@@ -208,12 +208,9 @@ class GameScene(private val gameState: GameState) : Scene()
 			if (it.end) checkIfBoardFilled()
 		}
 
-		if (gameState.difficulty.rotation)
-		{
-			piece.onClick {
-				piece.rotate()
-				checkIfBoardFilled()
-			}
+		piece.onClick {
+			piece.rotate()
+			checkIfBoardFilled()
 		}
 	}
 
