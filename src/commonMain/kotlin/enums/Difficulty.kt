@@ -8,6 +8,12 @@ enum class Difficulty(
 	val rotation: Boolean,
 
 	/**
+	 * If boards should be generated with random mirrored pieces
+	 * (pieces can still be manually mirrored)
+	 */
+	val mirroring: Boolean,
+
+	/**
 	 * Number of pieces generated on board, and allowed to be placed
 	 */
 	val pieceCount: Int,
@@ -18,7 +24,7 @@ enum class Difficulty(
 	val boardSize: Int,
 )
 {
-	EASY(false, 3, 7),
-	MEDIUM(true, 5, 8),
-	HARD(true, 8, 9),
+	EASY(false, false, 3, 7),
+	MEDIUM(true, false, 5, 8),
+	HARD(true, true, 8, 9),
 }
