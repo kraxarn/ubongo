@@ -30,8 +30,8 @@ class GenerateBoardTests
 		log.output = logOutput
 
 		generateBoard(
-			FastRandom(seed), PieceShape.values().toList(),
-			difficulty.pieceCount, difficulty.rotation
+			FastRandom(seed), PieceShape.values().take(difficulty.pieceCount),
+			difficulty.boardSize, difficulty.rotation
 		)
 
 		return logOutput[Logger.Level.WARN]?.count() ?: 0
