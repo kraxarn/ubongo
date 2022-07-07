@@ -18,7 +18,7 @@ enum class Difficulty(
 	val boardSize: Int,
 )
 {
-	EASY(false, 3, 6),
+	EASY(false, 3, 7),
 	MEDIUM(true, 5, 8),
-	HARD(true, 8, 10),
+	HARD(true, 8, 9),
 }
