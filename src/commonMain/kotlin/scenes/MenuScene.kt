@@ -17,7 +17,7 @@ import com.soywiz.korma.interpolation.Easing
 import constants.Application
 import constants.GameColors
 import constants.TextSize
-import containers.Logo
+import containers.logo
 import enums.Difficulty
 import enums.ResFont
 import skins.ButtonSkin
@@ -60,8 +60,7 @@ class MenuScene(private val gameState: GameState) : Scene()
 		gameState.regenerate()
 
 		container {
-			val logo = Logo()
-			addChild(logo)
+			val logo = logo { }
 
 			val title = uiText("Ubongo") {
 				textAlignment = TextAlignment.MIDDLE_RIGHT

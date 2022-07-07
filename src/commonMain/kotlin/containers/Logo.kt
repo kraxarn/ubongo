@@ -1,13 +1,15 @@
 package containers
 
-import com.soywiz.korge.view.Container
-import com.soywiz.korge.view.alignBottomToBottomOf
-import com.soywiz.korge.view.alignLeftToRightOf
-import com.soywiz.korge.view.position
+import com.soywiz.korge.view.*
 import com.soywiz.korma.geom.degrees
 import enums.PieceShape
 
-class Logo(size: Double = 128.0) : Container()
+fun Container.logo(
+	size: Double = 128.0,
+	callback: @ViewDslMarker Logo.() -> Unit = {},
+) = Logo(size).addTo(this, callback)
+
+class Logo(size: Double) : Container()
 {
 	init
 	{
