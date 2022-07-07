@@ -3,7 +3,9 @@ package utils
 import com.soywiz.klogger.Logger
 import com.soywiz.korma.geom.PointInt
 import com.soywiz.korma.geom.plus
+import enums.Difficulty
 import enums.PieceShape
+import extensions.mirrored
 import extensions.piece.center
 import extensions.piece.points
 import extensions.piece.size
@@ -11,7 +13,7 @@ import extensions.rotated
 import extensions.toInt
 import kotlin.random.Random
 
-fun generateBoard(random: Random, pieces: Iterable<PieceShape>, tileCount: Int, rotation: Boolean): Iterable<PointInt>
+fun generateBoard(random: Random, pieces: Iterable<PieceShape>, difficulty: Difficulty): Iterable<PointInt>
 {
 	val log = Logger("generateBoard")
 	val tiles = mutableListOf<PointInt>()
@@ -20,7 +22,12 @@ fun generateBoard(random: Random, pieces: Iterable<PieceShape>, tileCount: Int, 
 	for (i in shuffled.indices)
 	{
 		val piece = shuffled[i]
-		val points = (if (rotation) rotatedPoints(random, piece) else piece.points).toList()
+		val tileCount = difficulty.boardSize
+
+		val points = piece.let {
+			val points = if (difficulty.rotation) rotatedPoints(random, piece) else piece.points
+			if (difficulty.mirroring) mirroredPoints(random, points) else points
+		}.toList()
 
 		// First is placed in center
 		if (i == 0)
@@ -135,3 +142,6 @@ private fun rotatedPoints(random: Random, shape: PieceShape): Sequence<PointInt>
 	return (0 until random.nextInt(4))
 		.fold(shape.points) { _, _ -> shape.points.rotated(shape.center.toInt()) }
 }
+
+private fun mirroredPoints(random: Random, points: Sequence<PointInt>) =
+	if (random.nextBoolean()) points.mirrored() else points

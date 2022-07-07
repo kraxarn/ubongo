@@ -8,6 +8,7 @@ import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.PointInt
 import com.soywiz.korma.geom.vector.roundRect
 import constants.GameColors
+import enums.Difficulty
 import enums.PieceShape
 import extensions.containsPoint
 import utils.generateBoard
@@ -15,7 +16,7 @@ import kotlin.random.Random
 
 class Board(
 	random: Random,
-	pieces: Iterable<PieceShape>, tileCount: Int, rotation: Boolean,
+	pieces: Iterable<PieceShape>, difficulty: Difficulty,
 	width: Double, height: Double = width,
 ) : Container()
 {
@@ -32,9 +33,10 @@ class Board(
 	init
 	{
 		val board = roundRect(width, height, 16.0, fill = GameColors.boardBackground)
+		val tileCount = difficulty.boardSize
 		tileSize = (board.width - TILE_SPACING * 2) / tileCount
 		val rectSize = tileSize - TILE_SPACING
-		val tiles = generateBoard(random, pieces, tileCount, rotation).toHashSet()
+		val tiles = generateBoard(random, pieces, difficulty).toHashSet()
 		val positions = mutableListOf<Point>()
 
 		graphics {

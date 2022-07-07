@@ -9,3 +9,6 @@ operator fun IPointInt.times(scale: Int) =
 
 fun Sequence<PointInt>.rotated(origin: PointInt) =
 	this.map { PointInt(-it.y + origin.x, it.x - origin.y) }
+
+fun Sequence<PointInt>.mirrored() =
+	this.map { PointInt(-it.x, it.y) }

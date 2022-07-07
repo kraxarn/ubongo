@@ -4,9 +4,7 @@ import GameState
 import com.soywiz.klock.TimeSpan
 import com.soywiz.klock.milliseconds
 import com.soywiz.korge.annotations.KorgeExperimental
-import com.soywiz.korge.input.draggable
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.input.onMouseDrag
+import com.soywiz.korge.input.*
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.tween.V2
 import com.soywiz.korge.tween.get
@@ -118,10 +116,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			.take(gameState.difficulty.pieceCount)
 			.toList()
 
-		val boardSize = gameState.difficulty.boardSize
-		val rotation = gameState.difficulty.rotation
-
-		board = Board(gameState.random, pieceShapes, boardSize, rotation, size).addTo(this) {
+		board = Board(gameState.random, pieceShapes, gameState.difficulty, size).addTo(this) {
 			position(PADDING, 0.0)
 			alignTopToBottomOf(hud, PADDING)
 		}
