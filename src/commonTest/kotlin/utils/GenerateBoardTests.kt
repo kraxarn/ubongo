@@ -29,10 +29,8 @@ class GenerateBoardTests
 		val logOutput = MemoryLogOutput()
 		log.output = logOutput
 
-		generateBoard(
-			FastRandom(seed), PieceShape.values().take(difficulty.pieceCount),
-			difficulty.boardSize, difficulty.rotation
-		)
+		val pieces = PieceShape.values().take(difficulty.pieceCount)
+		generateBoard(FastRandom(seed), pieces, difficulty)
 
 		return logOutput[Logger.Level.WARN]?.count() ?: 0
 	}
