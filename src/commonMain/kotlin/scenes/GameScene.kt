@@ -113,11 +113,11 @@ class GameScene(private val gameState: GameState) : Scene()
 		}
 
 		val pieceShapes = gameState.random.pieceShapes()
-			.take(gameState.settings.pieceCount.value)
+			.take(gameState.difficulty.pieceCount)
 			.toList()
 
-		val boardSize = gameState.settings.boardSize.value
-		val rotation = gameState.settings.rotation.value
+		val boardSize = gameState.difficulty.boardSize
+		val rotation = gameState.difficulty.rotation
 
 		board = Board(gameState.random, pieceShapes, boardSize, rotation, size).addTo(this) {
 			position(PADDING, 0.0)
@@ -208,7 +208,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			if (it.end) checkIfBoardFilled()
 		}
 
-		if (gameState.settings.rotation.value)
+		if (gameState.difficulty.rotation)
 		{
 			piece.onClick {
 				piece.rotate()

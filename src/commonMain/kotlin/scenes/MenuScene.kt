@@ -18,7 +18,7 @@ import constants.Application
 import constants.GameColors
 import constants.TextSize
 import containers.Logo
-import containers.quickSettings
+import enums.Difficulty
 import enums.ResFont
 import skins.ButtonSkin
 import utils.randomWord
@@ -81,12 +81,17 @@ class MenuScene(private val gameState: GameState) : Scene()
 			position(views.virtualWidth / 2.0 - width / 4.0, views.virtualHeight * 0.15)
 		}
 
+		val back = uiButton("<")
+		val difficulties = uiHorizontalFill()
+
 		val startGame = uiButton("Start Game") {
 			uiSkin = buttonSkin
-			position(PADDING, views.virtualHeight * 0.725)
+			position(PADDING, views.virtualHeight * 0.8)
 			size(views.virtualWidth - PADDING * 2, BUTTON_HEIGHT)
 			onClick {
-				sceneContainer.changeTo<GameScene>()
+				visible(false)
+				back.visible(true)
+				difficulties.visible(true)
 			}
 		}
 
@@ -120,9 +125,38 @@ class MenuScene(private val gameState: GameState) : Scene()
 			}
 		}
 
-		quickSettings(gameState.res, gameState.settings, startGame.width, 240.0) {
-			alignTopToBottomOf(startGame)
+		back.apply {
+			uiSkin = buttonSkin
+			size(startGame.width / 6.0, startGame.height)
 			alignLeftToLeftOf(startGame)
+			alignTopToTopOf(startGame)
+			visible(false)
+			onClick {
+				back.visible(false)
+				difficulties.visible(false)
+				startGame.visible(true)
+			}
+		}
+
+		difficulties.apply {
+			size(startGame.width - back.width, startGame.height)
+			alignLeftToRightOf(back)
+			alignTopToTopOf(back)
+			visible(false)
+
+			val buttonSkin = this@MenuScene.buttonSkin.copy()
+			buttonSkin.textSize *= 0.7
+
+			for (difficulty in Difficulty.values())
+			{
+				uiButton(difficulty.name.lowercase().replaceFirstChar { it.uppercase() }) {
+					uiSkin = buttonSkin
+					onClick {
+						gameState.difficulty = difficulty
+						sceneContainer.changeTo<GameScene>()
+					}
+				}
+			}
 		}
 	}
 

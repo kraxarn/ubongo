@@ -1,5 +1,6 @@
 import com.soywiz.kds.random.FastRandom
 import com.soywiz.klock.DateTime
+import enums.Difficulty
 import kotlin.random.Random
 
 class GameState
@@ -20,7 +21,7 @@ class GameState
 
 	val res = Resources()
 
-	val settings = GameSettings()
+	var difficulty = Difficulty.MEDIUM
 
 	/**
 	 * Generate a new seed and reset random number generator
