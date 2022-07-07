@@ -17,6 +17,7 @@ import com.soywiz.korma.interpolation.Easing
 import constants.Application
 import constants.GameColors
 import constants.TextSize
+import containers.background
 import containers.logo
 import enums.Difficulty
 import enums.ResFont
@@ -58,6 +59,8 @@ class MenuScene(private val gameState: GameState) : Scene()
 	override suspend fun Container.sceneMain()
 	{
 		gameState.regenerate()
+
+		background { }
 
 		container {
 			val logo = logo { }

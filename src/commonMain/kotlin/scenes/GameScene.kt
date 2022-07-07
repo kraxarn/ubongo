@@ -88,6 +88,8 @@ class GameScene(private val gameState: GameState) : Scene()
 
 	override suspend fun Container.sceneMain()
 	{
+		background { }
+
 		val size = views.virtualWidth - PADDING * 2
 
 		val hud = uiGridFill(size * 0.8, 70.0, 2, 2) {
