@@ -29,11 +29,11 @@ class Background(private val views: Views) : Container()
 	private val bitmap
 		get() = NativeImage(actualWidth, actualHeight).context2d {
 			fill(
-				LinearGradientPaint(0, 0, 0, actualHeight)
+				LinearGradientPaint(0, 0, 0, height)
 					.add(0.0, GameColors.backgroundStart)
 					.add(1.0, GameColors.backgroundEnd)
 			) {
-				rect(0, 0, actualWidth, actualHeight)
+				rect(0, 0, width, height)
 			}
 		}
 
