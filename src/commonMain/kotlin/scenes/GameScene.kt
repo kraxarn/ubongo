@@ -189,7 +189,10 @@ class GameScene(private val gameState: GameState) : Scene()
 		piece.apply {
 			addTo(sceneView, callback)
 
+			var downTime = TimeSpan.NIL
+
 			draggable(autoMove = false) {
+				downTime = TimeSpan.NIL
 				bringToTop()
 				if (collidesWith(board))
 				{
@@ -206,9 +209,17 @@ class GameScene(private val gameState: GameState) : Scene()
 				if (it.end) checkIfBoardFilled()
 			}
 
-			onClick {
-				rotate()
-				checkIfBoardFilled()
+			onDown {
+				downTime = TimeSpan.now()
+			}
+
+			onUp {
+				if (!downTime.isNil())
+				{
+					val time = TimeSpan.now() - downTime
+					downTime = TimeSpan.NIL
+					if (time >= 500.milliseconds) mirror() else rotate()
+				}
 			}
 		}
 	}
