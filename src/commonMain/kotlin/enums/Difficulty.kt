@@ -1,6 +1,22 @@
 package enums
 
-enum class Difficulty(val rotation: Boolean, val pieceCount: Int, val boardSize: Int)
+enum class Difficulty(
+	/**
+	 * If boards should be generated with random rotation
+	 * (pieces can still be manually rotated)
+	 */
+	val rotation: Boolean,
+
+	/**
+	 * Number of pieces generated on board, and allowed to be placed
+	 */
+	val pieceCount: Int,
+
+	/**
+	 * Number of tiles in board vertically and horizontally
+	 */
+	val boardSize: Int,
+)
 {
 	EASY(false, 3, 6),
 	MEDIUM(true, 5, 8),
