@@ -2,6 +2,9 @@
 
 A game where you get random pieces, a random board, and then you need to fit all pieces on the board!
 
+| ![medium puzzle](.github/images/puzzle_medium.png) | ![hard puzzle](.github/images/puzzle_hard.png) |
+|----------------------------------------------------|------------------------------------------------|
+
 ## Versioning
 
 As this game is focused on being able to play together, even without an active internet connection, playing on the same
