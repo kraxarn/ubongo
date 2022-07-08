@@ -20,8 +20,8 @@ fun <T : View> T.maxWidthOrHeight(scale: Double) =
 fun View.containsPoint(point: Point) =
 	this.hitShape2d.containsPoint(point.x, point.y)
 
-val DEFAULT_TIME = 200.milliseconds
-val DEFAULT_EASING = Easing.EASE_OUT
+private val DEFAULT_TIME = 200.milliseconds
+private val DEFAULT_EASING = Easing.EASE_OUT
 
 /**
  * Move view by 90 degrees.
