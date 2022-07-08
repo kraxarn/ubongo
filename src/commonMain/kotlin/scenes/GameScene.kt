@@ -195,7 +195,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			draggable(autoMove = false) {
 				if (!isMirroring) holdJob?.cancel()
 				bringToTop()
-				if (collidesWith(board))
+				if (collidesWith(board, CollisionKind.SHAPE))
 				{
 					// Snap to grid
 					val tileSize = board.tileSize.toInt()

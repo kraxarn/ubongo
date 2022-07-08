@@ -6,11 +6,14 @@ import com.soywiz.korge.view.position
 import com.soywiz.korge.view.roundRect
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.PointInt
+import com.soywiz.korma.geom.shape.Shape2d
 import com.soywiz.korma.geom.vector.roundRect
 import constants.GameColors
 import enums.Difficulty
 import enums.PieceShape
+import extensions.bottomRight
 import extensions.containsPoint
+import extensions.topLeft
 import utils.generateBoard
 import kotlin.random.Random
 
@@ -55,6 +58,16 @@ class Board(
 					}
 				}
 			}
+		}
+
+		hitShape2d = positions.let {
+			val topLeft = it.topLeft()
+			val bottomRight = it.bottomRight() + Point(rectSize)
+			Shape2d.Rectangle(
+				topLeft.x, topLeft.y,
+				bottomRight.x - topLeft.x,
+				bottomRight.y - topLeft.y
+			)
 		}
 
 		tilePositions = positions
