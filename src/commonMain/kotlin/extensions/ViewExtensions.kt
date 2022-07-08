@@ -33,8 +33,11 @@ suspend fun View.rotate()
 	// Don't allow rotation while already rotating
 	if (this.rotation.degrees.toInt() % 90 != 0) return
 
+	// Always rotate clockwise
+	val degrees = (if (this.isMirrored) -90 else 90).degrees
+
 	this.tween(
-		this::rotation[this.rotation + 90.degrees],
+		this::rotation[this.rotation + degrees],
 		time = DEFAULT_TIME,
 		easing = DEFAULT_EASING,
 	)
@@ -61,3 +64,8 @@ suspend fun View.mirror()
  * View is currently animating being mirrored
  */
 val View.isMirroring get() = abs(this.scaleX) != 1.0
+
+/**
+ * View is mirrored
+ */
+val View.isMirrored get() = this.scaleX < 0
