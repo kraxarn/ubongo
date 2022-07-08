@@ -4,6 +4,7 @@ import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.scene.Module
 import com.soywiz.korim.format.PNG
 import com.soywiz.korinject.AsyncInjector
+import com.soywiz.korio.util.OS
 import com.soywiz.korma.geom.Anchor
 import com.soywiz.korma.geom.ScaleMode
 import com.soywiz.korma.geom.SizeInt
@@ -30,7 +31,10 @@ object Game : Module()
 
 	init
 	{
-		Logger.defaultLevel = Logger.Level.DEBUG
+		if (OS.isJvm)
+		{
+			Logger.defaultLevel = Logger.Level.DEBUG
+		}
 	}
 
 	override suspend fun AsyncInjector.configure()
