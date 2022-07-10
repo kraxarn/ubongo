@@ -2,24 +2,33 @@ package scenes
 
 import GameState
 import com.soywiz.klock.DateTime
+import com.soywiz.klock.milliseconds
 import com.soywiz.klock.seconds
 import com.soywiz.korge.animate.launchAnimate
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.input.onClick
+import com.soywiz.korge.input.onMouseDrag
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.tween.get
+import com.soywiz.korge.tween.tween
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
 import com.soywiz.korge.view.filter.TransitionFilter
 import com.soywiz.korim.text.TextAlignment
+import com.soywiz.korim.vector.format.SVG
+import com.soywiz.korim.vector.render
 import com.soywiz.korio.async.launch
 import com.soywiz.korma.interpolation.Easing
 import constants.Application
 import constants.GameColors
 import constants.TextSize
+import containers.Backdrop
+import containers.Settings
 import containers.logo
+import containers.settings
 import enums.Difficulty
 import enums.ResFont
+import enums.ResImage
 import skins.ButtonSkin
 import utils.randomWord
 
@@ -156,6 +165,40 @@ class MenuScene(private val gameState: GameState) : Scene()
 					}
 				}
 			}
+		}
+
+		val settings = Container()
+
+		val backdrop = Backdrop(views.actualVirtualWidth, views.actualVirtualHeight)
+
+		image(SVG(gameState.res[ResImage.UI_GEAR]).render()) {
+			size(64.0, 64.0)
+			position(views.virtualWidth - 64.0 - PADDING, PADDING)
+			onClick {
+				launch {
+					settings.tween(settings::y[0.0], time = 300.milliseconds, easing = Easing.EASE_IN_OUT)
+				}
+				backdrop.show()
+			}
+		}
+
+		backdrop.addTo(this) {
+			position(views.actualVirtualLeft, views.actualVirtualTop)
+			onClick {
+				launch {
+					val y = (settings.firstChild as? Settings)?.actualHeight ?: 0.0
+					settings.tween(settings::y[y], time = 300.milliseconds, easing = Easing.EASE_IN_OUT)
+				}
+				hide()
+			}
+		}
+
+		settings.addTo(this) {
+			val content = settings(gameState.res, views) {
+				// Don't dismiss when clicking content
+				onMouseDrag { }
+			}
+			y = content.actualHeight
 		}
 	}
 
