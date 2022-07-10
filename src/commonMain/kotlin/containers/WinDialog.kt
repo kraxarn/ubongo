@@ -4,13 +4,13 @@ import Resources
 import com.soywiz.klock.TimeSpan
 import com.soywiz.klock.minutes
 import com.soywiz.klock.seconds
+import com.soywiz.klock.toTimeString
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.ViewDslMarker
 import com.soywiz.korge.view.addTo
 import com.soywiz.korim.vector.format.SVG
 import com.soywiz.korim.vector.render
-import com.soywiz.korio.util.toStringDecimal
 import enums.ResImage
 
 fun Container.winDialog(
@@ -32,7 +32,7 @@ class WinDialog(
 	init
 	{
 		title(randomMessage(total))
-		body("You completed in ${total.seconds.toStringDecimal(3)} seconds")
+		body("You completed in ${total.toTimeString(2, true)}")
 
 		val backIcon = SVG(res[ResImage.UI_ARROW_LEFT]).render()
 		val nextIcon = SVG(res[ResImage.UI_PLAY]).render()
