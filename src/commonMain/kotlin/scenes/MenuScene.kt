@@ -1,6 +1,7 @@
 package scenes
 
 import GameState
+import Music
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.milliseconds
 import com.soywiz.klock.seconds
@@ -9,6 +10,7 @@ import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.input.onMouseDrag
 import com.soywiz.korge.scene.Scene
+import com.soywiz.korge.service.storage.storage
 import com.soywiz.korge.tween.get
 import com.soywiz.korge.tween.tween
 import com.soywiz.korge.ui.*
@@ -29,6 +31,7 @@ import containers.settings
 import enums.Difficulty
 import enums.ResFont
 import enums.ResImage
+import extensions.music
 import skins.ButtonSkin
 import utils.randomWord
 
@@ -39,6 +42,8 @@ class MenuScene(private val gameState: GameState) : Scene()
 	private lateinit var title2Skin: UISkin
 	private lateinit var buttonSkin: UISkin
 	private lateinit var textSkin: UISkin
+
+	private val music = Music()
 
 	override suspend fun Container.sceneInit()
 	{
@@ -195,11 +200,19 @@ class MenuScene(private val gameState: GameState) : Scene()
 
 		settings.addTo(this) {
 			val content = settings(gameState.res, views) {
+				onToggleMusic {
+					if (it) music.play() else music.pause()
+				}
 				// Don't dismiss when clicking content
 				onMouseDrag { }
 			}
 			y = content.actualHeight
 		}
+	}
+
+	override suspend fun sceneAfterInit()
+	{
+		if (views.storage.music) music.play()
 	}
 
 	companion object
