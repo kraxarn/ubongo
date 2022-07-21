@@ -2,6 +2,7 @@ import com.soywiz.korio.async.suspendTest
 import com.soywiz.korio.lang.assert
 import enums.ResFont
 import enums.ResImage
+import enums.ResSound
 import kotlin.test.Test
 import kotlin.test.assertFails
 
@@ -22,6 +23,11 @@ class ResourcesTests
 		for (font in ResFont.values())
 		{
 			assert(res[font].name.isNotBlank()) { font.name }
+		}
+
+		for (sound in ResSound.values())
+		{
+			assert(res[sound].name.isNotBlank()) { sound.name }
 		}
 	}
 }
