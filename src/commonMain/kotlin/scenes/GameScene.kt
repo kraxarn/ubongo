@@ -202,25 +202,26 @@ class GameScene(private val gameState: GameState) : Scene()
 		}
 	}
 
-	private fun snapToGrid(piece: Piece, pos: Point): Point
+	private fun DraggableInfo.snapToGrid()
 	{
 		val tileSize = board.tileSize.toInt()
-		val piecePos = pos.toInt()
+		val piecePos = this.viewNextXY.toInt()
 		val boardPos = (board.pos + Point(Board.TILE_SPACING)).toInt()
 		val point = Point(
 			((piecePos.x - boardPos.x) / tileSize * tileSize) + boardPos.x,
 			((piecePos.y - boardPos.y) / tileSize * tileSize) + boardPos.y,
 		)
 
-		val lastBoardPosition = piece.lastBoardPosition
+		val piece = this.view as? Piece
+		val lastBoardPosition = piece?.lastBoardPosition
 		if (vibration != null && lastBoardPosition != null && lastBoardPosition != point)
 		{
 			vibration?.vibrate(5.milliseconds)
 			launchImmediately { snapSound?.play(PlaybackParameters(volume = 0.25)) }
 		}
 
-		piece.lastBoardPosition = point
-		return point
+		piece?.lastBoardPosition = point
+		piece?.position(point)
 	}
 
 	private fun addPiece(piece: Piece, callback: @ViewDslMarker Piece.() -> Unit)
@@ -233,10 +234,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			draggable(autoMove = false) {
 				if (!isMirroring) holdJob?.cancel()
 				bringToTop()
-				if (snapWhileDragging && collidesWith(board, CollisionKind.SHAPE))
-				{
-					position(snapToGrid(piece, it.viewNextXY))
-				}
+				if (snapWhileDragging && collidesWith(board, CollisionKind.SHAPE)) it.snapToGrid()
 				else
 				{
 					piece.lastBoardPosition = null
@@ -245,10 +243,7 @@ class GameScene(private val gameState: GameState) : Scene()
 
 				if (it.end)
 				{
-					if (!snapWhileDragging)
-					{
-						position(snapToGrid(piece, it.viewNextXY))
-					}
+					if (!snapWhileDragging) it.snapToGrid()
 					checkIfBoardFilled()
 				}
 			}
