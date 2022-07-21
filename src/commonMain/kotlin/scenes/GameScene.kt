@@ -7,6 +7,8 @@ import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.input.*
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.scene.delay
+import com.soywiz.korge.service.storage.storage
+import com.soywiz.korge.service.vibration.NativeVibration
 import com.soywiz.korge.tween.V2
 import com.soywiz.korge.tween.get
 import com.soywiz.korge.tween.tween
@@ -28,6 +30,7 @@ import extensions.*
 import kotlinx.coroutines.Job
 
 @KorgeExperimental
+@ExperimentalUnsignedTypes
 class GameScene(private val gameState: GameState) : Scene()
 {
 	private lateinit var titleSkin: UISkin
@@ -45,6 +48,8 @@ class GameScene(private val gameState: GameState) : Scene()
 
 	private lateinit var board: Board
 	private lateinit var pieces: List<Piece>
+
+	private var vibration: NativeVibration? = null
 
 	private fun View.visible(visible: Boolean, vararg animations: V2<*>)
 	{
@@ -89,6 +94,11 @@ class GameScene(private val gameState: GameState) : Scene()
 
 	override suspend fun Container.sceneMain()
 	{
+		if (views.storage.sound)
+		{
+			vibration = NativeVibration(views)
+		}
+
 		val size = views.virtualWidth - PADDING * 2
 
 		val hud = uiGridFill(size * 0.8, 70.0, 2, 2) {
@@ -191,6 +201,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			addTo(sceneView, callback)
 
 			var holdJob: Job? = null
+			var lastBoardPosition: Point? = null
 
 			draggable(autoMove = false) {
 				if (!isMirroring) holdJob?.cancel()
@@ -201,11 +212,24 @@ class GameScene(private val gameState: GameState) : Scene()
 					val tileSize = board.tileSize.toInt()
 					val piecePos = it.viewNextXY.toInt()
 					val boardPos = (board.pos + Point(Board.TILE_SPACING)).toInt()
-					val x = ((piecePos.x - boardPos.x) / tileSize * tileSize) + boardPos.x
-					val y = ((piecePos.y - boardPos.y) / tileSize * tileSize) + boardPos.y
-					position(x, y)
+					val point = Point(
+						((piecePos.x - boardPos.x) / tileSize * tileSize) + boardPos.x,
+						((piecePos.y - boardPos.y) / tileSize * tileSize) + boardPos.y,
+					)
+
+					if (lastBoardPosition != null && lastBoardPosition != point)
+					{
+						vibration?.vibrate(5.milliseconds)
+					}
+
+					lastBoardPosition = point
+					position(point)
 				}
-				else position(it.viewNextXY)
+				else
+				{
+					lastBoardPosition = null
+					position(it.viewNextXY)
+				}
 
 				if (it.end) checkIfBoardFilled()
 			}

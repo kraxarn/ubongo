@@ -53,6 +53,8 @@ korge {
 		androidReleaseSignKeyPassword = properties.getProperty("keyPassword")
 	}
 
+	supportVibration()
+
 	targetJvm()
 	targetJs()
 	targetDesktop()
