@@ -13,9 +13,11 @@ import scenes.GameScene
 import scenes.MenuScene
 
 @KorgeExperimental
+@ExperimentalUnsignedTypes
 suspend fun main() = Korge(Korge.Config(Game))
 
 @KorgeExperimental
+@ExperimentalUnsignedTypes
 object Game : Module()
 {
 	override val mainScene get() = MenuScene::class

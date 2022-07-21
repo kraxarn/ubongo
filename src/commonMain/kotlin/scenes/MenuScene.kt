@@ -36,6 +36,7 @@ import skins.ButtonSkin
 import utils.randomWord
 
 @KorgeExperimental
+@ExperimentalUnsignedTypes
 class MenuScene(private val gameState: GameState) : Scene()
 {
 	private lateinit var titleSkin: UISkin
