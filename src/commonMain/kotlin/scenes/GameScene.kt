@@ -217,7 +217,7 @@ class GameScene(private val gameState: GameState) : Scene()
 
 			onDown {
 				holdJob = launch {
-					delay(500.milliseconds)
+					delay(300.milliseconds)
 					mirror()
 					checkIfBoardFilled()
 				}
