@@ -3,6 +3,8 @@ package scenes
 import GameState
 import com.soywiz.klock.TimeSpan
 import com.soywiz.klock.milliseconds
+import com.soywiz.korau.sound.PlaybackParameters
+import com.soywiz.korau.sound.Sound
 import com.soywiz.korge.annotations.KorgeExperimental
 import com.soywiz.korge.input.*
 import com.soywiz.korge.scene.Scene
@@ -26,6 +28,7 @@ import constants.TextSize
 import containers.*
 import enums.ResFont
 import enums.ResImage
+import enums.ResSound
 import extensions.*
 import kotlinx.coroutines.Job
 
@@ -50,6 +53,7 @@ class GameScene(private val gameState: GameState) : Scene()
 	private lateinit var pieces: List<Piece>
 
 	private var vibration: NativeVibration? = null
+	private var snapSound: Sound? = null
 
 	private fun View.visible(visible: Boolean, vararg animations: V2<*>)
 	{
@@ -97,6 +101,7 @@ class GameScene(private val gameState: GameState) : Scene()
 		if (views.storage.sound)
 		{
 			vibration = NativeVibration(views)
+			snapSound = gameState.res[ResSound.SNAP]
 		}
 
 		val size = views.virtualWidth - PADDING * 2
@@ -217,9 +222,10 @@ class GameScene(private val gameState: GameState) : Scene()
 						((piecePos.y - boardPos.y) / tileSize * tileSize) + boardPos.y,
 					)
 
-					if (lastBoardPosition != null && lastBoardPosition != point)
+					if (vibration != null && lastBoardPosition != null && lastBoardPosition != point)
 					{
 						vibration?.vibrate(5.milliseconds)
+						launchImmediately { snapSound?.play(PlaybackParameters(volume = 0.25)) }
 					}
 
 					lastBoardPosition = point
