@@ -54,6 +54,7 @@ class GameScene(private val gameState: GameState) : Scene()
 
 	private var vibration: NativeVibration? = null
 	private var snapSound: Sound? = null
+	private var snapWhileDragging = true
 
 	private fun View.visible(visible: Boolean, vararg animations: V2<*>)
 	{
@@ -103,6 +104,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			vibration = NativeVibration(views)
 			snapSound = gameState.res[ResSound.SNAP]
 		}
+		snapWhileDragging = views.storage.snapWhileDragging
 
 		val size = views.virtualWidth - PADDING * 2
 
@@ -231,7 +233,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			draggable(autoMove = false) {
 				if (!isMirroring) holdJob?.cancel()
 				bringToTop()
-				if (collidesWith(board, CollisionKind.SHAPE))
+				if (snapWhileDragging && collidesWith(board, CollisionKind.SHAPE))
 				{
 					position(snapToGrid(piece, it.viewNextXY))
 				}
@@ -241,7 +243,14 @@ class GameScene(private val gameState: GameState) : Scene()
 					position(it.viewNextXY)
 				}
 
-				if (it.end) checkIfBoardFilled()
+				if (it.end)
+				{
+					if (!snapWhileDragging)
+					{
+						position(snapToGrid(piece, it.viewNextXY))
+					}
+					checkIfBoardFilled()
+				}
 			}
 
 			onClick {
