@@ -221,7 +221,7 @@ class GameScene(private val gameState: GameState) : Scene()
 		val lastBoardPosition = piece?.lastBoardPosition
 		if (vibration != null && lastBoardPosition != null && lastBoardPosition != point)
 		{
-			vibration?.vibrate(5.milliseconds)
+			vibration?.vibrate(SNAP_VIBRATION_DURATION)
 			launchImmediately { snapSound?.play(soundParams) }
 		}
 
@@ -255,6 +255,7 @@ class GameScene(private val gameState: GameState) : Scene()
 
 			onClick {
 				rotateSound?.play(soundParams)
+				vibration?.vibrate(ROTATE_VIBRATION_DURATION)
 				rotate()
 				checkIfBoardFilled()
 			}
@@ -263,6 +264,7 @@ class GameScene(private val gameState: GameState) : Scene()
 				holdJob = launch {
 					delay(300.milliseconds)
 					rotateSound?.play(soundParams)
+					vibration?.vibrate(MIRROR_VIBRATION_DURATION)
 					mirror()
 					checkIfBoardFilled()
 				}
@@ -306,5 +308,9 @@ class GameScene(private val gameState: GameState) : Scene()
 	companion object
 	{
 		const val PADDING = 64.0
+
+		private val SNAP_VIBRATION_DURATION = 5.milliseconds
+		private val ROTATE_VIBRATION_DURATION = 7.milliseconds
+		private val MIRROR_VIBRATION_DURATION = ROTATE_VIBRATION_DURATION * 2
 	}
 }
