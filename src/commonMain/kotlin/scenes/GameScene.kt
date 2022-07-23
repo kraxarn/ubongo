@@ -217,7 +217,7 @@ class GameScene(private val gameState: GameState) : Scene()
 		if (vibration != null && lastBoardPosition != null && lastBoardPosition != point)
 		{
 			vibration?.vibrate(5.milliseconds)
-			launchImmediately { snapSound?.play(PlaybackParameters(volume = 0.25)) }
+			launchImmediately { snapSound?.play(PlaybackParameters(volume = 0.5)) }
 		}
 
 		piece?.lastBoardPosition = point
