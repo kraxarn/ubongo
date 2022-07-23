@@ -216,6 +216,7 @@ class MenuScene(private val gameState: GameState) : Scene()
 	private suspend fun startGame(state: GameState.() -> Unit)
 	{
 		state(gameState)
+		music.pause()
 		sceneContainer.changeTo<GameScene>()
 	}
 
