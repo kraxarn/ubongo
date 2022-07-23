@@ -15,6 +15,11 @@ var IStorage.music by property("music", false)
 var IStorage.sound by property("sound", true)
 
 /**
+ * If device should vibrate when moving or rotating pieces
+ */
+var IStorage.vibration by property("vibration", true)
+
+/**
  * Snap to board grid while dragging instead of only when dropped
  */
 var IStorage.snapWhileDragging by property("snapWhileDragging", true)

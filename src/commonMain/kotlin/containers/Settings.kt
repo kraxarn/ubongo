@@ -16,10 +16,7 @@ import com.soywiz.korio.async.AsyncSignal
 import com.soywiz.korma.geom.vector.roundRect
 import enums.ResFont
 import enums.ResImage
-import extensions.maxWidthOrHeight
-import extensions.music
-import extensions.snapWhileDragging
-import extensions.sound
+import extensions.*
 
 @KorgeExperimental
 fun Container.settings(res: Resources, views: Views, callback: @ViewDslMarker Settings.() -> Unit = {}) =
@@ -31,7 +28,7 @@ class Settings(res: Resources, private val views: Views) : Container()
 	val onToggleMusic = AsyncSignal<Boolean>()
 
 	private val actualWidth get() = views.virtualWidth.toDouble()
-	val actualHeight get() = 580.0
+	val actualHeight get() = 660.0
 
 	private val actualX get() = 0.0
 	private val actualY get() = views.actualVirtualTop + views.actualVirtualHeight - actualHeight + 16.0
@@ -70,9 +67,17 @@ class Settings(res: Resources, private val views: Views) : Container()
 			}
 		}
 
-		option("Snap to board while dragging", views.storage.snapWhileDragging) {
+		val vibration = option("Vibration", views.storage.vibration) {
 			alignLeftToLeftOf(sound)
 			alignTopToBottomOf(sound, PADDING / 2.0)
+			onClick {
+				views.storage.vibration = !views.storage.vibration
+			}
+		}
+
+		option("Snap to board while dragging", views.storage.snapWhileDragging) {
+			alignLeftToLeftOf(vibration)
+			alignTopToBottomOf(vibration, PADDING / 2.0)
 			onClick {
 				views.storage.snapWhileDragging = !views.storage.snapWhileDragging
 			}

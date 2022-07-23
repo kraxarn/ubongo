@@ -101,11 +101,16 @@ class GameScene(private val gameState: GameState) : Scene()
 
 		if (views.storage.sound)
 		{
-			vibration = NativeVibration(views)
 			snapSound = gameState.res[ResSound.SNAP]
 			rotateSound = gameState.res[ResSound.ROTATE]
 			winSound = gameState.res[ResSound.WIN]
 		}
+
+		if (views.storage.vibration)
+		{
+			vibration = NativeVibration(views)
+		}
+
 		snapWhileDragging = views.storage.snapWhileDragging
 	}
 
@@ -219,10 +224,13 @@ class GameScene(private val gameState: GameState) : Scene()
 
 		val piece = this.view as? Piece
 		val lastBoardPosition = piece?.lastBoardPosition
-		if (vibration != null && lastBoardPosition != null && lastBoardPosition != point)
+		if (lastBoardPosition != null && lastBoardPosition != point)
 		{
 			vibration?.vibrate(SNAP_VIBRATION_DURATION)
-			launchImmediately { snapSound?.play(soundParams) }
+			if (snapSound != null)
+			{
+				launchImmediately { snapSound?.play(soundParams) }
+			}
 		}
 
 		piece?.lastBoardPosition = point
