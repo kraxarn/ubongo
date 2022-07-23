@@ -95,17 +95,17 @@ class GameScene(private val gameState: GameState) : Scene()
 		}
 
 		pauseIcon = SVG(gameState.res[ResImage.UI_PAUSE]).render()
-	}
 
-	override suspend fun Container.sceneMain()
-	{
 		if (views.storage.sound)
 		{
 			vibration = NativeVibration(views)
 			snapSound = gameState.res[ResSound.SNAP]
 		}
 		snapWhileDragging = views.storage.snapWhileDragging
+	}
 
+	override suspend fun Container.sceneMain()
+	{
 		val size = views.virtualWidth - PADDING * 2
 
 		val hud = uiGridFill(size * 0.8, 70.0, 2, 2) {
