@@ -165,10 +165,7 @@ class MenuScene(private val gameState: GameState) : Scene()
 			{
 				uiButton(difficulty.name.lowercase().replaceFirstChar { it.uppercase() }) {
 					uiSkin = buttonSkin
-					onClick {
-						gameState.difficulty = difficulty
-						sceneContainer.changeTo<GameScene>()
-					}
+					onClick { startGame { gameState.difficulty = difficulty } }
 				}
 			}
 		}
@@ -214,6 +211,12 @@ class MenuScene(private val gameState: GameState) : Scene()
 	override suspend fun sceneAfterInit()
 	{
 		if (views.storage.music) music.play()
+	}
+
+	private suspend fun startGame(state: GameState.() -> Unit)
+	{
+		state(gameState)
+		sceneContainer.changeTo<GameScene>()
 	}
 
 	companion object
