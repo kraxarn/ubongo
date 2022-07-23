@@ -52,9 +52,12 @@ class GameScene(private val gameState: GameState) : Scene()
 	private lateinit var board: Board
 	private lateinit var pieces: List<Piece>
 
+	private val soundParams = PlaybackParameters(volume = 0.5)
 	private var vibration: NativeVibration? = null
 	private var snapSound: Sound? = null
 	private var snapWhileDragging = true
+	private var rotateSound: Sound? = null
+	private var winSound: Sound? = null
 
 	private fun View.visible(visible: Boolean, vararg animations: V2<*>)
 	{
@@ -100,6 +103,8 @@ class GameScene(private val gameState: GameState) : Scene()
 		{
 			vibration = NativeVibration(views)
 			snapSound = gameState.res[ResSound.SNAP]
+			rotateSound = gameState.res[ResSound.ROTATE]
+			winSound = gameState.res[ResSound.WIN]
 		}
 		snapWhileDragging = views.storage.snapWhileDragging
 	}
@@ -217,7 +222,7 @@ class GameScene(private val gameState: GameState) : Scene()
 		if (vibration != null && lastBoardPosition != null && lastBoardPosition != point)
 		{
 			vibration?.vibrate(5.milliseconds)
-			launchImmediately { snapSound?.play(PlaybackParameters(volume = 0.5)) }
+			launchImmediately { snapSound?.play(soundParams) }
 		}
 
 		piece?.lastBoardPosition = point
@@ -249,6 +254,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			}
 
 			onClick {
+				rotateSound?.play(soundParams)
 				rotate()
 				checkIfBoardFilled()
 			}
@@ -256,6 +262,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			onDown {
 				holdJob = launch {
 					delay(300.milliseconds)
+					rotateSound?.play(soundParams)
 					mirror()
 					checkIfBoardFilled()
 				}
@@ -284,6 +291,8 @@ class GameScene(private val gameState: GameState) : Scene()
 				sceneContainer.changeTo<GameScene>()
 			}
 		}
+
+		if (winSound != null) launch { winSound?.play(soundParams) }
 
 		paused = true
 		return true
