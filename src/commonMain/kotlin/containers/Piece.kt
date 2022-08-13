@@ -4,9 +4,9 @@ import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.View
 import com.soywiz.korge.view.graphics
 import com.soywiz.korge.view.hitShape
-import com.soywiz.korim.vector.StrokeInfo
 import com.soywiz.korma.geom.Point
 import com.soywiz.korma.geom.vector.LineCap
+import com.soywiz.korma.geom.vector.StrokeInfo
 import com.soywiz.korma.geom.vector.VectorBuilder
 import com.soywiz.korma.geom.vector.rect
 import enums.PieceShape

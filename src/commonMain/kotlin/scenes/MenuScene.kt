@@ -16,6 +16,7 @@ import com.soywiz.korge.tween.tween
 import com.soywiz.korge.ui.*
 import com.soywiz.korge.view.*
 import com.soywiz.korge.view.filter.TransitionFilter
+import com.soywiz.korge.view.filter.filter
 import com.soywiz.korim.text.TextAlignment
 import com.soywiz.korim.vector.format.SVG
 import com.soywiz.korim.vector.render
@@ -46,7 +47,7 @@ class MenuScene(private val gameState: GameState) : Scene()
 
 	private val music = Music()
 
-	override suspend fun Container.sceneInit()
+	override suspend fun SContainer.sceneInit()
 	{
 		titleSkin = UISkin {
 			textFont = gameState.res[ResFont.BOLD]
@@ -70,7 +71,7 @@ class MenuScene(private val gameState: GameState) : Scene()
 		}
 	}
 
-	override suspend fun Container.sceneMain()
+	override suspend fun SContainer.sceneMain()
 	{
 		gameState.regenerate()
 
@@ -120,7 +121,7 @@ class MenuScene(private val gameState: GameState) : Scene()
 		circle(seedName.height / 2.0, GameColors.foregroundAlt) {
 			alignRightToRightOf(startGame, PADDING / 2)
 			alignBottomToTopOf(startGame, PADDING)
-			val seedFilter = TransitionFilter(TransitionFilter.Transition.SWEEP, smooth = false)
+			val seedFilter = TransitionFilter(TransitionFilter.Transition.SWEEP, spread = 0.0)
 			filter = seedFilter
 			launchAnimate {
 				val nextMinute = 60 - DateTime.now().seconds

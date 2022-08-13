@@ -23,6 +23,8 @@ import com.soywiz.korio.async.launch
 import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korio.util.toStringDecimal
 import com.soywiz.korma.geom.Point
+import com.soywiz.korma.geom.minus
+import com.soywiz.korma.geom.plus
 import constants.GameColors
 import constants.TextSize
 import containers.*
@@ -83,7 +85,7 @@ class GameScene(private val gameState: GameState) : Scene()
 			)
 		}
 
-	override suspend fun Container.sceneInit()
+	override suspend fun SContainer.sceneInit()
 	{
 		titleSkin = UISkin {
 			textFont = gameState.res[ResFont.LIGHT]
@@ -114,7 +116,7 @@ class GameScene(private val gameState: GameState) : Scene()
 		snapWhileDragging = views.storage.snapWhileDragging
 	}
 
-	override suspend fun Container.sceneMain()
+	override suspend fun SContainer.sceneMain()
 	{
 		val size = views.virtualWidth - PADDING * 2
 

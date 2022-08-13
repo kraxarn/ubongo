@@ -1,5 +1,6 @@
 package extensions
 
+import com.soywiz.korma.geom.IPoint
 import com.soywiz.korma.geom.Point
 import enums.PieceShape
 import kotlin.random.Random
@@ -11,5 +12,5 @@ fun Random.pieceShapes(): Sequence<PieceShape> = sequence {
 	while (shapes.any()) yield(shapes.removeAt(this@pieceShapes.nextInt(shapes.size)))
 }
 
-fun Random.nextPoint(from: Point, until: Point): Point =
+fun Random.nextPoint(from: IPoint, until: IPoint): Point =
 	Point(this.nextDouble(from.x, until.x), this.nextDouble(from.y, until.y))
